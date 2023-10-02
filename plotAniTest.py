@@ -13,7 +13,7 @@ theta = np.pi/4
 g = 9.82
 zero = 2*np.sin(theta)*v/g
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(6, 6))
 #ball = ax.scatter(0,0)
 circle = Circle((0,0),r)
 
