@@ -7,7 +7,7 @@ import time
 
 start = time.monotonic()
 
-fps = 20
+fps = 30
 v = 15
 r=0.2
 theta = np.pi/4
