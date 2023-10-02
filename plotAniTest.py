@@ -6,7 +6,7 @@ import time
 
 start = time.monotonic()
 
-fps = 30
+fps = 60 
 v = 10
 r=0.1
 theta = np.pi/4
@@ -41,6 +41,5 @@ animation = FuncAnimation(fig, func=animation_frame, frames = np.arange(0, zero,
 
 end = time.monotonic()
 plt.show()
-print(end-start)
 
 
