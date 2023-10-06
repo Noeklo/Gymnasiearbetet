@@ -7,13 +7,12 @@ import time
 
 start = time.monotonic()
 
-fps = 30
+fps = 5
 v = 15
 r=0.2
 theta = np.pi/4
 g = 9.82
-t=0
-timeIncrement = 1/fps
+increment = 1/fps
 #zero = 2*np.sin(theta)*v/g
 #timeValue = np.arange(0, zero, 1/fps)
 
@@ -29,28 +28,38 @@ def x_distence(v,t):
     s = np.cos(theta)*v*t
     return s
 
-def generate_Frame(t):
+def generate_Data(v):
+    t = 0
+    data = np.empty((fps,2))
+    print(data)
+    while y_distence(v,t) >= 0:
+        data = np.append(data, np.array([[x_distence(v,t), y_distence(v,t)]]), axis=0)
+        t += increment
+    return data
+
+def generate_Frame(cord, lastCord):
     ax.cla()
     plt.title("Projectile Motion")  
     plt.grid()
-    ax.set_xlim(0,x_distence(v,2)+5)
-    ax.set_ylim(0, x_distence(v,2)+5)
-    circle = Circle((x_distence(v,t),y_distence(v,t)),r)
+    ax.set_xlim(0, lastCord[0]+5)
+    ax.set_ylim(0, lastCord[0]+5)
+    circle = Circle((cord[0], cord[1]),r)
     ax.add_patch(circle)
 
 #while y_distence(v,t) >= 0:
 #    print(t)
 #    print(f"{x_distence(v,t)}     {y_distence(v,t)}")
 #    t += timeIncrement
-
+data = generate_Data(v)
+lastCord = data[-1]
+print(data, len(data), "hej2")
 
 writer = PillowWriter(fps=fps)
 
 with writer.saving(fig, "nimate1.gif", 100):
-    while y_distence(v,t) >= 0:
-        generate_Frame(t)
-        writer.grab_frame()
-        t += timeIncrement
+        for cord in data:
+            generate_Frame(cord, lastCord)
+            writer.grab_frame()
 
 end = time.monotonic()
 print(end-start)
