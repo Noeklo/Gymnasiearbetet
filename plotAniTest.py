@@ -37,7 +37,7 @@ def animation_frame(t):
     ax.add_patch(circle)
 
 
-animation = FuncAnimation(fig, func=animation_frame, frames = np.arange(0, zero, 1/fps), interval = (1/fps)*1000)
+animation = FuncAnimation(fig, func=animation_frame, frames = np.arange(0, zero, 1/fps), interval = 1/fps*1000)
 
 end = time.monotonic()
 plt.show()
