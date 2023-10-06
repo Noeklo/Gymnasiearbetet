@@ -7,14 +7,13 @@ import time
 
 start = time.monotonic()
 
-fps = 60
-v = 30
-r=0.2
+fps = 30
+v = 7
+r=0.1
 theta = np.pi/4
 g = 9.82
 timeIncrement = 1/fps
-#zero = 2*np.sin(theta)*v/g
-#timeValue = np.arange(0, zero, 1/fps)
+zero = 2*np.sin(theta)*v/g
 
 def y_distence(v,t):
     s = np.sin(theta)*v*t - (g*t**2)/2
@@ -28,7 +27,6 @@ def generate_Data(v):
     t = 0
     i = 0
     data = np.empty((1000,2))
-    print(data)
     while y_distence(v,t) >= 0:
         data[i] = np.array([x_distence(v,t), y_distence(v,t)])
         t += timeIncrement
@@ -36,14 +34,28 @@ def generate_Data(v):
     data = data[:(i)]
     return data
 
+
+def generate_Frame(cord):
+    global frame_count, start_time
+
+    circle.set_center((cord[0],cord[1]))
+
+    frame_count += 1
+    elapsed_time = time.monotonic() - start_time
+    current_fps = frame_count / elapsed_time
+
+    # Update the title with the current FPS
+    fps_text.set_text(f"FPS: {current_fps:.2f}")
+
+    return circle, fps_text
+
 fig, ax = plt.subplots(figsize=(6, 6))
 circle = Circle((0,0),r)
 ax.add_patch(circle)
 
-def generate_Frame(cord):
-    circle.set_center((cord[0],cord[1]))
-
-    return circle,
+frame_count = 0
+start_time = time.monotonic()
+fps_text = ax.text(0.1, 0.9, '', transform=ax.transAxes)
 
 data = generate_Data(v)
 lastCord = data[-1]
@@ -57,7 +69,9 @@ print(data, len(data), "hej2")
 
 writer = FFMpegWriter(fps=fps)
 
-ani = FuncAnimation(fig, func=generate_Frame, frames = data, interval = 1/(fps)*1000 , blit = True)
+ani = FuncAnimation(fig, func=generate_Frame, frames = data, interval = 1000/fps-zero*1400/150, blit = True)
+
+plt.show()
 
 ani.save("Animate1.mp4", writer=writer, dpi=100)
 
