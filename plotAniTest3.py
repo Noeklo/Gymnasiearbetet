@@ -6,8 +6,8 @@ import time
 
 start = time.monotonic()
 
-fps = 60
-v = 15
+fps = 60 
+v = 7
 r=0.1
 theta = np.pi/4
 g = 9.82
@@ -40,10 +40,11 @@ def animation_frame(t):
     fps_text.set_text(f"FPS: {current_fps:.2f}")
                   
     return circle, fps_text
-
-animation = FuncAnimation(fig, func=animation_frame, frames = np.arange(0, zero, 1/fps), interval = 1/fps*1000 , blit = True, repeat = False)
-
 end = time.monotonic()
+print(len(np.arange(0, zero, 1/fps)), zero)
+
+animation = FuncAnimation(fig, func=animation_frame, frames = np.arange(0, zero, 1/fps), interval = 1/(2*fps)*1000 , blit = True, repeat = True)
+
 plt.title("Projectile Motion")  
 plt.grid()
 ax1.set_xlim(0, x_distence(v,zero)+5)
