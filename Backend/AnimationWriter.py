@@ -15,7 +15,7 @@ class AnimationWriter:
     V_y = 7
     x  = 0
     y = 0
-    fps = 30
+    fps = 60
 
     start = time.monotonic()
 
@@ -37,12 +37,14 @@ class AnimationWriter:
 
     def __init__(self):
         None
-    #writer = FFMpegWriter(fps=canvas1.fps)
     def generate_Animation(self,):
-        ani = FuncAnimation(self.canvas1.fig, func=self.generate_Frame, frames = np.arange(0,len(self.x_Cords)-1, 1), interval = 1000/self.canvas1.fps-self.calc1.getZero(self.circle1)*1400/150, blit = True)
+        #self.writer = FFMpegWriter(fps=self.canvas1.fps)
+        self.ani = FuncAnimation(self.canvas1.fig, func=self.generate_Frame, frames = np.arange(0,len(self.x_Cords)-1, 1), interval = 1000/self.canvas1.fps, blit = True)
         plt.show()
 
-    #ani.save("Animate1.mp4", writer=writer, dpi=100)
+#   self.calc1.getZero(self.circle1)*1400/150
+
+        #self.ani.save("Animate1.mp4", writer=self.writer, dpi=100)
 
     end = time.monotonic()
     print(end-start)

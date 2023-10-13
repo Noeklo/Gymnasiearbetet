@@ -1,13 +1,10 @@
 
-from Backend.AnimatonWriter import AnimationWriter
-massa = 0
+from Backend.AnimationWriter import AnimationWriter
 import tkinter as tk
 import ttkbootstrap as ttk
-import matplotlib.pyplot as plt
-import numpy as np
 
 
-#ani = AnimationWriter()
+ani = AnimationWriter()
 
 # def InitTkinter():
 
@@ -26,7 +23,7 @@ def show_values():
 
 def Start():
     print("Hello World")
-    #ani.generate_Animation()
+    ani.generate_Animation()
 
 # Mass Slider
 

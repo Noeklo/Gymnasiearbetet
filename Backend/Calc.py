@@ -31,6 +31,6 @@ class Calc:
             x_Cords[i] = np.array(self.x_distence(Obj,t))
             t += self.timeIncrement
             i += 1
-        y_cords = y_Cords[:(i)]
+        y_Cords = y_Cords[:(i)]
         x_Cords = x_Cords[:(i)]
         return  x_Cords, y_Cords
