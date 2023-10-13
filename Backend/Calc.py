@@ -1,6 +1,6 @@
 import numpy as np
-from Canvas import Canvas
-from CircleObj import CircleObj
+from Backend.Canvas import Canvas
+from Backend.CircleObj import CircleObj
 
 class Calc:
     g = 9.82
