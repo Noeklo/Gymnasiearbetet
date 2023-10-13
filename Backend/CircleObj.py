@@ -3,17 +3,14 @@ from matplotlib.patches import Circle
 
 class CircleObj:
 
-    def __init__(self, radius, mass,V_y, V_x, cord):
+    def __init__(self, radius, mass,V_x, V_y, x,y):
         self.radius = radius  
         self.mass = mass
         self.V_y = V_y
         self.V_x = V_x
-        self.cord = cord
-        self.circle = Circle((cord[0],cord[1]), self.radius)
-
-#   def getCircle(self, ax, cord):
-#       circle = Circle(cord, self.radius)
-#       return circle
+        self.x = x
+        self.y = y
+        self.circle = Circle((x,y),self.radius)
         
-    def postition(self, cord):
-        self.circle.set_cetner((cord[0],cord[1])) 
+    def position(self, x,y):
+        self.circle.set_center((x,y)) 
