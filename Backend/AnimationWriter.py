@@ -4,9 +4,9 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.animation import FFMpegWriter
 import time
 
-from CircleObj import CircleObj
-from Canvas import Canvas
-from Calc import Calc
+from Backend.CircleObj import CircleObj
+from Backend.Canvas import Canvas
+from Backend.Calc import Calc
 
 class AnimationWriter:
     radius = 0.1

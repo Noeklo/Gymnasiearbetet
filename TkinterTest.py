@@ -1,7 +1,15 @@
+
+from Backend.AnimatonWriter import AnimationWriter
+massa = 0
 import tkinter as tk
 import ttkbootstrap as ttk
+import matplotlib.pyplot as plt
+import numpy as np
 
-massa = 0
+
+#ani = AnimationWriter()
+
+# def InitTkinter():
 
 window = tk.Tk()
 window.title("FysiKol")
@@ -16,6 +24,10 @@ def convert():
 def show_values():
     print (w1.get())
 
+def Start():
+    print("Hello World")
+    #ani.generate_Animation()
+
 # Mass Slider
 
 def update_label(value):
@@ -23,8 +35,8 @@ def update_label(value):
     label.config(text=f"{rounded_value:.1f} KG")
     massa = rounded_value
 
-import pyglet,tkinter
-pyglet.font.add_file('C:\FysikSim\Gränssnitt\Roboto.ttf')
+# import pyglet,tkinter
+# pyglet.font.add_file('C:\FysikSim\Backend\Roboto.ttf')
 
 title_label = ttk.Label(window, text="Massa", font=("Roboto", 13, 'bold'))
 title_label.pack()
@@ -92,6 +104,10 @@ button_label.place(x=100, y=395)
 toggle_button = ttk.Button(text="ON", width=10, command=Simpletoggle)
 toggle_button.pack(pady=10)
 toggle_button.place(x=100, y=425)
+
+init_button = ttk.Button(text="START", width=10, command=Start)
+init_button.pack(pady=10)
+init_button.place(x=100, y=525)
 
 
 window.mainloop()
