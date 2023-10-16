@@ -24,20 +24,26 @@ class AnimationWriter:
 
         return self.circle1.circle, # fps_text 
 
-    canvas1 = Canvas((6,6), fps, "Projectile Motion")
-    circle1 = CircleObj(radius,mass,V_x,V_y,x,y)
+    canvas1 = None 
+    circle1 = None 
 
 
-    canvas1.ax.add_patch(circle1.circle)
-    calc1 = Calc(canvas1)
-    x_Cords, y_Cords = calc1.generate_Data(circle1)
-
-    canvas1.ax.set_xlim(0, x_Cords[-1]+5)
-    canvas1.ax.set_ylim(0, x_Cords[-1]+5)
+    calc1 = None
+    x_Cords, y_Cords = None, None
 
     def __init__(self):
         None
     def generate_Animation(self,):
+        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion")
+        self.circle1 = CircleObj(self.radius,self.mass,self.V_x,self.V_y,self.x,self.y)
+
+
+        self.canvas1.ax.add_patch(self.circle1.circle)
+        self.calc1 = Calc(self.canvas1)
+        self.x_Cords, self.y_Cords = self.calc1.generate_Data(self.circle1)
+
+        self.canvas1.ax.set_xlim(0, self.x_Cords[-1]+5)
+        self.canvas1.ax.set_ylim(0, self.x_Cords[-1]+5)
         #self.writer = FFMpegWriter(fps=self.canvas1.fps)
         self.ani = FuncAnimation(self.canvas1.fig, func=self.generate_Frame, frames = np.arange(0,len(self.x_Cords)-1, 1), interval = 1000/self.canvas1.fps, blit = True)
         plt.show(block=False)
