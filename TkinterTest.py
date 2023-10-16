@@ -12,11 +12,7 @@ window.geometry("1100x700")
 title_label = ttk.Label(window, text="FysiKol", font=("Roboto", 35, 'bold'))
 title_label.pack()
 
-def show_values():
-    print (w1.get())
-
 def Start():
-    print("Attempting to start animation...")
     ani.generate_Animation()
 
 def Stop():
