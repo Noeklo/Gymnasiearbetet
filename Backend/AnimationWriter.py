@@ -40,8 +40,10 @@ class AnimationWriter:
     def generate_Animation(self,):
         #self.writer = FFMpegWriter(fps=self.canvas1.fps)
         self.ani = FuncAnimation(self.canvas1.fig, func=self.generate_Frame, frames = np.arange(0,len(self.x_Cords)-1, 1), interval = 1000/self.canvas1.fps, blit = True)
-        plt.show()
+        plt.show(block=False)
 
+    def stop_Animation(self,):
+        plt.close(self.canvas1.fig)
 #   self.calc1.getZero(self.circle1)*1400/150
 
         #self.ani.save("Animate1.mp4", writer=self.writer, dpi=100)
