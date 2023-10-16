@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Circle
+import matplotlib
+
+matplotlib.use("qtagg")
 
 class Canvas:
 
