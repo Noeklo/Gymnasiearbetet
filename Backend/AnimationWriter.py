@@ -11,9 +11,9 @@ from Calc import Calc
 class AnimationWriter:
     radius = 0.1
     mass = 1
-    V_x = 7
-    V_y = 7
-    x  = 0
+    x_Velocity = 7
+    y_Velocity = 7
+    x = 0
     y = 0
     fps = 60
 
@@ -33,9 +33,10 @@ class AnimationWriter:
 
     def __init__(self):
         None
+
     def generate_Animation(self,):
         self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion")
-        self.circle1 = CircleObj(self.radius,self.mass,self.V_x,self.V_y,self.x,self.y)
+        self.circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity,self.x,self.y)
 
 
         self.canvas1.ax.add_patch(self.circle1.circle)
@@ -45,7 +46,12 @@ class AnimationWriter:
         self.canvas1.ax.set_xlim(0, self.x_Cords[-1]+5)
         self.canvas1.ax.set_ylim(0, self.x_Cords[-1]+5)
         #self.writer = FFMpegWriter(fps=self.canvas1.fps)
-        self.ani = FuncAnimation(self.canvas1.fig, func=self.generate_Frame, frames = np.arange(0,len(self.x_Cords)-1, 1), interval = 1000/self.canvas1.fps, blit = True)
+        self.ani = FuncAnimation(self.canvas1.fig,
+                                 func=self.generate_Frame,
+                                 frames = np.arange(0,len(self.x_Cords)-1, 1),
+                                 interval = 1000/self.canvas1.fps,
+                                 blit = True)
+                                 
         self.canvas1.tkCanvas.show(block=False)
 
     def stop_Animation(self,):
