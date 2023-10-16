@@ -25,6 +25,9 @@ def Start():
     print("Hello World")
     ani.generate_Animation()
 
+def Stop():
+    print('STOP')
+
 # Mass Slider
 
 def update_label(value):
@@ -105,6 +108,10 @@ toggle_button.place(x=100, y=425)
 init_button = ttk.Button(text="START", width=10, command=Start)
 init_button.pack(pady=10)
 init_button.place(x=100, y=525)
+
+stop_button = ttk.Button(text="STOP", width=10, command=Stop)
+stop_button.pack(pady=10)
+stop_button.place(x=100, y=575)
 
 
 window.mainloop()
