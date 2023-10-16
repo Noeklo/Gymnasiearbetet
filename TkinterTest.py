@@ -26,7 +26,7 @@ def Start():
     ani.generate_Animation()
 
 def Stop():
-    print('STOP')
+    ani.stop_Animation()
 
 # Mass Slider
 
