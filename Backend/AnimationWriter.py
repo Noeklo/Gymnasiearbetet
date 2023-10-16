@@ -9,27 +9,25 @@ from Canvas import Canvas
 from Calc import Calc
 
 class AnimationWriter:
-    radius = 0.1
-    mass = 1
-    x_Velocity = 7
-    y_Velocity = 7
+    
+    radius: float = 0.1
+    mass: float = 1
+    x_Velocity: float = 7
+    y_Velocity: float = 7
     x = 0
     y = 0
-    fps = 60
+    fps: int = 60
 
-    start = time.monotonic()
+    canvas1: Canvas = None 
+    circle1: CircleObj = None 
+
+    calc1: Calc = None
+    x_Cords, y_Cords = None, None
 
     def generate_Frame(self,i):
         self.circle1.position(self.x_Cords[i],self.y_Cords[i])
 
-        return self.circle1.circle, # fps_text 
-
-    canvas1 = None 
-    circle1 = None 
-
-
-    calc1 = None
-    x_Cords, y_Cords = None, None
+        return self.circle1.circle, 
 
     def __init__(self):
         None
@@ -37,7 +35,6 @@ class AnimationWriter:
     def generate_Animation(self,):
         self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion")
         self.circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity,self.x,self.y)
-
 
         self.canvas1.ax.add_patch(self.circle1.circle)
         self.calc1 = Calc(self.canvas1)
@@ -56,9 +53,5 @@ class AnimationWriter:
 
     def stop_Animation(self,):
         plt.close(self.canvas1.fig)
-#   self.calc1.getZero(self.circle1)*1400/150
 
         #self.ani.save("Animate1.mp4", writer=self.writer, dpi=100)
-
-    end = time.monotonic()
-    print(end-start)
