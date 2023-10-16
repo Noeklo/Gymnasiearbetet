@@ -1,5 +1,5 @@
 
-from Backend.AnimationWriter import AnimationWriter
+from AnimationWriter import AnimationWriter
 import tkinter as tk
 import ttkbootstrap as ttk
 

@@ -4,9 +4,9 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.animation import FFMpegWriter
 import time
 
-from Backend.CircleObj import CircleObj
-from Backend.Canvas import Canvas
-from Backend.Calc import Calc
+from CircleObj import CircleObj
+from Canvas import Canvas
+from Calc import Calc
 
 class AnimationWriter:
     radius = 0.1
@@ -46,7 +46,7 @@ class AnimationWriter:
         self.canvas1.ax.set_ylim(0, self.x_Cords[-1]+5)
         #self.writer = FFMpegWriter(fps=self.canvas1.fps)
         self.ani = FuncAnimation(self.canvas1.fig, func=self.generate_Frame, frames = np.arange(0,len(self.x_Cords)-1, 1), interval = 1000/self.canvas1.fps, blit = True)
-        plt.show(block=False)
+        self.canvas1.tkCanvas.show(block=False)
 
     def stop_Animation(self,):
         plt.close(self.canvas1.fig)
