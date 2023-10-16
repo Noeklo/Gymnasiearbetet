@@ -3,10 +3,7 @@ from AnimationWriter import AnimationWriter
 import tkinter as tk
 import ttkbootstrap as ttk
 
-
 ani = AnimationWriter()
-
-# def InitTkinter():
 
 window = tk.Tk()
 window.title("FysiKol")
@@ -15,14 +12,7 @@ window.geometry("1100x700")
 title_label = ttk.Label(window, text="FysiKol", font=("Roboto", 35, 'bold'))
 title_label.pack()
 
-def convert():
-    print("Hello World")
-
-def show_values():
-    print (w1.get())
-
 def Start():
-    print("Hello World")
     ani.generate_Animation()
 
 def Stop():
@@ -35,8 +25,8 @@ def update_label(value):
     label.config(text=f"{rounded_value:.1f} KG")
     massa = rounded_value
 
-# import pyglet,tkinter
-# pyglet.font.add_file('C:\FysikSim\Backend\Roboto.ttf')
+import pyglet,tkinter
+pyglet.font.add_file('C:\FysikSim\Roboto.ttf')
 
 title_label = ttk.Label(window, text="Massa", font=("Roboto", 13, 'bold'))
 title_label.pack()
@@ -112,6 +102,10 @@ init_button.place(x=100, y=525)
 stop_button = ttk.Button(text="STOP", width=10, command=Stop)
 stop_button.pack(pady=10)
 stop_button.place(x=100, y=575)
+
+stop_button = ttk.Button(text="SPARA", width=10, command=Stop)
+stop_button.pack(pady=10)
+stop_button.place(x=225, y=575)
 
 
 window.mainloop()
