@@ -6,7 +6,6 @@ from matplotlib.figure import Figure
 import matplotlib
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
-from GUI import GUI
 
 matplotlib.use("tkagg")
 
@@ -15,7 +14,7 @@ import tkinter as tk
 
 class Canvas:
 
-    def __init__(self, size: tuple, fps: int, title: str):
+    def __init__(self, size: tuple, fps: int, title: str, window: tkinter.Tk):
         self.size = size
         self.fps = fps
         #self.fig, self.ax = plt.subplots(figsize=size)
