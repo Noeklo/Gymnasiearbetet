@@ -6,6 +6,7 @@ from matplotlib.figure import Figure
 import matplotlib
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
+from GUI import GUI
 
 matplotlib.use("tkagg")
 
