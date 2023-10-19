@@ -1,4 +1,4 @@
-from Backend.AnimationWriter import AnimationWriter
+from AnimationWriter import AnimationWriter
 import matplotlib.pyplot as plt
 import tkinter as tk
 

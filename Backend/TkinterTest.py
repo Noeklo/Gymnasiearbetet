@@ -1,11 +1,12 @@
 
-from Backend.AnimationWriter import AnimationWriter
+from AnimationWriter import AnimationWriter
+from Canvas import Canvas
 import tkinter as tk
 import ttkbootstrap as ttk
 
+
 class GUI:
     ani = AnimationWriter()
-
     window = tk.Tk()
     window.title("FysiKol")
     window.geometry("1100x700")
@@ -21,13 +22,14 @@ class GUI:
 
     # Mass Slider
 
-    def update_label(value, self):
-        rounded_value = round(value, 1)
-        self.label.config(text=f"{rounded_value:.1f} KG")
-        massa = rounded_value
+    def update_label(self, value):
+        self.rounded_value = round(value, 1)
+        self.label.config(text=f"{self.rounded_value:.1f} KG")
+        self.massa = self.rounded_value
 
-    import pyglet,tkinter
-    pyglet.font.add_file('C:\FysikSim\Roboto.ttf')
+
+    # import pyglet,tkinter
+    # pyglet.font.add_file('C:\FysikSim\Roboto.ttf')
 
     title_label = ttk.Label(window, text="Massa", font=("Roboto", 13, 'bold'))
     title_label.pack()
