@@ -1,7 +1,9 @@
 
 from AnimationWriter import AnimationWriter
+from Canvas import Canvas
 import tkinter as tk
 import ttkbootstrap as ttk
+
 
 ani = AnimationWriter()
 
@@ -25,8 +27,8 @@ def update_label(value):
     label.config(text=f"{rounded_value:.1f} KG")
     massa = rounded_value
 
-import pyglet,tkinter
-pyglet.font.add_file('C:\FysikSim\Roboto.ttf')
+#import pyglet,tkinter
+#pyglet.font.add_file('C:\FysikSim\Roboto.ttf')
 
 title_label = ttk.Label(window, text="Massa", font=("Roboto", 13, 'bold'))
 title_label.pack()
