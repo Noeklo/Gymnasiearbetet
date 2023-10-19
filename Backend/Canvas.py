@@ -5,6 +5,7 @@ from matplotlib.patches import Circle
 from matplotlib.figure import Figure
 import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTKAgg
+import TkinterTest
 
 matplotlib.use("tkagg")
 
