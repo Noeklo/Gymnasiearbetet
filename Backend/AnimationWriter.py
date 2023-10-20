@@ -29,8 +29,7 @@ class AnimationWriter:
 
         return self.circle1.circle, 
 
-    def __init__(self, canvas1: Canvas, window: tkinter.Tk = None,):
-        self.window = window
+    def __init__(self, canvas1: Canvas ):
         self.canvas1 = canvas1
 
 #    def __init__(self, widow: tkinter.Tk = None,):
