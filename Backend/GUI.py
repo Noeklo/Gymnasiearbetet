@@ -2,7 +2,8 @@
 from AnimationWriter import AnimationWriter
 from Canvas import Canvas
 import tkinter as tk
-import ttkbootstrap as ttk
+# import ttkbootstrap as ttk
+from tkinter import ttk
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 
@@ -11,24 +12,37 @@ class GUI:
 
     def __init__(self):
         self.window = tk.Tk()
-#        self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.window)
-#        self.ani = AnimationWriter(self.canvas1, self.window)
-        self.ani = AnimationWriter(self.window)
         self.window.title("FysiKol")
         self.window.geometry("1100x700")
+
+        # self.frame2 = tk.Frame(self.window)
+
+        # self.graph = tk.Tk()
+        # self.graph.title("FysiKol Graph")
+        # self.graph.geometry("900x600")
+
+        # self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.graph)
+        # self.ani = AnimationWriter(self.canvas1, self.graph)
+
+        style = ttk.Style(self.window)
+
+        # Set the theme with the theme_use method
+        style.theme_use('vista')
+        
+        # self.ani = AnimationWriter(self.window)
         
         self.massa = 0 
         self.velocity = 0
 
 
-        title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
+        title_label = tk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
         title_label.pack()
 
-        title_label = ttk.Label(self.window, text="Massa", font=("Roboto", 13, 'bold'))
+        title_label = tk.Label(self.window, text="Massa", font=("Roboto", 13, 'bold'))
         title_label.pack()
         title_label.place(x=100, y=95)
 
-        w1 = ttk.Scale(self.window, from_=0, to=200, length=200, orient=tk.HORIZONTAL)
+        w1 = tk.Scale(self.window, from_=0, to=200, length=200, orient=tk.HORIZONTAL)
         w1.pack(ipadx = 50, ipady = 50)
         w1.place(x=100, y=125)
 
@@ -43,11 +57,11 @@ class GUI:
         label.place(x=310, y=120)
         w1.bind("<Motion>", lambda  e: update_label(w1.get()))
 
-        title_label = ttk.Label(self.window, text="Hastighet", font=("Roboto", 13, 'bold'))
+        title_label = tk.Label(self.window, text="Hastighet", font=("Roboto", 13, 'bold'))
         title_label.pack()
         title_label.place(x=100, y=195)
 
-        w2 = ttk.Scale(self.window, from_=0, to=50, length=200, orient=tk.HORIZONTAL)
+        w2 = tk.Scale(self.window, from_=0, to=50, length=200, orient=tk.HORIZONTAL)
         w2.pack(ipadx = 50, ipady = 50)
         w2.place(x=100, y=225)
 
@@ -62,11 +76,11 @@ class GUI:
 
         w2.bind("<Motion>", lambda  e: update_label2(w2.get()))
 
-        title_label2 = ttk.Label(self.window, text="Hastighet", font=("Roboto", 13, 'bold'))
+        title_label2 = tk.Label(self.window, text="Hastighet", font=("Roboto", 13, 'bold'))
         title_label2.pack()
         title_label2.place(x=100, y=295)
 
-        w22 = ttk.Scale(self.window, from_=0, to=100, length=200, orient=tk.HORIZONTAL)
+        w22 = tk.Scale(self.window, from_=0, to=100, length=200, orient=tk.HORIZONTAL)
         w22.pack(ipadx = 50, ipady = 50)
         w22.place(x=100, y=325)
 
@@ -77,7 +91,7 @@ class GUI:
 
 
 
-        button_label = ttk.Label(self.window, text="Elasticitet", font=("Roboto", 13, 'bold'))
+        button_label = tk.Label(self.window, text="Elasticitet", font=("Roboto", 13, 'bold'))
         button_label.pack()
         button_label.place(x=100, y=395)
 
@@ -89,21 +103,21 @@ class GUI:
                 toggle_button.config(text='ON')
 
 
-        toggle_button = ttk.Button(text="ON", width=10, command=Simpletoggle)
+        toggle_button = tk.Button(text="ON", width=10, command=Simpletoggle)
         toggle_button.pack(pady=10)
         toggle_button.place(x=100, y=425)
 
 
 
-        stop_button = ttk.Button(text="STOP", width=10, command=self.Stop)
+        stop_button = tk.Button(text="STOP", width=10, command=self.Stop)
         stop_button.pack(pady=10)
         stop_button.place(x=100, y=575)
 
-        stop_button = ttk.Button(text="SPARA", width=10, command=self.Stop)
+        stop_button = tk.Button(text="SPARA", width=10, command=self.Stop)
         stop_button.pack(pady=10)
         stop_button.place(x=225, y=575)
 
-        init_button = ttk.Button(text="START", width=10, command=self.Start)
+        init_button = tk.Button(text="START", width=10, command=self.Start)
         init_button.pack(pady=10)
         init_button.place(x=100, y=525)
 
@@ -119,3 +133,4 @@ class GUI:
 
 GUI1 = GUI()
 GUI1.window.mainloop()
+GUI1.graph.mainloop()

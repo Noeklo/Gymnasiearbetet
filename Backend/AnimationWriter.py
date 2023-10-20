@@ -29,14 +29,15 @@ class AnimationWriter:
 
         return self.circle1.circle, 
 
-    def __init__(self, canvas1: Canvas ):
-        self.canvas1 = canvas1
+    def __init__(self, canvas1: Canvas, widow: tkinter.Tk = None,):
+       self.window = widow
+       self.canvas1 = canvas1
 
-#    def __init__(self, widow: tkinter.Tk = None,):
-#        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
-#        self.window = widow
+    # def __init__(self, widow: tkinter.Tk = None,):
+    #     self.window = widow
 
     def generate_Animation(self,):
+        #self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
         self.circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity,self.x,self.y)
 
         self.canvas1.ax.add_patch(self.circle1.circle)

@@ -14,10 +14,9 @@ matplotlib.use("tkagg")
 import tkinter as tk
 
 class Canvas:
-
     tkCanvas = None
 
-    def __init__(self, size: tuple, fps: int, title: str):
+    def __init__(self, size: tuple, fps: int, title: str, frame2: tkinter.Tk = None):
         self.size = size
         self.fps = fps
         self.fig, self.ax = plt.subplots(figsize=size)
@@ -38,7 +37,7 @@ class Canvas:
 
         self.fig = Figure(figsize=size, dpi=100)
         self.ax = self.fig.add_subplot()
-        self.tkCanvas = FigureCanvasTkAgg(self.fig, master=self.window)
+        self.tkCanvas = FigureCanvasTkAgg(self.fig, master=frame2)
         self.tkCanvas.get_tk_widget().pack()
         
         self.title = title
