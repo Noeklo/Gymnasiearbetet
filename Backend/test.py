@@ -1,10 +1,13 @@
 from AnimationWriter import AnimationWriter
 from tkinter import *
+import matplotlib.pyplot as plt
+from Canvas import Canvas
 
-
-ani = AnimationWriter()
-
+canvas1 = Canvas((6,6), 60, "Projectile Motion")
+ani = AnimationWriter(canvas1)
 ani.generate_Animation()
+plt.show(block=False)
+
 
 #window = Tk() 
 #  
