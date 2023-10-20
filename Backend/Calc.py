@@ -4,6 +4,7 @@ from Canvas import Canvas
 from CircleObj import CircleObj
 
 class Calc:
+
     g: float = 9.82
 
     def __init__(self, canvas: Canvas):

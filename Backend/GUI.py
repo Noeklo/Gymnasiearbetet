@@ -3,13 +3,17 @@ from AnimationWriter import AnimationWriter
 from Canvas import Canvas
 import tkinter as tk
 import ttkbootstrap as ttk
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
 
 
 class GUI:
 
     def __init__(self):
-        self.ani = AnimationWriter()
         self.window = tk.Tk()
+#        self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.window)
+#        self.ani = AnimationWriter(self.canvas1, self.window)
+        self.ani = AnimationWriter(self.window)
         self.window.title("FysiKol")
         self.window.geometry("1100x700")
 
@@ -27,7 +31,7 @@ class GUI:
         label = tk.Label(self.window, text="0 KG")
         label.pack()
         label.place(x=310, y=120)
-        w1.bind("<Motion>", lambda self, e: self.update_label(self.w1.get()))
+        w1.bind("<Motion>", lambda  e: self.update_label(self.w1.get()))
 
         title_label = ttk.Label(self.window, text="Hastighet", font=("Roboto", 13, 'bold'))
         title_label.pack()
@@ -89,6 +93,9 @@ class GUI:
     def Start(self):
         print('start')
         self.ani.generate_Animation()
+        #self.canvas1.tkCanvas = FigureCanvasTkAgg(self.canvas1.fig, master=self.window)
+        #self.canvas1.tkCanvas.get_tk_widget().pack()
+        #self.canvas1.tkCanvas.draw()
 
     def Stop(self):
         self.ani.stop_Animation()
