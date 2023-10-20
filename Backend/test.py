@@ -23,7 +23,7 @@ ani.generate_Animation()
 #                     text = "Plot") 
 #  
 ## place the button  
-## in main window 
+## in main windows
 #plot_button.pack() 
 #  
 ## run the gui 

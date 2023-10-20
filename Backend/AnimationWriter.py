@@ -53,8 +53,9 @@ class AnimationWriter:
                                  interval = 1000/self.canvas1.fps,
                                  blit = True)
         #self.canvas1.draw()
-        self.canvas1.tkCanvas.plot(block=False)
-        #self.canvas1.ax.plot()
+        #plt.show(block=False)
+        #self.canvas1.ax.plot()s
+        plt.plot()
 
         print("generated animation")
 
