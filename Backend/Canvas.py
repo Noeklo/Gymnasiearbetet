@@ -23,7 +23,7 @@ class Canvas:
         self.fig, self.ax = plt.subplots(figsize=size)
 
         #self.fig = Figure(figsize=size, dpi=100)
-        #self.ax = self.fig.add_subplot()
+        #self.ax = self.fig.add_subplot()s
         #self.tkCanvas = FigureCanvasTkAgg(fig, master=self.window)
         #self.tkCanvas.get_tk_widget().pack()
         

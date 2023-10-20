@@ -53,7 +53,7 @@ class AnimationWriter:
                                  blit = True)
         #self.canvas1.draw()
         #plt.show(block=False)
-        #self.canvas1.ax.plot()
+        #self.canvas1.ax.plot()s
         plt.plot()
 
         print("generated animation")
