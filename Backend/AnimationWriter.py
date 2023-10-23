@@ -31,9 +31,10 @@ class AnimationWriter:
         return self.circle1.circle, 
 
 #ANimationWriter construktor för integrerad matplot i tkinter fönster dvs window parametern 
-    def __init__(self, canvas1: Canvas, widow: tkinter.Tk = None,):
-       self.window = widow
-       self.canvas1 = canvas1
+    def __init__(self, canvas1: Canvas, widow: tkinter.Tk = None, Velocity: int = 7):
+        self.Velocity = Velocity
+        self.window = widow
+        self.canvas1 = canvas1
 
 #AnimationWriter construktor för separat matplot fönster
 #    def __init__(self, widow: tkinter.Tk = None,):
