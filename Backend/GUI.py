@@ -17,7 +17,7 @@ class GUI:
 
         self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.window)
         self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=80)
-        self.ani = AnimationWriter(self.canvas1, self.window)
+#        self.ani = AnimationWriter(self.canvas1, self.window, self.velocity)
 
         style = ttk.Style(self.window)
 
@@ -117,6 +117,7 @@ class GUI:
 
     def Start(self):
         print('start')
+        self.ani = AnimationWriter(self.canvas1, self.window, self.velocity)
         self.ani.generate_Animation()
 
     def Stop(self):
