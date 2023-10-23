@@ -24,20 +24,24 @@ class AnimationWriter:
     calc1: Calc = None
     x_Cords, y_Cords = None, None
 
+#Sätter postion för cirkeln
     def generate_Frame(self,i):
         self.circle1.position(self.x_Cords[i],self.y_Cords[i])
 
         return self.circle1.circle, 
 
+#ANimationWriter construktor för integrerad matplot i tkinter fönster dvs window parametern 
     def __init__(self, canvas1: Canvas, widow: tkinter.Tk = None,):
        self.window = widow
        self.canvas1 = canvas1
 
-    # def __init__(self, widow: tkinter.Tk = None,):
-    #     self.window = widow
+#AnimationWriter construktor för separat matplot fönster
+#    def __init__(self, widow: tkinter.Tk = None,):
+#        self.window = widow
+#        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
 
+#Kör animationen
     def generate_Animation(self,):
-        #self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
         self.circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity,self.x,self.y)
 
         self.canvas1.ax.add_patch(self.circle1.circle)
@@ -56,10 +60,11 @@ class AnimationWriter:
         #plt.show(block=False)
         #self.canvas1.ax.plot()s
         plt.plot()
-
-        print("generated animation")
-
+        
+#stoppar animationen
     def stop_Animation(self,):
-        plt.close(self.canvas1.fig)
+        self.ani.event_source.stop()
+        plt.close()
+        #plt.close()
 
         #self.ani.save("Animate1.mp4", writer=self.writer, dpi=100)

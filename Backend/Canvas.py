@@ -14,23 +14,19 @@ matplotlib.use("tkagg")
 import tkinter as tk
 
 class Canvas:
-    tkCanvas = None
 
+#Canvas construktor för separat matplot fönster
     def __init__(self, size: tuple, fps: int, title: str):
         self.size = size
         self.fps = fps
         self.fig, self.ax = plt.subplots(figsize=size)
 
-        #self.fig = Figure(figsize=size, dpi=100)
-        #self.ax = self.fig.add_subplot()s
-        #self.tkCanvas = FigureCanvasTkAgg(fig, master=self.window)
-        #self.tkCanvas.get_tk_widget().pack()
-        
         self.title = title
 
         plt.title(title)  
         plt.grid()
 
+#Canvas construktor för integrerad matplot i tkinter fönster dvs window parametern 
     def __init__(self, size: tuple, fps: int, title: str, window: tkinter.Tk = None):
         self.size = size
         self.fps = fps
