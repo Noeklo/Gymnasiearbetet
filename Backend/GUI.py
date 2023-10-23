@@ -15,6 +15,9 @@ class GUI:
         self.window.title("FysiKol")
         self.window.geometry("1100x700")
 
+        self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.window)
+        self.ani = AnimationWriter(self.canvas1, self.window)
+
         # self.frame2 = tk.Frame(self.window)
 
         # self.graph = tk.Tk()
