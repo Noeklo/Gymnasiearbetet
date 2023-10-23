@@ -13,8 +13,6 @@ class AnimationWriter:
     
     radius: float = 0.1
     mass: float = 1
-    x_Velocity: float = 7
-    y_Velocity: float = 7
     x = 0
     y = 0
     fps: int = 60
@@ -31,10 +29,12 @@ class AnimationWriter:
         return self.circle1.circle, 
 
 #ANimationWriter construktor för integrerad matplot i tkinter fönster dvs window parametern 
-    def __init__(self, canvas1: Canvas, widow: tkinter.Tk = None, Velocity: int = 7):
-        self.Velocity = Velocity
+    def __init__(self, canvas1: Canvas, widow: tkinter.Tk = None, Velocity: float = 7):
         self.window = widow
         self.canvas1 = canvas1
+        self.x_Velocity: float = np.cos(np.pi/4)*Velocity
+        self.y_Velocity: float = np.sin(np.pi/4)*Velocity
+
 
 #AnimationWriter construktor för separat matplot fönster
 #    def __init__(self, widow: tkinter.Tk = None,):
@@ -64,8 +64,7 @@ class AnimationWriter:
         
 #stoppar animationen
     def stop_Animation(self,):
+        self.canvas1.ax.cla()
         self.ani.event_source.stop()
-        plt.close()
-        #plt.close()
 
         #self.ani.save("Animate1.mp4", writer=self.writer, dpi=100)
