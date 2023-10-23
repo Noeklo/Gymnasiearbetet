@@ -16,23 +16,14 @@ class GUI:
         self.window.geometry("1100x700")
 
         self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.window)
+        self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=80)
         self.ani = AnimationWriter(self.canvas1, self.window)
-
-        # self.frame2 = tk.Frame(self.window)
-
-        # self.graph = tk.Tk()
-        # self.graph.title("FysiKol Graph")
-        # self.graph.geometry("900x600")
-
-        # self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.graph)
-        # self.ani = AnimationWriter(self.canvas1, self.graph)
 
         style = ttk.Style(self.window)
 
         # Set the theme with the theme_use method
         style.theme_use('vista')
         
-        # self.ani = AnimationWriter(self.window)
         
         self.massa = 0 
         self.velocity = 0
@@ -136,4 +127,3 @@ class GUI:
 
 GUI1 = GUI()
 GUI1.window.mainloop()
-GUI1.graph.mainloop()
