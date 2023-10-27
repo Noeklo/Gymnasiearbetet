@@ -4,6 +4,7 @@ from Canvas import Canvas
 import tkinter as tk
 # import ttkbootstrap as ttk
 from tkinter import ttk
+from ttkthemes import ThemedTk, THEMES
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 
@@ -23,6 +24,7 @@ class GUI:
 
         # Set the theme with the theme_use method
         style.theme_use('vista')
+        print(style.theme_names())
         
         
         self.massa = 0 
