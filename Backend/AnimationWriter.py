@@ -67,4 +67,4 @@ class AnimationWriter:
         self.canvas1.ax.cla()
         self.ani.event_source.stop()
 
-        #self.ani.save("Animate1.mp4", writer=self.writer, dpi=100)
+        self.ani.save("Animate1.mp4", writer=self.writer, dpi=100)
