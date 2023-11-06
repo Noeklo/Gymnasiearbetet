@@ -13,16 +13,15 @@ class AnimationWriter:
     
     radius: float = 0.1
     mass: float = 1
-    x = 0
-    y = 0
-    fps: int = 60
+    x: float = 0
+    y: float= 0
 
     circle1: CircleObj = None 
     calc1: Calc = None
     x_Cords, y_Cords = None, None
 
 #Sätter postion för cirkeln
-    def generate_Frame(self,i):
+    def generate_Frame(self,i: int):
         self.circle1.position(self.x_Cords[i],self.y_Cords[i])
 
         return self.circle1.circle, 
@@ -65,8 +64,6 @@ class AnimationWriter:
     def stop_Animation(self,):
         self.ani.event_source.stop()
         self.canvas1.ax.clear()    
-        self.canvas1 = Canvas()
-        self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=80)
          
 
         print("hej")

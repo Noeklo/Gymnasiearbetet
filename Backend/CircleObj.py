@@ -3,7 +3,15 @@ from matplotlib.patches import Circle
 
 class CircleObj:
 
-    def __init__(self, radius, mass,x_Velocity, y_Velocity, x,y):
+    radius: float = None
+    mass: float = None
+    y_Velocity: float = None
+    x_Velocity: float = None
+    x: float = None
+    y: float = None
+    circle: Circle = None
+
+    def __init__(self, radius: float, mass: float, x_Velocity: float, y_Velocity: float, x: float,y: float):
         self.radius = radius  
         self.mass = mass
         self.y_Velocity = y_Velocity
