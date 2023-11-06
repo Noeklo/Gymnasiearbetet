@@ -1,7 +1,7 @@
 from AnimationWriter import AnimationWriter
 from tkinter import *
 from Canvas import Canvas
-
+import time
 
 #ani = AnimationWriter()
 #
@@ -31,3 +31,4 @@ plot_button.pack()
   
 # run the gui 
 window.mainloop() 
+time.sleep(5)

@@ -4,7 +4,6 @@ from Canvas import Canvas
 import tkinter as tk
 # import ttkbootstrap as ttk
 from tkinter import ttk
-from ttkthemes import ThemedTk, THEMES
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 
@@ -24,11 +23,10 @@ class GUI:
 
         # Set the theme with the theme_use method
         style.theme_use('vista')
-        print(style.theme_names())
         
         
         self.massa = 0 
-        self.velocity = 0
+        self.velocity = 8
 
 
         title_label = tk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
@@ -118,7 +116,7 @@ class GUI:
         init_button.place(x=100, y=525)
 
     def Start(self):
-        print('start')
+#        print('start')
         self.ani = AnimationWriter(self.canvas1, self.window, self.velocity)
         self.ani.generate_Animation()
 
