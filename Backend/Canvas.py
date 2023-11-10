@@ -8,7 +8,7 @@ from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 import tkinter
 
-matplotlib.use("tkagg")
+# matplotlib.use("qtagg")
 
 
 import tkinter as tk

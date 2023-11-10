@@ -19,11 +19,13 @@ window.title('Plotting in Tkinter')
 window.geometry("500x500") 
   
 # button that displays the plot 
-plot_button = Button(master = window,  
-                     command = ani.generate_Animation(), 
-                     height = 2,  
-                     width = 10, 
-                     text = "Plot") 
+plot_button = Button(
+    master = window,  
+    command = ani.generate_Animation(), 
+    height = 2,  
+    width = 10, 
+    text = "Plot"
+) 
   
 # place the button  
 # in main windows
