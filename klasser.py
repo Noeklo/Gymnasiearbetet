@@ -6,7 +6,7 @@ class Calc:
 
     def NsolveODE(self, y_prime: str, point: tuple, end: int, step: float):
 
-        x_Values = np.arange(point[0], end, step) 
+        x_Values = np.arange(point[0], end+step, step) 
         y_Values = np.zeros(len(x_Values))
 
         y_Values[0] = point[1]
@@ -14,47 +14,67 @@ class Calc:
         for count, x in enumerate(x_Values):
             y = y_Values[count]
             slope: float = eval(y_prime)
+            print(slope)
             if count < len(x_Values)-1:
                 y_Values[count+1] = slope*step + y_Values[count] 
-
-        print(y_Values)
+                print(y_Values[count+1])
+            
         print(x_Values)
+        print(y_Values)
 
         return x_Values, y_Values
 
+
 class Animation_Writer:
 
-    fig, ax = plt.subplots()
-
-    x = []
-    y = []
-    ln, = plt.plot([], [], marker = "o", color = "black")
-
-    def __init__(self, x_Values, y_Values):
-        self.x_Values = x_Values
-        self.y_Values = y_Values
+    def __init__(self):
+        self.fig, self.ax = plt.subplots()
+        self.lines = []
+        self.ys = []
+        self.xs = []
+        self.count = 0
 
     def generate_Frame(self,i):
-        #print(i)
-        self.x.append(self.x_Values[i]) 
-        self.y.append(self.y_Values[i])
-        self.ln.set_data(self.x, self.y)
+        if i + 1 <= len(self.xs[self.count]):
+            self.lines[self.count].set_data(self.xs[self.count][:i], self.ys[self.count][:i])
+        else:
+            self.count += 1
+            
+        return tuple(self.lines)
 
-        return self.ln,
 
-    def generate_Animation(self):
+    def generate_Graf(self, x_Values, y_Values):
+        self.x_Values = x_Values
+        self.y_Values = y_Values
+        self.xs.append(list(x_Values))
+        self.ys.append(list(y_Values))
 
-        print(len(self.x_Values))
+        ln, = plt.plot([], [], markersize = 5,marker = "o", color = "black")
+        self.lines.append(ln)
+        print(self.lines)
 
-        self.ax.set_xlim(-(self.x_Values[-1]+5),self.x_Values[-1]+5)
-        self.ax.set_ylim(-(self.x_Values[-1]+5),self.x_Values[-1]+5)
-        ani = FuncAnimation(self.fig, func = self.generate_Frame, frames = list(range(len(self.x_Values))), interval = 100, blit = True, repeat = False) 
+    def run_Animation(self):
+        self.ax.set_xlim(-(self.x_Values[-1]+10),self.x_Values[-1]+10)
+        self.ax.set_ylim(-(self.x_Values[-1]+10),self.x_Values[-1]+10)
+        ani = FuncAnimation(self.fig, func = self.generate_Frame, frames = list(range(len(self.x_Values))), interval = 0, blit = True, repeat = False) 
         plt.grid()
         plt.show()
-
         
 calc = Calc()
-x,y = calc.NsolveODE("x**2-y", (0,1),10,0.5)
-ani = Animation_Writer(x,y)
-ani.generate_Animation()
-    
+ani = Animation_Writer()
+
+# x,y = calc.NsolveODE("x+y", (0,1),10,2/(1+1))
+# ani.generate_Graf(x,y)
+# x,y = calc.NsolveODE("x+y", (0,1),10,2/(2+1))
+# ani.generate_Graf(x,y)
+
+y_prime = "-5*y"
+x,y = calc.NsolveODE(y_prime, (0,1),5,0.01)
+ani.generate_Graf(x,y)
+
+# for i in (1,0.5):
+
+#     x,y = calc.NsolveODE(y_prime, (0,1),5,i)
+#     ani.generate_Graf(x,y)
+
+ani.run_Animation()
