@@ -49,16 +49,19 @@ class Animation_Writer:
         self.xs.append(list(x_Values))
         self.ys.append(list(y_Values))
 
-        ln, = plt.plot([], [], markersize = 5,marker = "o", color = "black")
+        #ln, = plt.plot([], [], markersize = 5,marker = "o", color = "black")
+        ln, = plt.plot([], [], markersize = 5, color = "black")
         self.lines.append(ln)
         print(self.lines)
 
     def run_Animation(self):
-        self.ax.set_xlim(-(self.x_Values[-1]+10),self.x_Values[-1]+10)
-        self.ax.set_ylim(-(self.x_Values[-1]+10),self.x_Values[-1]+10)
+        self.ax.set_xlim(-(self.x_Values[-1]+self.padding),self.x_Values[-1]+self.padding)
+        self.ax.set_ylim(-(self.x_Values[-1]+self.padding),self.x_Values[-1]+self.padding)
         ani = FuncAnimation(self.fig, func = self.generate_Frame, frames = list(range(len(self.x_Values))), interval = 0, blit = True, repeat = False) 
         plt.grid()
         plt.show()
+
+    padding: int = 30
         
 calc = Calc()
 ani = Animation_Writer()
@@ -68,8 +71,8 @@ ani = Animation_Writer()
 # x,y = calc.NsolveODE("x+y", (0,1),10,2/(2+1))
 # ani.generate_Graf(x,y)
 
-y_prime = "-5*y"
-x,y = calc.NsolveODE(y_prime, (0,1),5,0.01)
+y_prime = "y*(np.cos(x)+4*np.sin(x)*x)"
+x,y = calc.NsolveODE(y_prime, (0,1),20,0.01)
 ani.generate_Graf(x,y)
 
 # for i in (1,0.5):
