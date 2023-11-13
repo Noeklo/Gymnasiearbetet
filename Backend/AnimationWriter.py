@@ -44,7 +44,7 @@ class AnimationWriter:
         self.circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity,self.x,self.y)
 
         self.canvas1.ax.add_patch(self.circle1.circle)
-        self.calc1 = Calc(self.cnvas1)#s
+        self.calc1 = Calc(self.canvas1)#s
         self.x_Cords, self.y_Cords = self.calc1.generate_Data(self.circle1)
 
         self.canvas1.ax.set_xlim(0, self.x_Cords[-1]+5)
