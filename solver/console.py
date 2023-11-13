@@ -27,4 +27,5 @@ if sys.argv[1] == "NsolveODE":
     #     x,y = calc.NsolveODE(y_prime, (0,1),5,i)
     #     ani.generate_Graf(x,y)
     print(f"y({end}) is about {round(y[-1], 4)}")
-    ani.run_Animation()
+#    ani.run_Animation()
+    ani.generate_Plot()
