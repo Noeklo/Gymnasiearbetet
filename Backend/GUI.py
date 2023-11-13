@@ -7,7 +7,7 @@ from tkinter import ttk
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 
-from tkextrafont import Font
+# from tkextrafont import Font
 
 
 class GUI:
@@ -28,13 +28,13 @@ class GUI:
         
         self.massa = 0 
         self.velocity = 8
-        font = Font(file="Linefont_Condensed-Black.ttf", family="Overhaul")
+        # font = Font(file="Linefont_Condensed-Black.ttf", family="Overhaul")
 
 
-        import pyglet, tkinter
-        pyglet.font.add_file("Linefont_Condensed-Black.ttf")
+        # import pyglet, tkinter
+        # pyglet.font.add_file("Linefont_Condensed-Black.ttf")
 
-        title_label = ttk.Label(self.window, text="FysiKol", font=(font, 35, 'bold'))
+        title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
         title_label.pack()
 
         title_label = ttk.Label(self.window, text="Massa", font=("Roboto", 13, 'bold'))
