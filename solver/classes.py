@@ -34,6 +34,10 @@ class Animation_Writer:
         self.count = 0
 
     def set_limets(self):
+        x_Padding: float = 0.1 * self.x_Values[-1]
+        y_Padding: float = 0.1 * self.y_Values.max() 
+        self.ax.set_xlim(self.x_Values[0] - x_Padding, self.x_Values[-1] + x_Padding)
+        self.ax.set_ylim(self.y_Values.min() - y_Padding, self.y_Values.max() + y_Padding)
         
 
     def generate_Frame(self,i):
@@ -79,10 +83,7 @@ class Animation_Writer:
         plt.plot(np.zeros(len(y_Axis)), y_Axis, color = "black", linewidth = lineWidth)
 
     def generate_Plot(self):
-        x_Padding: float = 0.1 * self.x_Values[-1]
-        y_Padding: float = 0.1 * self.y_Values.max() 
-        self.ax.set_xlim(self.x_Values[0] - x_Padding, self.x_Values[-1] + x_Padding)
-        self.ax.set_ylim(self.y_Values.min() - y_Padding, self.y_Values.max() + y_Padding)
+        self.set_limets()
         for index, line in enumerate(self.lines):
             plt.plot(self.xs[index], self.ys[index]) 
             plt.show()
