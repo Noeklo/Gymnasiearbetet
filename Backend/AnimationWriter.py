@@ -75,7 +75,7 @@ class AnimationWriter:
         return tuple([circle.circle for circle in self.circles])
 
 #ANimationWriter construktor för integrerad matplot i tkinter fönster dvs window parametern 
-    def __init__(self, canvas1: Canvas, window: tkinter.Tk = None, Velocity: float = 7):
+    def __init__(self, canvas1: Canvas, window: tkinter.Tk = None, Velocity: float = 8):
         self.window = window
         self.canvas1 = canvas1
         self.x_Velocity: float = np.cos(np.pi/4)*Velocity
@@ -97,18 +97,36 @@ class AnimationWriter:
         self.x_Starts.append(x)
         self.y_Starts.append(y)
 
+    def generate_Random_Circle(self, quantity: int):
+
+        random_Number_Generator = np.random.default_rng()
+
+        random_x_Cord: int = random_Number_Generator.choice(np.arange(0, 10, 1), size=quantity, replace=True)  
+        random_y_Cord: int = random_Number_Generator.choice(np.arange(0, 10, 1), size=quantity, replace=True)  
+        random_x_Velocity: int = random_Number_Generator.integers(low=-10, high=10, size=quantity)
+        random_y_Velocity: int = random_Number_Generator.integers(low=-10, high=10, size=quantity)
+
+        print(f"{random_x_Cord}\n{random_y_Cord}")
+
+        for index, x in enumerate(random_x_Cord):
+            circle1 = CircleObj(self.radius,
+                                self.mass,
+                                random_x_Velocity[index],
+                                random_y_Velocity[index],
+                                random_x_Cord[index],
+                                random_y_Cord[index])
+
+            self.canvas1.ax.add_patch(circle1.circle)
+            self.circles.append(circle1)
+
+            self.x_Starts.append(random_x_Cord[index])
+            self.y_Starts.append(random_y_Cord[index])
+
 #Kör animationen
     def generate_Animation(self):
-        self.generate_Circle(0,1)
-        self.generate_Circle(0,2)
-        self.generate_Circle(0,3)
-        self.generate_Circle(0,4)
-        self.generate_Circle(0,5)
-        self.generate_Circle(0,6)
-        self.generate_Circle(0,7)
-        self.generate_Circle(0,8)
-        #test
-    
+
+        self.generate_Random_Circle(10)
+
         self.calc1 = Calc2(self.canvas1)
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
         self.canvas1.set_Limets(10, 10)
