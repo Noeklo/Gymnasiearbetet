@@ -107,7 +107,7 @@ class AnimationWriter:
         self.generate_Circle(0,6)
         self.generate_Circle(0,7)
         self.generate_Circle(0,8)
-
+        #test
     
         self.calc1 = Calc2(self.canvas1)
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
