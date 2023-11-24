@@ -103,10 +103,10 @@ class AnimationWriter:
 
         random_x_Cord: int = random_Number_Generator.choice(np.arange(0, 10, 1), size=quantity, replace=True)  
         random_y_Cord: int = random_Number_Generator.choice(np.arange(0, 10, 1), size=quantity, replace=True)  
-        random_x_Velocity: int = random_Number_Generator.integers(low=-10, high=10, size=quantity)
-        random_y_Velocity: int = random_Number_Generator.integers(low=-10, high=10, size=quantity)
+        random_x_Velocity: int = random_Number_Generator.integers(low=-20, high=20, size=quantity)
+        random_y_Velocity: int = random_Number_Generator.integers(low=-20, high=20, size=quantity)
 
-        print(f"{random_x_Cord}\n{random_y_Cord}")
+#        print(f"{random_x_Cord}\n{random_y_Cord}")
 
         for index, x in enumerate(random_x_Cord):
             circle1 = CircleObj(self.radius,
@@ -125,18 +125,24 @@ class AnimationWriter:
 #Kör animationen
     def generate_Animation(self):
 
-        self.generate_Random_Circle(10)
-
+        self.generate_Random_Circle(4)
         self.calc1 = Calc2(self.canvas1)
+
+        start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
+        end = time.monotonic_ns()
+
+        #print(f"{(end-start)/(10**9)}")
+
         self.canvas1.set_Limets(10, 10)
 
         #self.writer = FFMpegWriter(fps=self.canvas1.fps)
         self.ani = FuncAnimation(self.canvas1.fig,
                                  func=self.generate_Frame,
-                                 frames = 1000,
+                                 frames = 3,
                                  interval = 1000/self.canvas1.fps,
-                                 blit = True)
+                                 blit = True,
+                                 repeat = False)
         
 #stoppar animationen
     def stop_Animation(self,):

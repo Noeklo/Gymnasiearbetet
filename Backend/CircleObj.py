@@ -21,7 +21,7 @@ class CircleObj:
         self.y = y
         self.circle = Circle((x,y),self.radius)
         self.y_Cords: List[float] = np.empty(1000)
-        self.x_Cords: List[float] = np.empty(1000)
+        self.x_Cords: List[float] = np.empty(1000) 
         
     def position(self, i):
         self.circle.set_center((self.x_Cords[i], self.y_Cords[i])) 
