@@ -32,6 +32,10 @@ class Canvas:
             self.fig, self.ax = plt.subplots(figsize=size)
             plt.title(title)
             plt.grid()
+
+    def set_Limets(self, x_Limet: int, y_Limet: int):
+        self.ax.set_xlim(0, x_Limet)
+        self.ax.set_ylim(0, y_Limet)
  
 
 #        plt.title(title)  
