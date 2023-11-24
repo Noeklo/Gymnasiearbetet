@@ -78,6 +78,7 @@ class AnimationWriter:
     def __init__(self, canvas1: Canvas, window: tkinter.Tk = None, Velocity: float = 8):
         self.window = window
         self.canvas1 = canvas1
+        self.frames = 500
         self.x_Velocity: float = np.cos(np.pi/4)*Velocity
         self.y_Velocity: float = np.sin(np.pi/4)*Velocity
         self.radius: float = 0.1
@@ -103,8 +104,8 @@ class AnimationWriter:
 
         random_x_Cord: int = random_Number_Generator.choice(np.arange(0, 10, 1), size=quantity, replace=True)  
         random_y_Cord: int = random_Number_Generator.choice(np.arange(0, 10, 1), size=quantity, replace=True)  
-        random_x_Velocity: int = random_Number_Generator.integers(low=-20, high=20, size=quantity)
-        random_y_Velocity: int = random_Number_Generator.integers(low=-20, high=20, size=quantity)
+        random_x_Velocity: int = random_Number_Generator.integers(low=-1, high=1, size=quantity)
+        random_y_Velocity: int = random_Number_Generator.integers(low=-1, high=1, size=quantity)
 
 #        print(f"{random_x_Cord}\n{random_y_Cord}")
 
@@ -125,21 +126,21 @@ class AnimationWriter:
 #Kör animationen
     def generate_Animation(self):
 
-        self.generate_Random_Circle(4)
-        self.calc1 = Calc2(self.canvas1)
+        self.generate_Random_Circle(20)
+        self.calc1 = Calc2(self.canvas1, self.frames)
 
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
         end = time.monotonic_ns()
 
-        #print(f"{(end-start)/(10**9)}")
+        print(f"{(end-start)/(10**9)}")
 
         self.canvas1.set_Limets(10, 10)
 
         #self.writer = FFMpegWriter(fps=self.canvas1.fps)
         self.ani = FuncAnimation(self.canvas1.fig,
                                  func=self.generate_Frame,
-                                 frames = 3,
+                                 frames = self.frames,
                                  interval = 1000/self.canvas1.fps,
                                  blit = True,
                                  repeat = False)
