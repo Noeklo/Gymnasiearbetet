@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import combinations
 from typing import List
 from Canvas import Canvas
 from CircleObj import CircleObj
@@ -40,9 +41,10 @@ class Calc:
 
 class Calc2:
 
-    def __init__(self, canvas: Canvas):
+    def __init__(self, canvas: Canvas, frames):
         self.timeIncrement: float = 1/canvas.fps
         self.g: float = 9.82
+        self.frames = frames
 
     def getZero(self, Obj: CircleObj):
         zero = 2*Obj.y_Velocity/self.g 
@@ -56,33 +58,32 @@ class Calc2:
         distance = Velocity*self.timeIncrement
         return distance
 
-    def get_Difference(self, Obj1: CircleObj, Obj2: CircleObj, i):
-
-       # print(f"x cord 1{Obj1.x_Cords}")
-       # print(f"x cord 2{Obj2.x_Cords}")
+    def get_Difference(self, obj_Pair, i):
         
-        diff = np.sqrt( (Obj1.x_Cords[i] - Obj2.x_Cords[i])**2 + (Obj1.y_Cords[i] - Obj2.y_Cords[i])**2 ) 
-        print(f"diff är {diff}")
+        diff = np.sqrt( (obj_Pair[0].x_Cords[i] - obj_Pair[1].x_Cords[i])**2 + (obj_Pair[0].y_Cords[i] - obj_Pair[1].y_Cords[i])**2 ) 
+
         return diff
 
-    def check_Dif_Less_Than_Diameter(self, Objs: List[CircleObj], index, Obj, i):
-        colliding_pairs = []
+    def check_Dif_Less_Than_Diameter(self, Objs: List[CircleObj], index, i):
 
-        for index2, Obj2 in enumerate(Objs):
-            if index != index2:
-                diff = self.get_Difference(Obj, Obj2, i)
-                if 0 < diff <= (Obj.radius + Obj2.radius):
-            
-                    colliding_pairs.append([Obj, Obj2])
+        obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
+        diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
-        return colliding_pairs
+        print(diffs)
+
+        for index, diff in enumerate(diffs):
+            if 0 < diff < (obj_Pairs[index][0].radius + obj_Pairs[index][1].radius):
+                return obj_Pairs[index]
+
+        return []
+
 
     def generate_Data(self, Objs: List[CircleObj], x_Starts: List[float], y_Starts: List[float]):
         timeSeconds: float = 0
         i: int = 0
 
-        while i < 2:
-            print(i)
+        while i < 1000:
+            #print(f"frame {i}")
 
             for index, Obj in enumerate(Objs):
                 if i == 0:
@@ -91,12 +92,18 @@ class Calc2:
                 else:
                     Obj.y_Cords[i] = self.linear_Distence(Obj.y_Velocity) + Obj.y_Cords[i-1]
                     Obj.x_Cords[i] = self.linear_Distence(Obj.x_Velocity) + Obj.x_Cords[i-1]
-                    coliding_Objs: List[CircleObj] = self.check_Dif_Less_Than_Diameter(Objs, index, Obj, i)
-                    if len(coliding_Objs) > 0: 
-                        
-                        #unit_Normal_Angle: float = np.arctan((coliding_Objs[1].y_Cords[i] - coliding_Objs[2].y_Cords[i]) / (coliding_Objs[1].x_Cords[i] - coliding_Objs[2]))
-                        #unit_Tangent_Angle: float = unit_Tangent_Angle + (np.pi / 2) 
-                        print("collision")
+
+            coliding_Pairs: List[CircleObj] = self.check_Dif_Less_Than_Diameter(Objs, index, i)
+            if len(coliding_Pairs) > 0: 
+                
+                coliding_Pairs[0].x_Velocity = -coliding_Pairs[0].x_Velocity 
+                coliding_Pairs[0].y_Velocity = -coliding_Pairs[0].y_Velocity 
+                
+                coliding_Pairs[1].x_Velocity = -coliding_Pairs[1].x_Velocity 
+                coliding_Pairs[1].y_Velocity = -coliding_Pairs[1].y_Velocity 
+                #unit_Normal_Angle: float = np.arctan((coliding_Objs[1].y_Cords[i] - coliding_Objs[2].y_Cords[i]) / (coliding_Objs[1].x_Cords[i] - coliding_Objs[2]))
+                #unit_Tangent_Angle: float = unit_Tangent_Angle + (np.pi / 2) 
+                #print("collision")#
 
             timeSeconds += self.timeIncrement
             i += 1
@@ -105,7 +112,7 @@ class Calc2:
         for Obj in Objs:
             Obj.y_Cords = Obj.y_Cords[:(i)]
             Obj.x_Cords = Obj.x_Cords[:(i)]
-            print(f"x cord 1{Obj.x_Cords}")
-            print(f"x cord 2{Obj.y_Cords}")
+#            print(f"x cord 1{Obj.x_Cords}")
+#            print(f"x cord 2{Obj.y_Cords}")
 
         
