@@ -86,6 +86,7 @@ class AnimationWriter:
         self.circles = []
         self.x_Starts = []
         self.y_Starts = []
+        self.lim = 10
 
 #AnimationWriter construktor för separat matplot fönster
 #    def __init__(self, widow: tkinter.Tk = None,):
@@ -127,7 +128,8 @@ class AnimationWriter:
     def generate_Animation(self):
 
         self.generate_Random_Circle(20)
-        self.calc1 = Calc2(self.canvas1, self.frames)
+        #self.generate_Circle(1,1)
+        self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
 
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
@@ -135,7 +137,7 @@ class AnimationWriter:
 
         print(f"{(end-start)/(10**9)}")
 
-        self.canvas1.set_Limets(10, 10)
+        self.canvas1.set_Limets(self.lim, self.lim)
 
         #self.writer = FFMpegWriter(fps=self.canvas1.fps)
         self.ani = FuncAnimation(self.canvas1.fig,
