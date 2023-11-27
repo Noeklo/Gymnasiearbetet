@@ -103,7 +103,7 @@ class Calc2:
                 coliding_Pairs[1].y_Velocity = -coliding_Pairs[1].y_Velocity 
                 #unit_Normal_Angle: float = np.arctan((coliding_Objs[1].y_Cords[i] - coliding_Objs[2].y_Cords[i]) / (coliding_Objs[1].x_Cords[i] - coliding_Objs[2]))
                 #unit_Tangent_Angle: float = unit_Tangent_Angle + (np.pi / 2) 
-                #print("collision")
+                #print("collision")#
 
             timeSeconds += self.timeIncrement
             i += 1
