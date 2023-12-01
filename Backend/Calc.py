@@ -60,15 +60,31 @@ class Calc2:
         return distance
 
     def get_Difference(self, obj_Pair, i):
+
         diff: float = None
+        #If both are circles 
         if isinstance(obj_Pair[0], CircleObj) and isinstance(obj_Pair[1], CircleObj):
             diff = np.sqrt( (obj_Pair[0].x_Cords[i] - obj_Pair[1].x_Cords[i])**2 + (obj_Pair[0].y_Cords[i] - obj_Pair[1].y_Cords[i])**2 ) 
+
+        #If one is a line
         elif isinstance(obj_Pair[0], LineObj) and isinstance(obj_Pair[1], CircleObj): 
-            diff = np.sqrt( (obj_Pair[0].x_Cords[0] - obj_Pair[1].x_Cords[i])**2 + (obj_Pair[0].y_Cords[0] - obj_Pair[1].y_Cords[i])**2 ) 
+            #If two x cords are the same than it is a y axis
+            if obj_Pair[0].x_Cords[1] == obj_Pair[0].x_Cords[2]: 
+                diff = np.sqrt((obj_Pair[0].x_Cords[0] - obj_Pair[1].x_Cords[i])**2) 
+            else:
+                diff = np.sqrt((obj_Pair[0].y_Cords[0] - obj_Pair[1].y_Cords[i])**2) 
+
         elif isinstance(obj_Pair[0], CircleObj) and isinstance(obj_Pair[1], LineObj): 
-            diff = np.sqrt( (obj_Pair[0].x_Cords[i] - obj_Pair[1].x_Cords[0])**2 + (obj_Pair[0].y_Cords[i] - obj_Pair[1].y_Cords[0])**2 ) 
+
+            if obj_Pair[1].x_Cords[1] == obj_Pair[1].x_Cords[2]: 
+                diff = np.sqrt((obj_Pair[1].x_Cords[0] - obj_Pair[0].x_Cords[i])**2) 
+            else:
+                diff = np.sqrt((obj_Pair[1].y_Cords[0] - obj_Pair[0].y_Cords[i])**2) 
+
+        #If both are lines
         elif isinstance(obj_Pair[0], LineObj) and isinstance(obj_Pair[1], LineObj): 
             diff = 10**10
+
         return diff
 
     def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
@@ -108,7 +124,6 @@ class Calc2:
             #print(f"frame {i}")
 
             for index, Obj in enumerate(Objs):
-                print(type(Obj))
                 if isinstance(Obj, CircleObj):
                     if i == 0 :
                         Obj.y_Cords[0] = y_Starts[index]                
@@ -121,6 +136,7 @@ class Calc2:
             if len(coliding_Pairs) > 0: 
                 
                 self.change_Velocity(coliding_Pairs)
+#                print("collision")
 
             timeSeconds += self.timeIncrement
             i += 1

@@ -44,9 +44,9 @@ class Canvas:
         length = np.linspace(0,lim,lim*1000)
 
         x_Boarder1: LineObj = LineObj(length, np.zeros(1000))
-        x_Boarder2: LineObj = LineObj(length, np.array([lim*1000]))
+        x_Boarder2: LineObj = LineObj(length, np.array([lim for _ in range(1000)]))
         y_Boarder1: LineObj = LineObj(np.zeros(1000), length)
-        y_Boarder2: LineObj = LineObj(np.array([lim*1000]), length)
+        y_Boarder2: LineObj = LineObj(np.array([lim for _ in range(1000)]), length)
 
         self.boarders.append(x_Boarder1)
         self.boarders.append(x_Boarder2)

@@ -74,13 +74,13 @@ class AnimationWriter:
             if isinstance(circle, CircleObj):
                 circle.position(i)
 
-        return tuple([circle.circle for circle in self.circles])
+        return tuple([circle.circle for circle in self.circles if isinstance(circle, CircleObj)])
 
 #ANimationWriter construktor för integrerad matplot i tkinter fönster dvs window parametern 
     def __init__(self, canvas1: Canvas, window: tkinter.Tk = None, Velocity: float = 8):
         self.window = window
         self.canvas1 = canvas1
-        self.frames = 500
+        self.frames = 1000
         self.x_Velocity: float = np.cos(np.pi/4)*Velocity
         self.y_Velocity: float = np.sin(np.pi/4)*Velocity
         self.radius: float = 0.1
@@ -94,6 +94,7 @@ class AnimationWriter:
 #    def __init__(self, widow: tkinter.Tk = None,):
 #        self.window = widow
 #        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
+
     def generate_Circle(self, x, y):
         circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity, x, y)
         self.canvas1.ax.add_patch(circle1.circle)
@@ -105,10 +106,10 @@ class AnimationWriter:
 
         random_Number_Generator = np.random.default_rng()
 
-        random_x_Cord: int = random_Number_Generator.choice(np.arange(0, 10, 1), size=quantity, replace=True)  
-        random_y_Cord: int = random_Number_Generator.choice(np.arange(0, 10, 1), size=quantity, replace=True)  
-        random_x_Velocity: int = random_Number_Generator.integers(low=-1, high=1, size=quantity)
-        random_y_Velocity: int = random_Number_Generator.integers(low=-1, high=1, size=quantity)
+        random_x_Cord: int = random_Number_Generator.choice(np.arange(1, self.lim, 1), size=quantity, replace=True)  
+        random_y_Cord: int = random_Number_Generator.choice(np.arange(1, self.lim, 1), size=quantity, replace=True)  
+        random_x_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
+        random_y_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
 
 #        print(f"{random_x_Cord}\n{random_y_Cord}")
 
@@ -130,14 +131,14 @@ class AnimationWriter:
 #Kör animationen
     def generate_Animation(self):
 
-        self.generate_Random_Circle(4)
+        self.generate_Random_Circle(20)
     
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
         self.canvas1.set_Boarders(self.lim) 
 
         self.circles += self.canvas1.boarders
-        print(self.circles)
+        #print(self.circles)
     
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)

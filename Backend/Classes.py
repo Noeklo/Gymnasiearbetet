@@ -30,12 +30,13 @@ class LineObj:
 
     mass: float = 10**100 
     radius: float = 0
-    y_Velocity: float = None
-    x_Velocity: float = None
+    y_Velocity: float = 0 
+    x_Velocity: float = 0 
 
     def __init__(self, x_Cords: [], y_Cords: []):
         self.y_Cords: np.array = np.array(y_Cords)
         self.x_Cords: np.array = np.array(x_Cords)
-        
+        #print(f"{x_Cords}\n{y_Cords}\n")        
+
     def position(self, i):
         pass
