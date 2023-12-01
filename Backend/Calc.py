@@ -2,7 +2,7 @@ import numpy as np
 from itertools import combinations
 from typing import List
 from Canvas import Canvas
-from CircleObj import CircleObj
+from Classes import CircleObj, LineObj
 
 
 #gammal
@@ -60,12 +60,18 @@ class Calc2:
         return distance
 
     def get_Difference(self, obj_Pair, i):
-        
-        diff = np.sqrt( (obj_Pair[0].x_Cords[i] - obj_Pair[1].x_Cords[i])**2 + (obj_Pair[0].y_Cords[i] - obj_Pair[1].y_Cords[i])**2 ) 
-
+        diff: float = None
+        if isinstance(obj_Pair[0], CircleObj) and isinstance(obj_Pair[1], CircleObj):
+            diff = np.sqrt( (obj_Pair[0].x_Cords[i] - obj_Pair[1].x_Cords[i])**2 + (obj_Pair[0].y_Cords[i] - obj_Pair[1].y_Cords[i])**2 ) 
+        elif isinstance(obj_Pair[0], LineObj) and isinstance(obj_Pair[1], CircleObj): 
+            diff = np.sqrt( (obj_Pair[0].x_Cords[0] - obj_Pair[1].x_Cords[i])**2 + (obj_Pair[0].y_Cords[0] - obj_Pair[1].y_Cords[i])**2 ) 
+        elif isinstance(obj_Pair[0], CircleObj) and isinstance(obj_Pair[1], LineObj): 
+            diff = np.sqrt( (obj_Pair[0].x_Cords[i] - obj_Pair[1].x_Cords[0])**2 + (obj_Pair[0].y_Cords[i] - obj_Pair[1].y_Cords[0])**2 ) 
+        elif isinstance(obj_Pair[0], LineObj) and isinstance(obj_Pair[1], LineObj): 
+            diff = 10**10
         return diff
 
-    def check_Dif_Less_Than_Diameter(self, Objs: List[CircleObj], index, i):
+    def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
 
         obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
         diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
@@ -80,7 +86,8 @@ class Calc2:
         for obj in Objs:
             if obj.x_Cords[i] >= self.lim:
                 pass
-
+            elif obj.y_Cords[i] >= self.lim:
+                pass
 
     def change_Velocity(self, coliding_Pairs: [[CircleObj]]):
         coliding_Pairs[0].x_Velocity = -coliding_Pairs[0].x_Velocity 
@@ -101,14 +108,16 @@ class Calc2:
             #print(f"frame {i}")
 
             for index, Obj in enumerate(Objs):
-                if i == 0:
-                    Obj.y_Cords[0] = y_Starts[index]                
-                    Obj.x_Cords[0] = x_Starts[index]                
-                else:
-                    Obj.y_Cords[i] = self.linear_Distence(Obj.y_Velocity) + Obj.y_Cords[i-1]
-                    Obj.x_Cords[i] = self.linear_Distence(Obj.x_Velocity) + Obj.x_Cords[i-1]
+                print(type(Obj))
+                if isinstance(Obj, CircleObj):
+                    if i == 0 :
+                        Obj.y_Cords[0] = y_Starts[index]                
+                        Obj.x_Cords[0] = x_Starts[index]                
+                    else:
+                        Obj.y_Cords[i] = self.linear_Distence(Obj.y_Velocity) + Obj.y_Cords[i-1]
+                        Obj.x_Cords[i] = self.linear_Distence(Obj.x_Velocity) + Obj.x_Cords[i-1]
 
-            coliding_Pairs: List[CircleObj] = self.check_Dif_Less_Than_Diameter(Objs, index, i)
+            coliding_Pairs: List[CircleObj] = self.get_Coliding_Pairs(Objs, index, i)
             if len(coliding_Pairs) > 0: 
                 
                 self.change_Velocity(coliding_Pairs)

@@ -1,4 +1,6 @@
 import numpy as np
+from typing import List
+from Classes import LineObj 
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Circle
@@ -36,7 +38,20 @@ class Canvas:
     def set_Limets(self, x_Limet: int, y_Limet: int):
         self.ax.set_xlim(0, x_Limet)
         self.ax.set_ylim(0, y_Limet)
- 
+        
+    def set_Boarders(self, lim):
+        self.boarders: List[LineObj] = []
+        length = np.linspace(0,lim,lim*1000)
+
+        x_Boarder1: LineObj = LineObj(length, np.zeros(1000))
+        x_Boarder2: LineObj = LineObj(length, np.array([lim*1000]))
+        y_Boarder1: LineObj = LineObj(np.zeros(1000), length)
+        y_Boarder2: LineObj = LineObj(np.array([lim*1000]), length)
+
+        self.boarders.append(x_Boarder1)
+        self.boarders.append(x_Boarder2)
+        self.boarders.append(y_Boarder1)
+        self.boarders.append(y_Boarder2)
 
 #        plt.title(title)  
 #        plt.grid()

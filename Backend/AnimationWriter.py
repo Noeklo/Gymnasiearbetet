@@ -4,8 +4,9 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.animation import FFMpegWriter
 import tkinter
 import time
+from typing import List
 
-from CircleObj import CircleObj
+from Classes import CircleObj, LineObj
 from Canvas import Canvas
 from Calc import Calc
 from Calc import Calc2
@@ -70,7 +71,8 @@ class AnimationWriter:
 #Sätter postion för cirkeln
     def generate_Frame(self, i: int):
         for circle in self.circles:
-            circle.position(i)
+            if isinstance(circle, CircleObj):
+                circle.position(i)
 
         return tuple([circle.circle for circle in self.circles])
 
@@ -123,14 +125,20 @@ class AnimationWriter:
 
             self.x_Starts.append(random_x_Cord[index])
             self.y_Starts.append(random_y_Cord[index])
+        
 
 #Kör animationen
     def generate_Animation(self):
 
-        self.generate_Random_Circle(20)
+        self.generate_Random_Circle(4)
+    
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
+        self.canvas1.set_Boarders(self.lim) 
 
+        self.circles += self.canvas1.boarders
+        print(self.circles)
+    
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
         end = time.monotonic_ns()

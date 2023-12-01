@@ -25,3 +25,17 @@ class CircleObj:
         
     def position(self, i):
         self.circle.set_center((self.x_Cords[i], self.y_Cords[i])) 
+
+class LineObj:
+
+    mass: float = 10**100 
+    radius: float = 0
+    y_Velocity: float = None
+    x_Velocity: float = None
+
+    def __init__(self, x_Cords: [], y_Cords: []):
+        self.y_Cords: np.array = np.array(y_Cords)
+        self.x_Cords: np.array = np.array(x_Cords)
+        
+    def position(self, i):
+        pass
