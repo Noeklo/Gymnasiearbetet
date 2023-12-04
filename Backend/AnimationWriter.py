@@ -72,7 +72,7 @@ class AnimationWriter:
     def generate_Frame(self, i: int):
         for circle in self.circles:
             if isinstance(circle, CircleObj):
-                circle.position(i)
+                circle.position(self.calc1.data_Multiplier*i)
 
         return tuple([circle.circle for circle in self.circles if isinstance(circle, CircleObj)])
 
@@ -106,10 +106,24 @@ class AnimationWriter:
 
         random_Number_Generator = np.random.default_rng()
 
-        random_x_Cord: int = random_Number_Generator.choice(np.arange(1, self.lim, 1), size=quantity, replace=True)  
-        random_y_Cord: int = random_Number_Generator.choice(np.arange(1, self.lim, 1), size=quantity, replace=True)  
+        #random_x_Cord: int = random_Number_Generator.choice(np.arange(1, self.lim, 1), size=quantity, replace=False)  
+        #random_y_Cord: int = random_Number_Generator.choice(np.arange(1, self.lim, 1), size=quantity, replace=False)  
+
         random_x_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
         random_y_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
+
+         # Generate all possible coordinates
+        all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
+        
+        # Shuffle the coordinates
+        np.random.shuffle(all_coordinates)
+
+        # Take the first 'quantity' coordinates
+        selected_coordinates = all_coordinates[:quantity]
+
+        # Extract x and y coordinates
+        random_x_Cord = selected_coordinates[:, 0]
+        random_y_Cord = selected_coordinates[:, 1]
 
 #        print(f"{random_x_Cord}\n{random_y_Cord}")
 
@@ -131,7 +145,7 @@ class AnimationWriter:
 #Kör animationen
     def generate_Animation(self):
 
-        self.generate_Random_Circle(20)
+        self.generate_Random_Circle(30)
     
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames, self.lim)

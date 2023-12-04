@@ -42,7 +42,9 @@ class Calc:
 class Calc2:
 
     def __init__(self, canvas: Canvas, frames: int, lim: int):
-        self.timeIncrement: float = 1/canvas.fps
+        self.data_Multiplier = 5
+        self.timeIncrement: float = 1/(self.data_Multiplier *canvas.fps)
+#        self.timeIncrement: float = 1/canvas.fps
         self.g: float = 9.82
         self.frames = frames
         self.lim = lim
@@ -93,7 +95,7 @@ class Calc2:
         diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
         for index, diff in enumerate(diffs):
-            if 0 < diff < (obj_Pairs[index][0].radius + obj_Pairs[index][1].radius):
+            if 0 < diff <= (obj_Pairs[index][0].radius + obj_Pairs[index][1].radius):
                 return obj_Pairs[index]
 
         return []
@@ -120,7 +122,7 @@ class Calc2:
         timeSeconds: float = 0
         i: int = 0
 
-        while i < 1000:
+        while i < self.frames*self.data_Multiplier:
             #print(f"frame {i}")
 
             for index, Obj in enumerate(Objs):
