@@ -194,8 +194,8 @@ class GUI:
 
 
     def Start(self):
-        self.ani = AnimationWriter(self.canvas1, self.vector, self.window, self.velocity)
-        self.ani.generate_Animation()
+        self.ani = AnimationWriter(self.canvas1, self.vectors, self.window, self.velocity)
+        self.ani.generate_Spec_Animation(self.vectors, self.velocity)
 
     def Stop(self):
         self.ani.stop_Animation()
