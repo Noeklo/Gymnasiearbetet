@@ -98,7 +98,6 @@ class AnimationWriter:
         self.canvas1.set_Boarders(self.lim) 
 
         self.circles += self.canvas1.boarders
-        #print(self.circles)
     
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
