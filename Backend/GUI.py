@@ -54,7 +54,7 @@ class GUI:
                 print(vector[0], vector[1])
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
-                # dgurtkuhgk
+                # dgurtkuhgks
                 print("Distance:", distance)
                 print("Strength:", strength)
                 if strength > 0.5:
