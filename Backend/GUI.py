@@ -42,7 +42,7 @@ class GUI:
             strength = 0
 
         def left_click_hold(event, canvas):
-            print(canvas)
+            #print(canvas)
             x, y = event.x, event.y
             if (x > 75 and x < 425 and y > 75 and y < 425):
                 global start_point, strength
@@ -54,9 +54,9 @@ class GUI:
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
 
-                print("Vector:", vector)
-                print("Distance:", distance)
-                print("Strength:", strength)
+                #print("Vector:", vector)
+                #print("Distance:", distance)
+                #print("Strength:", strength)
                 if strength > 0.5:
                     update_label2(strength * 10)
                 
@@ -150,7 +150,7 @@ class GUI:
         init_button.place(x=100, y=525)
 
     def Start(self):
-        self.ani = AnimationWriter(self.canvas1, self.window, self.velocity)
+        self.ani = AnimationWriter(self.canvas1, self.vector, self.window, self.velocity)
         self.ani.generate_Animation()
 
     def Stop(self):
