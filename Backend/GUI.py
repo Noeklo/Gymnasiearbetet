@@ -49,15 +49,12 @@ class GUI:
                 global start_point, strength
                 if self.line_tag:
                     self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
-                # nytt sktit
                 end_point = (event.x, event.y)
                 vector = (start_point, end_point)
                 print(vector[0], vector[1])
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
-                
-
-                print("Vector:", vector)
+            
                 print("Distance:", distance)
                 print("Strength:", strength)
                 if strength > 0.5:
