@@ -1,36 +1,20 @@
 import tkinter as tk
-from tkinter import ttk
 
-# Create the main window
+def on_mouse_motion(event, canvas):
+    x, y = event.x, event.y
+    print(f"Mouse moved to ({x}, {y}) on canvas {canvas}")
+
 root = tk.Tk()
-root.title("Default Themes")
+root.title("Mouse Movement Tracker")
 
-root.tk.call("source", "azure.tcl")
-root.tk.call("set_theme", "light")
-root.title("FysiKol")
-root.geometry("800x500")
+canvas1 = tk.Canvas(root, width=400, height=300, bg="white")
+canvas1.pack()
 
+canvas2 = tk.Canvas(root, width=400, height=300, bg="lightgray")
+canvas2.pack()
 
-# Set a minsize for the window, and place it in the middle
-root.update()
-root.minsize(root.winfo_width(), root.winfo_height())
-x_cordinate = int((root.winfo_screenwidth() / 2) - (root.winfo_width() / 2))
-y_cordinate = int((root.winfo_screenheight() / 2) - (root.winfo_height() / 2))
-root.geometry("+{}+{}".format(x_cordinate, y_cordinate-20))
+# Bind the motion event to the specific canvas
+canvas1.bind("<Motion>", lambda event: on_mouse_motion(event, canvas1))
+canvas2.bind("<Motion>", lambda event: on_mouse_motion(event, canvas2))
 
-
-# w1 = tk.Scale(root, from_=0, to=200, length=200)
-# w1.pack(ipadx = 50, ipady = 50)
-# w1.place(x=100, y=125)
-
-scale = ttk.Scale(
-    from_=100,
-    to=0,
-    length=200,
-)
-scale.pack()
-# scale.grid(row=0, column=0, padx=(20, 10), pady=(20, 0), sticky="ew")
-
-
-# Run the main loop
 root.mainloop()
