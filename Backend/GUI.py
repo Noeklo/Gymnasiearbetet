@@ -54,7 +54,6 @@ class GUI:
                 print(vector[0], vector[1])
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
-                # dgurtkuhgks
                 print("Distance:", distance)
                 print("Strength:", strength)
                 if strength > 0.5:
@@ -167,7 +166,7 @@ class GUI:
         init_button.place(x=100, y=525)
 
     def Start(self):
-        self.ani = AnimationWriter(self.canvas1, self.window, self.velocity)
+        self.ani = AnimationWriter(self.canvas1, self.vector, self.window, self.velocity)
         self.ani.generate_Animation()
 
     def Stop(self):
