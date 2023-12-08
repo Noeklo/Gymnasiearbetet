@@ -145,7 +145,7 @@ class AnimationWriter:
 #Kör animationen
     def generate_Animation(self):
 
-        self.generate_Random_Circle(30)
+        self.generate_Random_Circle(20)
     
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
