@@ -39,6 +39,7 @@ class AnimationWriter:
 #        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
 
     def get_angle(self, vectors: List):
+        #print(vectors)
         angle: float = np.arctan((vectors[1][1] - vectors[0][1])/(vectors[1][0] - vectors[0][0]))
         return angle 
 
@@ -96,7 +97,7 @@ class AnimationWriter:
         self.y_Velocity: float = np.sin(self.get_angle(vectors))*Velocity
 
 
-        self.generate_Circle(vectors[0][0],vectors[0][1])
+        self.generate_Circle(vectors[0][0],vectors[0][1]) # noll vid 75 bredd 540
         self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
         self.canvas1.set_Boarders(self.lim) 
 
