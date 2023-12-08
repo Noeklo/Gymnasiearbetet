@@ -16,6 +16,8 @@ class GUI:
         self.window.tk.call("set_theme", "light")
         self.massa = 0 
         self.velocity = 8
+
+
         title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
         title_label.pack()
         # self.sidecanvas = tk.Canvas(self.window, width=200, height=500, bg="grey")
@@ -24,7 +26,6 @@ class GUI:
         start_point = None
         strength = 0
         color = None
-        
 
         def calculate_vector(start, end):
             return end[0] - start[0], end[1] - start[1]
@@ -42,17 +43,19 @@ class GUI:
             strength = 0
 
         def left_click_hold(event, canvas):
-            print(canvas)
             x, y = event.x, event.y
-            if (x > 75 and x < 425 and y > 75 and y < 425):
+            print(x,y)
+            if (x > 75 and x < 540 and y > 75 and y < 540):
                 global start_point, strength
                 if self.line_tag:
                     self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
 
                 end_point = (event.x, event.y)
-                vector = calculate_vector(start_point, end_point)
+                vector = (start_point, end_point)
+                print(vector[0], vector[1])
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
+                
 
                 print("Vector:", vector)
                 print("Distance:", distance)
@@ -70,7 +73,24 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: left_click_hold(event, self.canvas1))
 
-        title_label = ttk.Label(self.window, text="Massa", font=("Roboto", 13, 'bold'))
+
+
+
+        tab_parent = ttk.Notebook(self.window)
+        tab1 = ttk.Frame(tab_parent)
+        tab2 = ttk.Frame(tab_parent)
+        tab_parent.add(tab1, text="All Records")
+        tab_parent.add(tab2, text="Add New Record")
+        tab_parent.pack(ipadx = 100, ipady = 300)
+        # tab_parent.place(x=100, y=100)
+
+
+
+
+
+
+
+        title_label = ttk.Label(tab1, text="Massa", font=("Roboto", 13, 'bold'))
         title_label.pack()
         title_label.place(x=100, y=95)
 
