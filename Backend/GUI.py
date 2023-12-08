@@ -16,12 +16,11 @@ class GUI:
         self.window.tk.call("set_theme", "light")
         self.massa = 0 
         self.velocity = 8
+        self.vectors = []
 
 
         title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
         title_label.pack()
-        # self.sidecanvas = tk.Canvas(self.window, width=200, height=500, bg="grey")
-        # sidecanvas.pack()
 
         start_point = None
         strength = 0
@@ -50,8 +49,8 @@ class GUI:
                 if self.line_tag:
                     self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
                 end_point = (event.x, event.y)
-                vector = (start_point, end_point)
-                print(vector[0], vector[1])
+                vectors = [start_point, end_point]
+                print(vectors[0], vectors[1])
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
                 print("Distance:", distance)
@@ -70,52 +69,53 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: left_click_hold(event, self.canvas1))
 
 
+        lbl = ttk.Label(self.window, text="O", font=("Roboto", 35, 'bold'))
+        lbl.pack()
+        lbl.place(x=50, y=100)
 
-
-        tab_parent = ttk.Notebook(self.window)
+        tab_parent = ttk.Notebook(lbl)
         tab1 = ttk.Frame(tab_parent)
         tab2 = ttk.Frame(tab_parent)
-        tab_parent.add(tab1, text="All Records")
-        tab_parent.add(tab2, text="Add New Record")
-        tab_parent.pack(ipadx = 100, ipady = 300)
-        # tab_parent.place(x=100, y=100)
+        tab_parent.add(tab1, text="Exakt Styrning")
+        tab_parent.add(tab2, text="Slumpmässig Styrning")
+        tab_parent.pack(ipadx = 75, ipady = 250)
 
 
 
 
 
 
-
+        # INSIDE TAB 1
         title_label = ttk.Label(tab1, text="Massa", font=("Roboto", 13, 'bold'))
         title_label.pack()
-        title_label.place(x=100, y=95)
+        title_label.place(x=50, y=50)
 
-        w1 = ttk.Scale(self.window, from_=0, to=200, length=200, orient=tk.HORIZONTAL)
+        w1 = ttk.Scale(tab1, from_=0, to=200, length=200, orient=tk.HORIZONTAL)
         w1.pack(ipadx = 50, ipady = 50)
-        w1.place(x=100, y=125)
+        w1.place(x=50, y=75)
 
         def update_label(value):
             rounded_value = round(value, 1)
             label.config(text=f"{rounded_value:.1f} KG")
             self.massa = rounded_value
 
-        label = tk.Label(self.window, text="0.0 KG")
+        label = tk.Label(tab1, text="0.0 KG")
         label.pack()
-        label.place(x=310, y=120)
+        label.place(x=275, y=70)
         w1.bind("<Motion>", lambda  e: update_label(w1.get()))
 
-        title_label = ttk.Label(self.window, text="Hastighet", font=("Roboto", 13, 'bold'))
+        title_label = ttk.Label(tab1, text="Hastighet", font=("Roboto", 13, 'bold'))
         title_label.pack()
-        title_label.place(x=100, y=195)
+        title_label.place(x=50, y=150)
 
-        w2 = ttk.Scale(self.window, from_=0, to=40, length=200, orient=tk.HORIZONTAL)
+        w2 = ttk.Scale(tab1, from_=0, to=20, length=200, orient=tk.HORIZONTAL)
         w2.set(self.velocity)
         w2.pack(ipadx = 50, ipady = 50)
-        w2.place(x=100, y=225)
+        w2.place(x=50, y=175)
 
-        labelvelocity = ttk.Label(self.window, text="8.0 m/s")
+        labelvelocity = ttk.Label(tab1, text="8.0 m/s")
         labelvelocity.pack()
-        labelvelocity.place(x=310, y=220)
+        labelvelocity.place(x=275, y=170)
         
         def update_label2(value):
             rounded_value = round(value, 1)
@@ -125,45 +125,73 @@ class GUI:
 
         w2.bind("<Motion>", lambda  e: update_label2(w2.get()))
 
-        title_label2 = ttk.Label(self.window, text="Hastighet", font=("Roboto", 13, 'bold'))
-        title_label2.pack()
-        title_label2.place(x=100, y=295)
+        # title_label2 = ttk.Label(tab1, text="Hastighet", font=("Roboto", 13, 'bold'))
+        # title_label2.pack()
+        # title_label2.place(x=50, y=295)
 
-        w22 = ttk.Scale(self.window, from_=0, to=100, length=200, orient=tk.HORIZONTAL)
-        w22.pack(ipadx = 50, ipady = 50)
-        w22.place(x=100, y=325)
+        # w22 = ttk.Scale(tab1, from_=0, to=100, length=200, orient=tk.HORIZONTAL)
+        # w22.pack(ipadx = 50, ipady = 50)
+        # w22.place(x=100, y=325)
 
-        labelvelocity2 = ttk.Label(self.window, text="0.0 m/s")
-        labelvelocity2.pack()
-        labelvelocity2.place(x=310, y=320)
-        w22.bind("<Motion>", lambda e: 2)
+        # labelvelocity2 = ttk.Label(tab1, text="0.0 m/s")
+        # labelvelocity2.pack()
+        # labelvelocity2.place(x=310, y=320)
+        # w22.bind("<Motion>", lambda e: 2)
 
-        button_label = ttk.Label(self.window, text="Elasticitet", font=("Roboto", 13, 'bold'))
+        button_label = ttk.Label(tab1, text="Elasticitet", font=("Roboto", 13, 'bold'))
         button_label.pack()
-        button_label.place(x=100, y=395)
+        button_label.place(x=50, y=250)
 
         def Simpletoggle():
-    
             if toggle_button.config('text')[-1] == 'PÅ':
                 toggle_button.config(text='AV')
             else:
                 toggle_button.config(text='PÅ')
 
-        toggle_button = ttk.Button(text="PÅ", width=10, command=Simpletoggle)
+        toggle_button = ttk.Button(tab1, text="PÅ", width=10, command=Simpletoggle)
         toggle_button.pack(pady=10)
-        toggle_button.place(x=100, y=425)
+        toggle_button.place(x=50, y=280)
 
-        stop_button = ttk.Button(text="STOP", width=10, command=self.Stop)
-        stop_button.pack(pady=10)
-        stop_button.place(x=100, y=575)
-
-        stop_button = ttk.Button(text="SPARA", width=10, command=self.Stop)
-        stop_button.pack(pady=10)
-        stop_button.place(x=225, y=575)
-
-        init_button = ttk.Button(text="START", width=10, command=self.Start)
+        init_button = ttk.Button(tab1, text="START", width=10, command=self.Start)
         init_button.pack(pady=10)
-        init_button.place(x=100, y=525)
+        init_button.place(x=50, y=375)
+
+        stop_button = ttk.Button(tab1, text="STOP", width=10, command=self.Stop)
+        stop_button.pack(pady=10)
+        stop_button.place(x=50, y=425)
+
+        stop_button = ttk.Button(tab1, text="SPARA", width=10, command=self.Stop)
+        stop_button.pack(pady=10)
+        stop_button.place(x=175, y=425)
+
+
+
+
+
+
+
+
+
+
+
+
+        # INSIDE TAB 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def Start(self):
         self.ani = AnimationWriter(self.canvas1, self.vector, self.window, self.velocity)
