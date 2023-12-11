@@ -146,6 +146,7 @@ class AnimationWriter:
                                  repeat = False)
 #stoppar animationen
     def stop_Animation(self,):
+        self.canvas1.tkCanvas.get_tk_widget().forget()
         self.ani.event_source.stop()
         self.canvas1.ax.clear()    
         self.circles = []
