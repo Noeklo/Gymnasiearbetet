@@ -75,9 +75,9 @@ class GUI:
         tab_parent = ttk.Notebook(lbl)
         tab1 = ttk.Frame(tab_parent)
         tab2 = ttk.Frame(tab_parent)
-        tab_parent.add(tab1, text="Exakt Styrning")
-        tab_parent.add(tab2, text="Slumpmässig Styrning")
-        tab_parent.pack(ipadx = 75, ipady = 250)
+        tab_parent.add(tab1, text="Standard")
+        tab_parent.add(tab2, text="Avancerad")
+        tab_parent.pack(ipadx = 100, ipady = 250)
 
         def update_mass1(value):
             rounded_value = round(value, 1)
@@ -246,8 +246,7 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
 
     def RandomStart(self):
-        self.count = self.numeric_entry.get()
-        print('mängd', self.count)
+        self.count = int(self.numeric_entry.get())
         self.ani = AnimationWriter(self.canvas1, self.window)
         self.ani.generate_Rnd_Animation(self.count, self.velocity)
 
