@@ -48,6 +48,10 @@ class Calc2:
         self.g: float = 9.82
         self.frames = frames
         self.lim = lim
+        
+    def get_angle(self, vectors: List):
+        angle: float = np.arctan(-(vectors[1][1] - vectors[0][1])/(vectors[1][0] - vectors[0][0]))
+        return angle 
 
     def getZero(self, Obj: CircleObj):
         zero = 2*Obj.y_Velocity/self.g 

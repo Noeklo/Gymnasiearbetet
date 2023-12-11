@@ -38,6 +38,7 @@ class AnimationWriter:
 #        self.window = widow
 #        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
 
+
     def generate_Circle(self, x, y):
         circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity, x, y)
         self.canvas1.ax.add_patch(circle1.circle)
@@ -86,16 +87,14 @@ class AnimationWriter:
         
 
 #genererar animation med random cirklar
-    def generate_spec_Animation(self, vector: tuple,  Velocity: float = 8):
+    def generate_Spec_Animation(self, vectors: List,  Velocity: float = 8):
 
-        self.x_Velocity: float = np.cos(np.pi/4)*Velocity
-        self.y_Velocity: float = np.sin(np.pi/4)*Velocity
-
-        self.generate_Random_Circle(20)
-    
-        #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
         self.canvas1.set_Boarders(self.lim) 
+        
+        self.x_Velocity: float = np.cos(self.calc1.get_angle(vectors))*Velocity
+        self.y_Velocity: float = np.sin(self.calc1.get_angle(vectors))*Velocity
+        self.generate_Circle(5,5) # noll vid 75 bredd 540
 
         self.circles += self.canvas1.boarders
    #s 
@@ -117,9 +116,6 @@ class AnimationWriter:
 
 #generarar animation med cirklar som har specefik riktning och hastighet 
     def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8):
-
-        self.x_Velocity: float = np.cos(np.pi/4)*Velocity
-        self.y_Velocity: float = np.sin(np.pi/4)*Velocity
 
         self.generate_Random_Circle(quantity)
     

@@ -51,11 +51,11 @@ class GUI:
                     self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
                 end_point = (event.x, event.y)
                 self.vectors = [start_point, end_point]
-                # print(vectors[0], vectors[1])
+                #print(vectors[0], vectors[1])
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
-                # print("Distance:", distance)
-                # print("Strength:", strength)
+                #print("Distance:", distance)
+                #print("Strength:", strength)
                 if strength > 0.5:
                     update_label2(strength * 10)
                 
@@ -239,7 +239,7 @@ class GUI:
 
 
     def Start(self):
-        self.ani = AnimationWriter(self.canvas1, self.vectors, self.window, self.velocity)
+        self.ani = AnimationWriter(self.canvas1, self.window)
         self.ani.generate_Spec_Animation(self.vectors, self.velocity)
 
     def RandomStart(self):
