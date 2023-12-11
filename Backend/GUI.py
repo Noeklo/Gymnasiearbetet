@@ -51,13 +51,10 @@ class GUI:
                     self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
                 end_point = (event.x, event.y)
                 self.vectors = [start_point, end_point]
-                #print(vectors[0], vectors[1])
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
-                #print("Distance:", distance)
-                #print("Strength:", strength)
                 if strength > 0.5:
-                    update_label2(strength * 10)
+                    update_vel1(strength * 10)
                 
                 if strength < 1:
                     self.color = f'#{int(strength * 255):1x}0000'
@@ -81,17 +78,35 @@ class GUI:
         tab_parent.add(tab2, text="Slumpmässig Styrning")
         tab_parent.pack(ipadx = 75, ipady = 250)
 
-
-        def update_label(value):
+        def update_mass1(value):
             rounded_value = round(value, 1)
-            label.config(text=f"{rounded_value:.1f} KG")
+            labelw1.config(text=f"{rounded_value:.1f} KG")
             self.massa = rounded_value
+            w1.set(self.massa)
 
-        def update_label2(value):
+        def update_mass2(value):
             rounded_value = round(value, 1)
-            labelvelocity.config(text=f"{rounded_value:.1f} m/s")
-            self.velocity = rounded_value
-            w2.set(self.velocity)
+            labelw3.config(text=f"{rounded_value:.1f} KG")
+            self.massa = rounded_value
+            w3.set(self.massa)
+
+        def update_vel1(value):
+            rounded_value = round(value, 1)
+            if rounded_value < 21.0:
+                if rounded_value > 20.0:
+                    rounded_value = 20.0
+                labelvelocityw2.config(text=f"{rounded_value:.1f} m/s")
+                self.velocity = rounded_value
+                w2.set(self.velocity)
+
+        def update_vel2(value):
+            rounded_value = round(value, 1)
+            if rounded_value < 21.0:
+                if rounded_value > 20.0:
+                    rounded_value = 20.0
+                labelvelocityw4.config(text=f"{rounded_value:.1f} m/s")
+                self.velocity = rounded_value
+                w4.set(self.velocity)
 
         def Simpletoggle():
             if toggle_button.config('text')[-1] == 'PÅ':
@@ -114,10 +129,10 @@ class GUI:
         w1.place(x=50, y=75)
 
 
-        label = tk.Label(tab1, text="0.0 KG")
-        label.pack()
-        label.place(x=275, y=70)
-        w1.bind("<Motion>", lambda  e: update_label(w1.get()))
+        labelw1 = tk.Label(tab1, text="0.0 KG")
+        labelw1.pack()
+        labelw1.place(x=275, y=70)
+        w1.bind("<Motion>", lambda  e: update_mass1(w1.get()))
 
         title_label = ttk.Label(tab1, text="Hastighet", font=("Roboto", 13, 'bold'))
         title_label.pack()
@@ -128,11 +143,11 @@ class GUI:
         w2.pack(ipadx = 50, ipady = 50)
         w2.place(x=50, y=175)
 
-        labelvelocity = ttk.Label(tab1, text="8.0 m/s")
-        labelvelocity.pack()
-        labelvelocity.place(x=275, y=170)
+        labelvelocityw2 = ttk.Label(tab1, text="8.0 m/s")
+        labelvelocityw2.pack()
+        labelvelocityw2.place(x=275, y=170)
 
-        w2.bind("<Motion>", lambda  e: update_label2(w2.get()))
+        w2.bind("<Motion>", lambda  e: update_vel1(w2.get()))
 
         button_label = ttk.Label(tab1, text="Elasticitet", font=("Roboto", 13, 'bold'))
         button_label.pack()
@@ -174,29 +189,29 @@ class GUI:
         title_label.pack()
         title_label.place(x=50, y=50)
 
-        w1 = ttk.Scale(tab2, from_=0, to=200, length=200, orient=tk.HORIZONTAL)
-        w1.pack(ipadx = 50, ipady = 50)
-        w1.place(x=50, y=75)
+        w3 = ttk.Scale(tab2, from_=0, to=200, length=200, orient=tk.HORIZONTAL)
+        w3.pack(ipadx = 50, ipady = 50)
+        w3.place(x=50, y=75)
 
-        label = tk.Label(tab2, text="0.0 KG")
-        label.pack()
-        label.place(x=275, y=70)
-        w1.bind("<Motion>", lambda  e: update_label(w1.get()))
+        labelw3 = tk.Label(tab2, text="0.0 KG")
+        labelw3.pack()
+        labelw3.place(x=275, y=70)
+        w3.bind("<Motion>", lambda  e: update_mass2(w3.get()))
 
         title_label = ttk.Label(tab2, text="Hastighet", font=("Roboto", 13, 'bold'))
         title_label.pack()
         title_label.place(x=50, y=150)
 
-        w2 = ttk.Scale(tab2, from_=0, to=20, length=200, orient=tk.HORIZONTAL)
-        w2.set(self.velocity)
-        w2.pack(ipadx = 50, ipady = 50)
-        w2.place(x=50, y=175)
+        w4 = ttk.Scale(tab2, from_=0, to=20, length=200, orient=tk.HORIZONTAL)
+        w4.set(self.velocity)
+        w4.pack(ipadx = 50, ipady = 50)
+        w4.place(x=50, y=175)
 
-        labelvelocity = ttk.Label(tab2, text="8.0 m/s")
-        labelvelocity.pack()
-        labelvelocity.place(x=275, y=170)
+        labelvelocityw4 = ttk.Label(tab2, text="8.0 m/s")
+        labelvelocityw4.pack()
+        labelvelocityw4.place(x=275, y=170)
 
-        w2.bind("<Motion>", lambda  e: update_label2(w2.get()))
+        w4.bind("<Motion>", lambda  e: update_vel2(w4.get()))
         
         button_label = ttk.Label(tab2, text="Elasticitet", font=("Roboto", 13, 'bold'))
         button_label.pack()
@@ -241,6 +256,7 @@ class GUI:
     def Start(self):
         self.ani = AnimationWriter(self.canvas1, self.window)
         self.ani.generate_Spec_Animation(self.vectors, self.velocity)
+        self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
 
     def RandomStart(self):
         self.ani = AnimationWriter(self.canvas1, self.vectors, self.window, self.velocity)
@@ -248,6 +264,11 @@ class GUI:
 
     def Stop(self):
         self.ani.stop_Animation()
+        self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.window)
+        self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=80)
+        self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
+        self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
+
 
 GUI1 = GUI()
 GUI1.window.mainloop()
