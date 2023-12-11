@@ -17,6 +17,7 @@ class GUI:
         self.massa = 0 
         self.velocity = 8
         self.vectors = []
+        self.amount = 0
 
 
         title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
@@ -49,12 +50,12 @@ class GUI:
                 if self.line_tag:
                     self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
                 end_point = (event.x, event.y)
-                vectors = [start_point, end_point]
-                print(vectors[0], vectors[1])
+                self.vectors = [start_point, end_point]
+                # print(vectors[0], vectors[1])
                 distance = calculate_distance(start_point, end_point)
                 strength = update_strength(distance)
-                print("Distance:", distance)
-                print("Strength:", strength)
+                # print("Distance:", distance)
+                # print("Strength:", strength)
                 if strength > 0.5:
                     update_label2(strength * 10)
                 
@@ -81,6 +82,24 @@ class GUI:
         tab_parent.pack(ipadx = 75, ipady = 250)
 
 
+        def update_label(value):
+            rounded_value = round(value, 1)
+            label.config(text=f"{rounded_value:.1f} KG")
+            self.massa = rounded_value
+
+        def update_label2(value):
+            rounded_value = round(value, 1)
+            labelvelocity.config(text=f"{rounded_value:.1f} m/s")
+            self.velocity = rounded_value
+            w2.set(self.velocity)
+
+        def Simpletoggle():
+            if toggle_button.config('text')[-1] == 'PÅ':
+                toggle_button.config(text='AV')
+            else:
+                toggle_button.config(text='PÅ')
+
+
 
 
 
@@ -94,10 +113,6 @@ class GUI:
         w1.pack(ipadx = 50, ipady = 50)
         w1.place(x=50, y=75)
 
-        def update_label(value):
-            rounded_value = round(value, 1)
-            label.config(text=f"{rounded_value:.1f} KG")
-            self.massa = rounded_value
 
         label = tk.Label(tab1, text="0.0 KG")
         label.pack()
@@ -116,37 +131,12 @@ class GUI:
         labelvelocity = ttk.Label(tab1, text="8.0 m/s")
         labelvelocity.pack()
         labelvelocity.place(x=275, y=170)
-        
-        def update_label2(value):
-            rounded_value = round(value, 1)
-            labelvelocity.config(text=f"{rounded_value:.1f} m/s")
-            self.velocity = rounded_value
-            w2.set(self.velocity)
 
         w2.bind("<Motion>", lambda  e: update_label2(w2.get()))
-
-        # title_label2 = ttk.Label(tab1, text="Hastighet", font=("Roboto", 13, 'bold'))
-        # title_label2.pack()
-        # title_label2.place(x=50, y=295)
-
-        # w22 = ttk.Scale(tab1, from_=0, to=100, length=200, orient=tk.HORIZONTAL)
-        # w22.pack(ipadx = 50, ipady = 50)
-        # w22.place(x=100, y=325)
-
-        # labelvelocity2 = ttk.Label(tab1, text="0.0 m/s")
-        # labelvelocity2.pack()
-        # labelvelocity2.place(x=310, y=320)
-        # w22.bind("<Motion>", lambda e: 2)
 
         button_label = ttk.Label(tab1, text="Elasticitet", font=("Roboto", 13, 'bold'))
         button_label.pack()
         button_label.place(x=50, y=250)
-
-        def Simpletoggle():
-            if toggle_button.config('text')[-1] == 'PÅ':
-                toggle_button.config(text='AV')
-            else:
-                toggle_button.config(text='PÅ')
 
         toggle_button = ttk.Button(tab1, text="PÅ", width=10, command=Simpletoggle)
         toggle_button.pack(pady=10)
@@ -180,7 +170,62 @@ class GUI:
 
 
 
+        title_label = ttk.Label(tab2, text="Massa", font=("Roboto", 13, 'bold'))
+        title_label.pack()
+        title_label.place(x=50, y=50)
 
+        w1 = ttk.Scale(tab2, from_=0, to=200, length=200, orient=tk.HORIZONTAL)
+        w1.pack(ipadx = 50, ipady = 50)
+        w1.place(x=50, y=75)
+
+        label = tk.Label(tab2, text="0.0 KG")
+        label.pack()
+        label.place(x=275, y=70)
+        w1.bind("<Motion>", lambda  e: update_label(w1.get()))
+
+        title_label = ttk.Label(tab2, text="Hastighet", font=("Roboto", 13, 'bold'))
+        title_label.pack()
+        title_label.place(x=50, y=150)
+
+        w2 = ttk.Scale(tab2, from_=0, to=20, length=200, orient=tk.HORIZONTAL)
+        w2.set(self.velocity)
+        w2.pack(ipadx = 50, ipady = 50)
+        w2.place(x=50, y=175)
+
+        labelvelocity = ttk.Label(tab2, text="8.0 m/s")
+        labelvelocity.pack()
+        labelvelocity.place(x=275, y=170)
+
+        w2.bind("<Motion>", lambda  e: update_label2(w2.get()))
+        
+        button_label = ttk.Label(tab2, text="Elasticitet", font=("Roboto", 13, 'bold'))
+        button_label.pack()
+        button_label.place(x=50, y=250)
+
+
+        entry_label = ttk.Label(tab2, text="Antal Objekt", font=("Roboto", 13, 'bold'))
+        entry_label.pack()
+        entry_label.place(x=200, y=250)
+        numeric_entry = ttk.Entry(tab2,  validate="key")
+        numeric_entry.pack(pady=10)
+        numeric_entry.place(x=200, y=280)
+
+
+        toggle_button = ttk.Button(tab2, text="PÅ", width=10, command=Simpletoggle)
+        toggle_button.pack(pady=10)
+        toggle_button.place(x=50, y=280)
+
+        init_button = ttk.Button(tab2, text="START", width=10, command=self.Start)
+        init_button.pack(pady=10)
+        init_button.place(x=50, y=375)
+
+        stop_button = ttk.Button(tab2, text="STOP", width=10, command=self.Stop)
+        stop_button.pack(pady=10)
+        stop_button.place(x=50, y=425)
+
+        stop_button = ttk.Button(tab2, text="SPARA", width=10, command=self.Stop)
+        stop_button.pack(pady=10)
+        stop_button.place(x=175, y=425)
 
 
 
@@ -196,6 +241,10 @@ class GUI:
     def Start(self):
         self.ani = AnimationWriter(self.canvas1, self.vectors, self.window, self.velocity)
         self.ani.generate_Spec_Animation(self.vectors, self.velocity)
+
+    def RandomStart(self):
+        self.ani = AnimationWriter(self.canvas1, self.vectors, self.window, self.velocity)
+        self.ani.generate_Rnd_Animation(self.amount, self.velocity)
 
     def Stop(self):
         self.ani.stop_Animation()
