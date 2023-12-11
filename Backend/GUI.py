@@ -17,7 +17,8 @@ class GUI:
         self.massa = 0 
         self.velocity = 8
         self.vectors = []
-        self.amount = 0
+        self.count = 0
+        
 
 
         title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
@@ -113,11 +114,6 @@ class GUI:
                 toggle_button.config(text='AV')
             else:
                 toggle_button.config(text='PÅ')
-
-
-
-
-
 
         # INSIDE TAB 1
         title_label = ttk.Label(tab1, text="Massa", font=("Roboto", 13, 'bold'))
@@ -221,16 +217,17 @@ class GUI:
         entry_label = ttk.Label(tab2, text="Antal Objekt", font=("Roboto", 13, 'bold'))
         entry_label.pack()
         entry_label.place(x=200, y=250)
-        numeric_entry = ttk.Entry(tab2,  validate="key")
-        numeric_entry.pack(pady=10)
-        numeric_entry.place(x=200, y=280)
+        self.numeric_entry = ttk.Entry(tab2,  validate="key")
+        self.numeric_entry.pack(pady=10)
+        self.numeric_entry.place(x=200, y=280)
+        
 
 
         toggle_button = ttk.Button(tab2, text="PÅ", width=10, command=Simpletoggle)
         toggle_button.pack(pady=10)
         toggle_button.place(x=50, y=280)
 
-        init_button = ttk.Button(tab2, text="START", width=10, command=self.Start)
+        init_button = ttk.Button(tab2, text="START", width=10, command=self.RandomStart)
         init_button.pack(pady=10)
         init_button.place(x=50, y=375)
 
@@ -242,25 +239,17 @@ class GUI:
         stop_button.pack(pady=10)
         stop_button.place(x=175, y=425)
 
-
-
-
-
-
-
-
-
-
-
-
+        
     def Start(self):
         self.ani = AnimationWriter(self.canvas1, self.window)
         self.ani.generate_Spec_Animation(self.vectors, self.velocity)
         self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
 
     def RandomStart(self):
-        self.ani = AnimationWriter(self.canvas1, self.vectors, self.window, self.velocity)
-        self.ani.generate_Rnd_Animation(self.amount, self.velocity)
+        self.count = self.numeric_entry.get()
+        print('mängd', self.count)
+        self.ani = AnimationWriter(self.canvas1, self.window)
+        self.ani.generate_Rnd_Animation(self.count, self.velocity)
 
     def Stop(self):
         self.ani.stop_Animation()
@@ -268,6 +257,17 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=80)
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
+
+
+
+
+
+
+
+
+
+
+
 
 
 GUI1 = GUI()
