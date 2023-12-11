@@ -38,10 +38,6 @@ class AnimationWriter:
 #        self.window = widow
 #        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
 
-    def get_angle(self, vectors: List):
-        #print(vectors)
-        angle: float = np.arctan((vectors[1][1] - vectors[0][1])/(vectors[1][0] - vectors[0][0]))
-        return angle 
 
     def generate_Circle(self, x, y):
         circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity, x, y)
@@ -93,13 +89,12 @@ class AnimationWriter:
 #genererar animation med random cirklar
     def generate_Spec_Animation(self, vectors: List,  Velocity: float = 8):
 
-        self.x_Velocity: float = np.cos(self.get_angle(vectors))*Velocity
-        self.y_Velocity: float = np.sin(self.get_angle(vectors))*Velocity
-
-
-        self.generate_Circle(vectors[0][0],vectors[0][1]) # noll vid 75 bredd 540
         self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
         self.canvas1.set_Boarders(self.lim) 
+        
+        self.x_Velocity: float = np.cos(self.calc1.get_angle(vectors))*Velocity
+        self.y_Velocity: float = np.sin(self.calc1.get_angle(vectors))*Velocity
+        self.generate_Circle(5,5) # noll vid 75 bredd 540
 
         self.circles += self.canvas1.boarders
    #s 
