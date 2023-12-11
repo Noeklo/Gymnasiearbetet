@@ -123,7 +123,7 @@ class AnimationWriter:
         self.generate_Random_Circle(quantity)
     
         #self.generate_Circle(1,1)
-        self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
+        self.calc1 = Calc2(self.canvas1, self.frames , self.lim)
         self.canvas1.set_Boarders(self.lim) 
 
         self.circles += self.canvas1.boarders
