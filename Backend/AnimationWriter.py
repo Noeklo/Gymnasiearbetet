@@ -26,8 +26,6 @@ class AnimationWriter:
         self.window = window
         self.canvas1 = canvas1
         self.frames = 1000
-        self.radius: float = 0.1
-        self.mass: float = 1
         self.circles = []
         self.x_Starts = []
         self.y_Starts = []
@@ -87,7 +85,10 @@ class AnimationWriter:
         
 
 #genererar animation med random cirklar
-    def generate_Spec_Animation(self, vectors: List,  Velocity: float = 8):
+    def generate_Spec_Animation(self, vectors: List,  Velocity: float = 8, radius: float = 0.1, mass: float = 1):
+
+        self.radius: float = radius
+        self.mass: float = mass 
 
         self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
         self.canvas1.set_Boarders(self.lim) 
@@ -115,7 +116,9 @@ class AnimationWriter:
                                  repeat = False)
 
 #generarar animation med cirklar som har specefik riktning och hastighet 
-    def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8):
+    def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8, radius: float = 0.1, mass: float = 1):
+        self.radius: float = radius
+        self.mass: float = mass 
 
         self.generate_Random_Circle(quantity)
     
@@ -145,4 +148,7 @@ class AnimationWriter:
     def stop_Animation(self,):
         self.ani.event_source.stop()
         self.canvas1.ax.clear()    
+        self.circles = []
+        self.x_Starts = []
+        self.y_Starts = []
          
