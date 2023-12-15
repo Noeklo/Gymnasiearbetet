@@ -25,7 +25,7 @@ class AnimationWriter:
     def __init__(self, canvas1: Canvas, window: tkinter.Tk = None):
         self.window = window
         self.canvas1 = canvas1
-        self.frames = 500
+        self.frames = 1000
         self.circles = []
         self.x_Starts = []
         self.y_Starts = []
