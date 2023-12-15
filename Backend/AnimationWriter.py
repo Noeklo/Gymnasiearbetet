@@ -25,7 +25,7 @@ class AnimationWriter:
     def __init__(self, canvas1: Canvas, window: tkinter.Tk = None):
         self.window = window
         self.canvas1 = canvas1
-        self.frames = 1000
+        self.frames = 500
         self.circles = []
         self.x_Starts = []
         self.y_Starts = []
@@ -147,7 +147,7 @@ class AnimationWriter:
 #stoppar animationen
     def stop_Animation(self,):
         self.canvas1.tkCanvas.get_tk_widget().forget()
-        self.ani.event_source.stop()
+        #self.ani.event_source.stop()
         self.canvas1.ax.clear()    
         self.circles = []
         self.x_Starts = []
