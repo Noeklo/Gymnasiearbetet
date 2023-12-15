@@ -111,7 +111,7 @@ class Calc2:
             elif obj.y_Cords[i] >= self.lim:
                 pass
 
-    def change_Velocity(self, coliding_Pairs: [[CircleObj]]):
+    def change_Velocity(self, i: int, coliding_Pairs: [[CircleObj]]):
         coliding_Pairs[0].x_Velocity = -coliding_Pairs[0].x_Velocity 
         coliding_Pairs[0].y_Velocity = -coliding_Pairs[0].y_Velocity 
         
@@ -120,6 +120,79 @@ class Calc2:
         #unit_Normal_Angle: float = np.arctan((coliding_Objs[1].y_Cords[i] - coliding_Objs[2].y_Cords[i]) / (coliding_Objs[1].x_Cords[i] - coliding_Objs[2]))
         #unit_Tangent_Angle: float = unit_Tangent_Angle + (np.pi / 2) 
         #print("collision")#
+
+            # circle1 och circle2 är dictionaries med följande nycklar: 'position', 'velocity'
+        # Där 'position' är en tuple (x, y) och 'velocity' är en tuple (vx, vy)
+
+        # Extrahera positioner och hastighetsvektorer
+        #pos1 = circle1['position']
+        #pos2 = circle2['position']
+        #vel1 = circle1['velocity']
+        #vel2 = circle2['velocity']
+
+      #  vel1 = (coliding_Pairs[0].x_Velocity, coliding_Pairs[0].y_Velocity)
+      #  vel2 = (coliding_Pairs[1].x_Velocity, coliding_Pairs[1].y_Velocity) 
+
+      #  # Beräkna avståndet mellan cirklarna
+      #  distance = self.get_Difference(coliding_Pairs, i ) 
+
+      #  # Beräkna normalvektorn
+
+      #  #If one is a line
+      #  if isinstance(coliding_Pairs[0], LineObj) and isinstance(coliding_Pairs[1], CircleObj): 
+      #      #If two x cords are the same than it is a y axis
+      #      if coliding_Pairs[0].x_Cords[1] == coliding_Pairs[0].x_Cords[2]: 
+      #          normal_vector = (0,0)
+      #      else:
+      #          normal_vector = (0,0)
+      #      print("hej1")
+      #      coliding_Pairs[0].x_Velocity = -coliding_Pairs[0].x_Velocity 
+      #      coliding_Pairs[0].y_Velocity = -coliding_Pairs[0].y_Velocity 
+      #      
+      #      coliding_Pairs[1].x_Velocity = -coliding_Pairs[1].x_Velocity 
+      #      coliding_Pairs[1].y_Velocity = -coliding_Pairs[1].y_Velocity 
+
+      #  if isinstance(coliding_Pairs[0], CircleObj) and isinstance(coliding_Pairs[1], LineObj): 
+
+      #      if coliding_Pairs[1].x_Cords[1] == coliding_Pairs[1].x_Cords[2]: 
+      #          normal_vector = (0,0)
+      #      else:
+      #          normal_vector = (0,0)
+
+      #      print("hej2")
+      #      coliding_Pairs[0].x_Velocity = -coliding_Pairs[0].x_Velocity 
+      #      coliding_Pairs[0].y_Velocity = -coliding_Pairs[0].y_Velocity 
+      #      
+      #      coliding_Pairs[1].x_Velocity = -coliding_Pairs[1].x_Velocity 
+      #      coliding_Pairs[1].y_Velocity = -coliding_Pairs[1].y_Velocity 
+
+      #  if isinstance(coliding_Pairs[0], CircleObj) and isinstance(coliding_Pairs[1], CircleObj):
+      #      normal_vector = ((coliding_Pairs[1].x_Cords[i] - coliding_Pairs[0].x_Cords[i]) /
+      #                      distance, (coliding_Pairs[1].y_Cords[i] - coliding_Pairs[0].y_Cords[i]) / distance)
+      #      # Beräkna relative hastighetsvektor
+      #      relative_velocity = (vel2[0] - vel1[0], vel2[1] - vel1[1])
+      #      
+      #      # Beräkna kollisionens hastighet längs normalvektorn
+      #      v1_along_normal = (relative_velocity[0] * normal_vector[0] + relative_velocity[1] * normal_vector[1]) * normal_vector[0]
+      #      v2_along_normal = (relative_velocity[0] * normal_vector[0] + relative_velocity[1] * normal_vector[1]) * normal_vector[1]
+
+      #      # Beräkna nya hastighetsvektorer efter kollision
+      #      new_vel1 = (vel1[0] + (v2_along_normal - v1_along_normal) * normal_vector[0],
+      #                  vel1[1] + (v2_along_normal - v1_along_normal) * normal_vector[1])
+
+      #      new_vel2 = (vel2[0] - (v2_along_normal - v1_along_normal) * normal_vector[0],
+      #                  vel2[1] - (v2_along_normal - v1_along_normal) * normal_vector[1])
+
+      #      coliding_Pairs[0].x_Velocity = new_vel1[0] 
+      #      coliding_Pairs[0].y_Velocity = new_vel1[1] 
+      #      coliding_Pairs[1].x_Velocity = new_vel2[0] 
+      #      coliding_Pairs[1].y_Velocity = new_vel2[1] 
+
+
+      #  #If both are lines
+      #  elif isinstance(coliding_Pairs[0], LineObj) and isinstance(coliding_Pairs[1], LineObj): 
+      #      pass
+
 
 
     def generate_Data(self, Objs: List[CircleObj], x_Starts: List[float], y_Starts: List[float]):
@@ -141,8 +214,8 @@ class Calc2:
             coliding_Pairs: List[CircleObj] = self.get_Coliding_Pairs(Objs, index, i)
             if len(coliding_Pairs) > 0: 
                 
-                self.change_Velocity(coliding_Pairs)
-#                print("collision")
+                self.change_Velocity(i, coliding_Pairs)
+                #print("collision")
 
             timeSeconds += self.timeIncrement
             i += 1
