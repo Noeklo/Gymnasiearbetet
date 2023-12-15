@@ -11,7 +11,7 @@ class GUI:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title("FysiKol")
-        self.window.geometry("1100x700")
+        self.window.geometry("1050x600")
         self.window.tk.call("source", "azure.tcl")
         self.window.tk.call("set_theme", "light")
         self.massa = 0 
@@ -21,16 +21,12 @@ class GUI:
         self.canvas1 = None
         self.size = 1
         
-        title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
-        title_label.pack()
+        # title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
+        # title_label.pack()
 
         start_point = None
         strength = 0
         color = None
-
-
-
-
 
 
 
@@ -39,13 +35,13 @@ class GUI:
 
         self.line_tag = None
         self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.window)
-        self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=80)
+        self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=0)
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
 
         lbl = ttk.Label(self.window, text="O", font=("Roboto", 35, 'bold'))
         lbl.pack()
-        lbl.place(x=50, y=100)
+        lbl.place(x=50, y=30)
 
         tab_parent = ttk.Notebook(lbl)
         tab1 = ttk.Frame(tab_parent)
@@ -165,10 +161,17 @@ class GUI:
 
         self.entry_label = ttk.Label(tab2, text="Antal Objekt", font=("Roboto", 13, 'bold'))
         self.entry_label.pack()
-        self.entry_label.place(x=200, y=250)
+        self.entry_label.place(x=175, y=250)
         self.numeric_entry = ttk.Entry(tab2,  validate="key")
         self.numeric_entry.pack(pady=10)
-        self.numeric_entry.place(x=200, y=280)
+        self.numeric_entry.place(x=175, y=280)
+
+        self.time_label = ttk.Label(tab2, text="Tid i sek", font=("Roboto", 13, 'bold'))
+        self.time_label.pack()
+        self.time_label.place(x=175, y=325)
+        self.time_entry = ttk.Entry(tab2,  validate="key")
+        self.time_entry.pack(pady=10)
+        self.time_entry.place(x=175, y=350)
         
         self.toggle_button = ttk.Button(tab2, text="PÅ", width=10, command=self.Simpletoggle)
         self.toggle_button.pack(pady=10)
@@ -281,7 +284,7 @@ class GUI:
         self.ani.stop_Animation()
         self.canvas1.tkCanvas.get_tk_widget().destroy()
         self.canvas1 = Canvas((6,6), 60, "Projectile Motion", self.window)
-        self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=80)
+        self.canvas1.tkCanvas.get_tk_widget().place(x=450, y=0)
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
 
