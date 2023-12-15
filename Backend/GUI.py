@@ -208,7 +208,6 @@ class GUI:
 
     def left_click_hold(self, event, canvas):
         x, y = event.x, event.y
-        print(x,y)
         if (x > 75 and x < 540 and y > 75 and y < 540):
             global start_point, strength
             if self.line_tag:
