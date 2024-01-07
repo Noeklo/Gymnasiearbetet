@@ -160,8 +160,8 @@ class Calc2:
         coliding_Pairs[1].x_Velocity = new_vel2[0] 
         coliding_Pairs[1].y_Velocity = new_vel2[1] 
 
-        print(f"{np.sqrt(coliding_Pairs[0].x_Velocity**2+coliding_Pairs[0].y_Velocity**2)}")
-        print(f"{np.sqrt(coliding_Pairs[1].x_Velocity**2+coliding_Pairs[1].y_Velocity**2)}")
+        print(f"Hastighet: {np.sqrt(coliding_Pairs[0].x_Velocity**2+coliding_Pairs[0].y_Velocity**2)}")
+        print(f"Hastighet: {np.sqrt(coliding_Pairs[1].x_Velocity**2+coliding_Pairs[1].y_Velocity**2)}")
 
 
         #If both are lines
