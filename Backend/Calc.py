@@ -125,18 +125,22 @@ class Calc2:
         if isinstance(coliding_Pairs[0], LineObj) and isinstance(coliding_Pairs[1], CircleObj): 
             #If two x cords are the same than it is a y axis
             if coliding_Pairs[0].x_Cords[1] == coliding_Pairs[0].x_Cords[2]: 
-                normal_vector = (coliding_Pairs[1].radius/distance,0)
+                #normal_vector = (coliding_Pairs[1].radius/distance,0)
+                normal_vector = (1,0)
             else:
-                normal_vector = (0,coliding_Pairs[1].radius/distance)
+                #normal_vector = (0,coliding_Pairs[1].radius/distance)
+                normal_vector = (0,1)
 
             print(normal_vector)
 
         if isinstance(coliding_Pairs[0], CircleObj) and isinstance(coliding_Pairs[1], LineObj): 
 
             if coliding_Pairs[1].x_Cords[1] == coliding_Pairs[1].x_Cords[2]: 
-                normal_vector = (coliding_Pairs[0].radius/distance,0)
+                #normal_vector = (coliding_Pairs[0].radius/distance,0)
+                normal_vector = (1,0)
             else:
-                normal_vector = (0,coliding_Pairs[0].radius/distance)
+                #normal_vector = (0,coliding_Pairs[0].radius/distance)
+                normal_vector = (0,1)
 
 
         if isinstance(coliding_Pairs[0], CircleObj) and isinstance(coliding_Pairs[1], CircleObj):
