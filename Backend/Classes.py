@@ -36,7 +36,7 @@ class LineObj:
     def __init__(self, x_Cords: [], y_Cords: []):
         self.y_Cords: np.array = np.array(y_Cords)
         self.x_Cords: np.array = np.array(x_Cords)
-        #print(f"{x_Cords}\n{y_Cords}\n")        
+        #print(f"{x_Cords}\n{y_Cords}\n")         
 
     def position(self, i):
         pass
