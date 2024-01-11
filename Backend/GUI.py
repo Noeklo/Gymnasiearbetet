@@ -282,8 +282,8 @@ class GUI:
     def RandomStart(self):
         self.count = int(self.numeric_entry.get())
         self.time = int(self.time_entry.get())
-        self.ani = AnimationWriter(self.canvas1, self.window, self.time)
-        self.ani.generate_Rnd_Animation(self.count, self.velocity)
+        self.ani = AnimationWriter(self.canvas1, self.window)
+        self.ani.generate_Rnd_Animation(self.count, self.velocity, self.time)
 
     def Stop(self):
         self.ani.stop_Animation()

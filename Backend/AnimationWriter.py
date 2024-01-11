@@ -120,10 +120,10 @@ class AnimationWriter:
         print(f"tid för ani: {(end2 - end)/(10**9)}")
 
 #generarar animation med cirklar som har specefik riktning och hastighet 
-    def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8, radius: float = 0.1, mass: float = 1, time: float = 1000/60):
+    def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8, radius: float = 0.1, mass: float = 1, length: float = 1000/60):
         self.radius: float = radius
         self.mass: float = mass 
-        self.frames = time*60
+        self.frames = length*60
 
         self.generate_Random_Circle(quantity)
     
