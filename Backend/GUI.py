@@ -158,6 +158,7 @@ class GUI:
         
         self.button_label = ttk.Label(tab2, text="Elasticitet", font=("Roboto", 13, 'bold'))
         self.button_label.pack()
+        
         self.button_label.place(x=50, y=250)
 
         self.entry_label = ttk.Label(tab2, text="Antal Objekt", font=("Roboto", 13, 'bold'))
