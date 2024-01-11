@@ -107,7 +107,8 @@ class AnimationWriter:
 
         self.canvas1.set_Limets(self.lim, self.lim)
 
-        #self.writer = FFMpegWriter(fps=self.canvas1.fps)
+
+        #self.writer = FFMpegWriter(fps=self.canvas1.fps)s
         self.ani = FuncAnimation(self.canvas1.fig,
                                  func=self.generate_Frame,
                                  frames = self.frames,
