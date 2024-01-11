@@ -114,11 +114,15 @@ class AnimationWriter:
                                  interval = 1000/self.canvas1.fps,
                                  blit = True,
                                  repeat = False)
+        
+        end2 = time.monotonic_ns()
+        print(f"tid för ani: {(end2 - end)/(10**9)}")
 
 #generarar animation med cirklar som har specefik riktning och hastighet 
-    def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8, radius: float = 0.1, mass: float = 1):
+    def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8, radius: float = 0.1, mass: float = 1, time: float = 1000/60):
         self.radius: float = radius
         self.mass: float = mass 
+        self.frames = time*60
 
         self.generate_Random_Circle(quantity)
     
@@ -133,10 +137,10 @@ class AnimationWriter:
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
         end = time.monotonic_ns()
 
-        print(f"{(end-start)/(10**9)}")
-
+        print(f"tid för calc: {(end-start)/(10**9)}")
+        
         self.canvas1.set_Limets(self.lim, self.lim)
-
+    
         #self.writer = FFMpegWriter(fps=self.canvas1.fps)
         self.ani = FuncAnimation(self.canvas1.fig,
                                  func=self.generate_Frame,
@@ -144,6 +148,9 @@ class AnimationWriter:
                                  interval = 1000/self.canvas1.fps,
                                  blit = True,
                                  repeat = False)
+        
+        end2 = time.monotonic_ns()
+        print(f"tid för ani: {(end2 - end)/(10**9)}")
 #stoppar animationen
     def stop_Animation(self,):
         self.canvas1.tkCanvas.get_tk_widget().forget()
