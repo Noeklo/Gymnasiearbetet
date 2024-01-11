@@ -20,6 +20,7 @@ class GUI:
         self.count = 0
         self.canvas1 = None
         self.size = 1
+        self.time = 0
         
         # title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
         # title_label.pack()
@@ -169,7 +170,7 @@ class GUI:
         self.time_label = ttk.Label(tab2, text="Tid i sek", font=("Roboto", 13, 'bold'))
         self.time_label.pack()
         self.time_label.place(x=175, y=325)
-        self.time_entry = ttk.Entry(tab2,  validate="key")
+        self.time_entry = ttk.Entry(tab2)
         self.time_entry.pack(pady=10)
         self.time_entry.place(x=175, y=350)
         
@@ -216,11 +217,14 @@ class GUI:
             self.vectors = [start_point, end_point]
             distance = self.calculate_distance(start_point, end_point)
             strength = self.update_strength(distance)
-            if strength > 0.5:
-                self.update_vel1(strength * 10)
-            
-            if strength < 1:
+            self.update_vel1(strength * 10)
+            if strength < 1 and strength > 0.5:
                 self.color = f'#{int(strength * 255):1x}0000'
+            else:
+                if strength > 1:
+                    self.color = f'#ff0000'
+                elif strength < 0.3:
+                    self.color = f'#2b0202'
 
             self.line_tag = self.canvas1.tkCanvas.get_tk_widget().create_line(start_point[0], start_point[1], end_point[0], end_point[1], fill=self.color, width=2)
 
@@ -276,7 +280,8 @@ class GUI:
 
     def RandomStart(self):
         self.count = int(self.numeric_entry.get())
-        self.ani = AnimationWriter(self.canvas1, self.window)
+        self.time = int(self.time_entry.get())
+        self.ani = AnimationWriter(self.canvas1, self.window, self.time)
         self.ani.generate_Rnd_Animation(self.count, self.velocity)
 
     def Stop(self):
