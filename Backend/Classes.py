@@ -28,7 +28,7 @@ class CircleObj:
 
 class LineObj:
 
-    mass: float = 10**100 
+    mass: float = 10.0**100 
     radius: float = 0
     y_Velocity: float = 0 
     x_Velocity: float = 0 

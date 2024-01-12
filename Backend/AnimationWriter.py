@@ -21,7 +21,7 @@ class AnimationWriter:
 
         end2 = time.monotonic_ns()
 
-        print(f"tid för animationen: {(end2-self.end)/(10**9)}")
+        #print(f"tid för animationen: {(end2-self.end)/(10**9)}")
 
         return tuple([circle.circle for circle in self.circles if isinstance(circle, CircleObj)])
 
@@ -128,7 +128,6 @@ class AnimationWriter:
         self.radius: float = radius
         self.mass: float = mass 
         self.frames = int(length*60/2)
-        print(f"frames: {self.frames}")
 
         self.generate_Random_Circle(quantity)
     
