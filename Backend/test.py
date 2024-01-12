@@ -1,36 +1,23 @@
-from AnimationWriter import AnimationWriter
-from tkinter import *
-from Canvas import Canvas
-import time
+import tkinter as tk
 
-#ani = AnimationWriter()
-#
-#ani.generate_Animation()
+def on_entry_change(*args):
+    # Function to get the entry text whenever it changes
+    entry_text = entry_var.get()
+    print("Entry Text:", entry_text)
 
-window = Tk() 
+# Create the main Tkinter window
+root = tk.Tk()
+root.title("Entry Update Example")
 
-canvas1 = Canvas((6,6), 60, "Projectile Motion", window)
-  
-ani = AnimationWriter(canvas1, window)
-# setting the title  
-window.title('Plotting in Tkinter') 
-  
-# dimensions of the main window 
-window.geometry("500x500") 
-  
-# button that displays the plot 
-plot_button = Button(
-    master = window,  
-    command = ani.generate_Animation(), 
-    height = 2,  
-    width = 10, 
-    text = "Plot"
-) 
-  
-# place the button  
-# in main windows
-plot_button.pack() 
-  
-# run the gui 
-window.mainloop() 
-time.sleep(5)
+# Create a StringVar to track the Entry content
+entry_var = tk.StringVar()
+
+# Create an Entry widget and associate it with the StringVar
+entry = tk.Entry(root, width=30, textvariable=entry_var)
+entry.pack(padx=10, pady=10)
+
+# Set up the trace to call the on_entry_change function whenever the content changes
+entry_var.trace_add("write", on_entry_change)
+
+# Run the Tkinter event loop
+root.mainloop()
