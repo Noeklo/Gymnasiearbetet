@@ -283,7 +283,7 @@ class GUI:
         self.count = int(self.numeric_entry.get())
         self.time = int(self.time_entry.get())
         self.ani = AnimationWriter(self.canvas1, self.window)
-        self.ani.generate_Rnd_Animation(self.count, self.velocity, self.time)
+        self.ani.generate_Rnd_Animation(self.count, self.velocity, 0.1, 1, self.time)
 
     def Stop(self):
         self.ani.stop_Animation()

@@ -19,6 +19,10 @@ class AnimationWriter:
             if isinstance(circle, CircleObj):
                 circle.position(self.calc1.data_Multiplier*i)
 
+        end2 = time.monotonic_ns()
+
+        print(f"tid för animationen: {(end2-self.end)/(10**9)}")
+
         return tuple([circle.circle for circle in self.circles if isinstance(circle, CircleObj)])
 
 #ANimationWriter construktor för integrerad matplot i tkinter fönster dvs window parametern 
@@ -30,6 +34,8 @@ class AnimationWriter:
         self.x_Starts = []
         self.y_Starts = []
         self.lim = 10
+        
+        self._ = []
 
 #AnimationWriter construktor för separat matplot fönster
 #    def __init__(self, widow: tkinter.Tk = None,):
@@ -101,9 +107,9 @@ class AnimationWriter:
    #s 
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
-        end = time.monotonic_ns()
+        self.end = time.monotonic_ns()
 
-        print(f"{(end-start)/(10**9)}")
+        print(f"{(self.end-start)/(10**9)}")
 
         self.canvas1.set_Limets(self.lim, self.lim)
 
@@ -115,15 +121,14 @@ class AnimationWriter:
                                  interval = 1000/self.canvas1.fps,
                                  blit = True,
                                  repeat = False)
-        
-        end2 = time.monotonic_ns()
-        print(f"tid för ani: {(end2 - end)/(10**9)}")
+
 
 #generarar animation med cirklar som har specefik riktning och hastighet 
     def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8, radius: float = 0.1, mass: float = 1, length: float = 1000/60):
         self.radius: float = radius
         self.mass: float = mass 
-        self.frames = length*60
+        self.frames = int(length*60/2)
+        print(f"frames: {self.frames}")
 
         self.generate_Random_Circle(quantity)
     
@@ -136,9 +141,9 @@ class AnimationWriter:
     
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
-        end = time.monotonic_ns()
+        self.end = time.monotonic_ns()
 
-        print(f"tid för calc: {(end-start)/(10**9)}")
+        print(f"tid för calc: {(self.end-start)/(10**9)}")
         
         self.canvas1.set_Limets(self.lim, self.lim)
     
@@ -149,9 +154,7 @@ class AnimationWriter:
                                  interval = 1000/self.canvas1.fps,
                                  blit = True,
                                  repeat = False)
-        
-        end2 = time.monotonic_ns()
-        print(f"tid för ani: {(end2 - end)/(10**9)}")
+
 #stoppar animationen
     def stop_Animation(self,):
         self.canvas1.tkCanvas.get_tk_widget().forget()
