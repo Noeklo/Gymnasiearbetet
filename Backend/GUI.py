@@ -53,6 +53,12 @@ class GUI:
 
 
 
+        def is_float(value):
+            try:
+                float(value)
+                return True
+            except ValueError:
+                return False
 
         
 
@@ -65,10 +71,26 @@ class GUI:
         self.w1.pack(ipadx = 50, ipady = 50)
         self.w1.place(x=50, y=75)
 
+        def on_mass1_change(*args):
+            entry_text = entry_var1.get()
+            if is_float(entry_text):
+                if float(entry_text) > 200.0:
+                    entry_var1.set('200')
+                    self.massa = 200.0
+                self.massa = float(entry_text)
+                self.w1.set(self.massa)
 
-        self.labelw1 = tk.Label(tab1, text="0.0 KG")
+        entry_var1 = tk.StringVar()
+        entry_var1.trace_add("write",  on_mass1_change)
+
+
+        self.inputmass = ttk.Entry(tab1, width=4, textvariable=entry_var1)
+        self.inputmass.insert(0, "0.0") 
+        self.inputmass.pack(pady=10)
+        self.inputmass.place(x=275, y=65)
+        self.labelw1 = tk.Label(tab1, text="KG")
         self.labelw1.pack()
-        self.labelw1.place(x=275, y=70)
+        self.labelw1.place(x=320, y=70)
         self.w1.bind("<Motion>", lambda  e: self.update_mass1(self.w1.get()))
 
         title_label = ttk.Label(tab1, text="Hastighet", font=("Roboto", 13, 'bold'))
@@ -80,9 +102,30 @@ class GUI:
         self.w2.pack(ipadx = 50, ipady = 50)
         self.w2.place(x=50, y=150)
 
-        self.labelvelocityw2 = ttk.Label(tab1, text="8.0 m/s")
+        
+        def on_vel1_change(*args):
+            entry_text = entry_var2.get()
+            if is_float(entry_text):
+                if float(entry_text) > 20.0:
+                    entry_var2.set('20')
+                    self.velocity = 20.0
+                self.velocity = float(entry_text)
+                self.w2.set(self.velocity)
+
+
+        entry_var2 = tk.StringVar()
+        entry_var2.trace_add("write",  on_vel1_change)
+        
+
+        self.inputvel = ttk.Entry(tab1, width=4, textvariable=entry_var2)
+        self.inputvel.insert(0, "8.0") 
+        self.inputvel.pack(pady=10)
+        self.inputvel.place(x=275, y=140)
+        self.labelvelocityw2 = ttk.Label(tab1, text="m/s")
         self.labelvelocityw2.pack()
-        self.labelvelocityw2.place(x=275, y=145)
+        self.labelvelocityw2.place(x=320, y=145)
+
+
 
         self.w2.bind("<Motion>", lambda  e: self.update_vel1(self.w2.get()))
 
@@ -136,9 +179,25 @@ class GUI:
         self.w3.pack(ipadx = 50, ipady = 50)
         self.w3.place(x=50, y=75)
 
-        self.labelw3 = tk.Label(tab2, text="0.0 KG")
+        def on_mass2_change(*args):
+            entry_text = entry_var3.get()
+            if is_float(entry_text):
+                if float(entry_text) > 200.0:
+                    entry_var3.set('200')
+                    self.massa = 200.0
+                self.massa = float(entry_text)
+                self.w3.set(self.massa)
+
+        entry_var3 = tk.StringVar()
+        entry_var3.trace_add("write",  on_mass2_change)
+
+        self.inputmass2 = ttk.Entry(tab2, width=4, textvariable=entry_var3)
+        self.inputmass2.insert(0, "0.0") 
+        self.inputmass2.pack(pady=10)
+        self.inputmass2.place(x=275, y=65)
+        self.labelw3 = tk.Label(tab2, text="KG")
         self.labelw3.pack()
-        self.labelw3.place(x=275, y=70)
+        self.labelw3.place(x=320, y=70)
         self.w3.bind("<Motion>", lambda  e: self.update_mass2(self.w3.get()))
 
         self.title_label = ttk.Label(tab2, text="Hastighet", font=("Roboto", 13, 'bold'))
@@ -150,16 +209,38 @@ class GUI:
         self.w4.pack(ipadx = 50, ipady = 50)
         self.w4.place(x=50, y=175)
 
-        self.labelvelocityw4 = ttk.Label(tab2, text="8.0 m/s")
+
+
+        def on_vel2_change(*args):
+            entry_text = entry_var4.get()
+            if is_float(entry_text):
+                if float(entry_text) > 20.0:
+                    entry_var4.set('20')
+                    self.velocity = 20.0
+                self.velocity = float(entry_text)
+                self.w4.set(self.velocity)
+
+
+        entry_var4 = tk.StringVar()
+        entry_var4.trace_add("write",  on_vel2_change)
+
+        self.inputvel2 = ttk.Entry(tab2, width=4,  textvariable=entry_var4)
+        self.inputvel2.insert(0, "8.0")
+        self.inputvel2.pack(pady=10)
+        self.inputvel2.place(x=275, y=165)
+
+
+
+        self.labelvelocityw4 = ttk.Label(tab2, text="m/s")
         self.labelvelocityw4.pack()
-        self.labelvelocityw4.place(x=275, y=170)
+        self.labelvelocityw4.place(x=320, y=170)
 
         self.w4.bind("<Motion>", lambda  e: self.update_vel2(self.w4.get()))
         
         self.button_label = ttk.Label(tab2, text="Elasticitet", font=("Roboto", 13, 'bold'))
         self.button_label.pack()
         self.button_label.place(x=50, y=250)
-        
+
 
         self.entry_label = ttk.Label(tab2, text="Antal Objekt", font=("Roboto", 13, 'bold'))
         self.entry_label.pack()
@@ -238,13 +319,17 @@ class GUI:
 
     def update_mass1(self, value):
         rounded_value = round(value, 1)
-        self.labelw1.config(text=f"{rounded_value:.1f} KG")
+        # self.labelw1.config(text=f"{rounded_value:.1f} KG")
+        self.inputmass.delete(0, 'end')
+        self.inputmass.insert(-1, f"{rounded_value:.1f}")
         self.massa = rounded_value
         self.w1.set(self.massa)
 
     def update_mass2(self, value):
         rounded_value = round(value, 1)
-        self.labelw3.config(text=f"{rounded_value:.1f} KG")
+        # self.labelw3.config(text=f"{rounded_value:.1f} KG")
+        self.inputmass2.delete(0, 'end')
+        self.inputmass2.insert(-1, f"{rounded_value:.1f}")
         self.massa = rounded_value
         self.w3.set(self.massa)
 
@@ -253,7 +338,9 @@ class GUI:
         if rounded_value < 21.0:
             if rounded_value > 20.0:
                 rounded_value = 20.0
-            self.labelvelocityw2.config(text=f"{rounded_value:.1f} m/s")
+            # self.labelvelocityw2.config(text=f"{rounded_value:.1f} m/s")
+            self.inputvel.delete(0, 'end')
+            self.inputvel.insert(-1, f"{rounded_value:.1f}")
             self.velocity = rounded_value
             self.w2.set(self.velocity)
 
@@ -262,7 +349,8 @@ class GUI:
         if rounded_value < 21.0:
             if rounded_value > 20.0:
                 rounded_value = 20.0
-            self.labelvelocityw4.config(text=f"{rounded_value:.1f} m/s")
+            self.inputvel2.delete(0, 'end')
+            self.inputvel2.insert(-1, f"{rounded_value:.1f}")
             self.velocity = rounded_value
             self.w4.set(self.velocity)
 
