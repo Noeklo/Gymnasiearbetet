@@ -23,7 +23,7 @@ class GUI:
         self.time = 0
         
         # title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
-        # title_label.pack()
+        # title_label.pack() 
 
         start_point = None
         strength = 0
