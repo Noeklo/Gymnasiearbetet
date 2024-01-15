@@ -54,9 +54,7 @@ class AnimationWriter:
 
         random_Number_Generator = np.random.default_rng()
 
-        #random_x_Cord: int = random_Number_Generator.choice(np.arange(1, self.lim, 1), size=quantity, replace=False)  
-        #random_y_Cord: int = random_Number_Generator.choice(np.arange(1, self.lim, 1), size=quantity, replace=False)  
-
+        masses: int = random_Number_Generator.integers(low=1, high=5, size=quantity)
         random_x_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
         random_y_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
 
@@ -77,7 +75,7 @@ class AnimationWriter:
 
         for index, x in enumerate(random_x_Cord):
             circle1 = CircleObj(self.radius,
-                                self.mass,
+                                masses[index],
                                 random_x_Velocity[index],
                                 random_y_Velocity[index],
                                 random_x_Cord[index],
