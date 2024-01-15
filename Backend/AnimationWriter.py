@@ -71,15 +71,18 @@ class AnimationWriter:
         random_x_Cord = selected_coordinates[:, 0]
         random_y_Cord = selected_coordinates[:, 1]
 
-#        print(f"{random_x_Cord}\n{random_y_Cord}")
+        #Gör en lista med färger 
+        colors: List[str] = ["blue", "red"]
 
         for index, x in enumerate(random_x_Cord):
+            random_Color = colors[random_Number_Generator.integers(low=0, high=len(colors), size=1)[0]]
             circle1 = CircleObj(self.radius,
                                 masses[index],
                                 random_x_Velocity[index],
                                 random_y_Velocity[index],
                                 random_x_Cord[index],
-                                random_y_Cord[index])
+                                random_y_Cord[index],
+                                random_Color)
 
             self.canvas1.ax.add_patch(circle1.circle)
             self.circles.append(circle1)

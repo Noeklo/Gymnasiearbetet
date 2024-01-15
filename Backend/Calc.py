@@ -111,6 +111,7 @@ class Calc2:
             elif obj.y_Cords[i] >= self.lim:
                 pass
 
+
     def change_Velocity(self, i: int, coliding_Pairs: [[CircleObj]]):
 
         vel1 = (coliding_Pairs[0].x_Velocity, coliding_Pairs[0].y_Velocity)

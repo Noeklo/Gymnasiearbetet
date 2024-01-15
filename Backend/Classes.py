@@ -12,14 +12,14 @@ class CircleObj:
     y: float = None
     circle: Circle = None
 
-    def __init__(self, radius: float, mass: float, x_Velocity: float, y_Velocity: float, x: float,y: float):
+    def __init__(self, radius: float, mass: float, x_Velocity: float, y_Velocity: float, x: float,y: float, color: str = "blue"):
         self.radius = radius  
         self.mass = mass
         self.y_Velocity = y_Velocity
         self.x_Velocity = x_Velocity
         self.x = x
         self.y = y
-        self.circle = Circle((x,y),self.radius)
+        self.circle = Circle((x,y),self.radius, color = str(color))
         self.y_Cords: List[float] = np.empty(100000)
         self.x_Cords: List[float] = np.empty(100000) 
         
