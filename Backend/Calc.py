@@ -181,10 +181,10 @@ class Calc2:
         coliding_Pairs[1].y_Velocity = normal_vector[1] * new_v2_normal + tangent_vector[1] * v2_tangent
 
 
-        print(new_vel1[0]*(coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2*coliding_Pairs[1].mass*new_vel2[0])
-        print((coliding_Pairs[0].mass + coliding_Pairs[1].mass))
-        print(f"Hastighet: {np.sqrt(coliding_Pairs[0].x_Velocity**2+coliding_Pairs[0].y_Velocity**2)}")
-        print(f"Hastighet: {np.sqrt(coliding_Pairs[1].x_Velocity**2+coliding_Pairs[1].y_Velocity**2)}")
+        #print(new_vel1[0]*(coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2*coliding_Pairs[1].mass*new_vel2[0])
+        #print((coliding_Pairs[0].mass + coliding_Pairs[1].mass))
+        #print(f"Hastighet: {np.sqrt(coliding_Pairs[0].x_Velocity**2+coliding_Pairs[0].y_Velocity**2)}")
+        #print(f"Hastighet: {np.sqrt(coliding_Pairs[1].x_Velocity**2+coliding_Pairs[1].y_Velocity**2)}")
 
 
     def generate_Data(self, Objs: List[CircleObj], x_Starts: List[float], y_Starts: List[float]):
