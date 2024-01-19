@@ -160,8 +160,8 @@ class Calc2:
         v2_tangent = vel2[0] * tangent_vector[0] + vel2[1] * tangent_vector[1]
 
         #Anpassning för bevarande av rörelsemängd och kenetisk energi
-        new_v1_normal = -(v1_normal*(coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2*coliding_Pairs[1].mass*v1_normal) / (coliding_Pairs[0].mass + coliding_Pairs[1].mass)
-        new_v2_normal = -(v2_normal*(coliding_Pairs[1].mass - coliding_Pairs[0].mass) + 2*coliding_Pairs[0].mass*v2_normal) / (coliding_Pairs[1].mass + coliding_Pairs[0].mass)
+        new_v1_normal = (v1_normal*(coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2*coliding_Pairs[1].mass*v1_normal) / (coliding_Pairs[0].mass + coliding_Pairs[1].mass)
+        new_v2_normal = (v2_normal*(coliding_Pairs[1].mass - coliding_Pairs[0].mass) + 2*coliding_Pairs[0].mass*v2_normal) / (coliding_Pairs[1].mass + coliding_Pairs[0].mass)
 
         # Anpassning för bevarande av rörelsemängd och kenetisk energi
         new_v1_normal = (v1_normal * (coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2 * coliding_Pairs[1].mass * v2_normal) / (coliding_Pairs[0].mass + coliding_Pairs[1].mass)
