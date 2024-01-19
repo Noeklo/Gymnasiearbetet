@@ -43,8 +43,8 @@ class AnimationWriter:
 #        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
 
 
-    def generate_Circle(self, x, y):
-        circle1 = CircleObj(self.radius,self.mass,self.x_Velocity,self.y_Velocity, x, y)
+    def generate_Circle(self, x_Velocity, y_Velocity, x, y):
+        circle1 = CircleObj(self.radius,self.mass,x_Velocity,y_Velocity, x, y)
         self.canvas1.ax.add_patch(circle1.circle)
         self.circles.append(circle1)
         self.x_Starts.append(x)
@@ -54,7 +54,7 @@ class AnimationWriter:
 
         random_Number_Generator = np.random.default_rng()
 
-        masses: int = random_Number_Generator.integers(low=1, high=5, size=quantity)
+        masses: int = random_Number_Generator.integers(low=1, high=6, size=quantity)
         random_x_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
         random_y_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
 
@@ -72,23 +72,30 @@ class AnimationWriter:
         random_y_Cord = selected_coordinates[:, 1]
 
         #Gör en lista med färger 
-        colors: List[str] = ["blue", "red"]
+        #colors: List[str] = ["blue", "red"]
 
         for index, x in enumerate(random_x_Cord):
-            random_Color = colors[random_Number_Generator.integers(low=0, high=len(colors), size=1)[0]]
+            #random_Color = colors[random_Number_Generator.integers(low=1, high=len(colors), size=1)[0]]
             circle1 = CircleObj(self.radius,
                                 masses[index],
                                 random_x_Velocity[index],
                                 random_y_Velocity[index],
                                 random_x_Cord[index],
-                                random_y_Cord[index],
-                                random_Color)
+                                random_y_Cord[index])
+        
 
             self.canvas1.ax.add_patch(circle1.circle)
             self.circles.append(circle1)
 
             self.x_Starts.append(random_x_Cord[index])
             self.y_Starts.append(random_y_Cord[index])
+
+        circle1 = CircleObj(self.radius, 3,0,0,5,5)
+        self.canvas1.ax.add_patch(circle1.circle)
+        self.circles.append(circle1)
+
+        self.x_Starts.append(0)
+        self.y_Starts.append(0)
         
 
 #genererar animation med random cirklar
@@ -102,7 +109,8 @@ class AnimationWriter:
         
         self.x_Velocity: float = np.cos(self.calc1.get_angle(vectors))*Velocity
         self.y_Velocity: float = np.sin(self.calc1.get_angle(vectors))*Velocity
-        self.generate_Circle(5,5) # noll vid 75 bredd 540
+        self.generate_Circle(self.x_Velocity, self.y_Velocity, 5,5) # noll vid 75 bredd 540
+        self.generate_Circle(0, 0, 7,7) # noll vid 75 bredd 540
 
         self.circles += self.canvas1.boarders
    #s 

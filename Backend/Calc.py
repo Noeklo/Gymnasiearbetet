@@ -159,34 +159,22 @@ class Calc2:
         v1_tangent = vel1[0] * tangent_vector[0] + vel1[1] * tangent_vector[1]
         v2_tangent = vel2[0] * tangent_vector[0] + vel2[1] * tangent_vector[1]
 
-        # Beräkna nya hastighetsvektorer efter kollision
-        new_vel1 = (vel1[0] - 2 * v1_normal * normal_vector[0], vel1[1] - 2 * v1_normal * normal_vector[1])
-        new_vel2 = (vel2[0] - 2 * v2_normal * normal_vector[0], vel2[1] - 2 * v2_normal * normal_vector[1])
-        
-        coliding_Pairs[0].x_Velocity = new_vel1[0] 
-        coliding_Pairs[0].y_Velocity = new_vel1[1] 
-        coliding_Pairs[1].x_Velocity = new_vel2[0] 
-        coliding_Pairs[1].y_Velocity = new_vel2[1] 
-        #print(coliding_Pairs[0].mass )
-        #print(coliding_Pairs[1].mass )
-        #print(coliding_Pairs[0].mass - coliding_Pairs[1].mass)
-        #print(new_vel1)
-
         #Anpassning för bevarande av rörelsemängd och kenetisk energi
         new_v1_normal = -(v1_normal*(coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2*coliding_Pairs[1].mass*v1_normal) / (coliding_Pairs[0].mass + coliding_Pairs[1].mass)
         new_v2_normal = -(v2_normal*(coliding_Pairs[1].mass - coliding_Pairs[0].mass) + 2*coliding_Pairs[0].mass*v2_normal) / (coliding_Pairs[1].mass + coliding_Pairs[0].mass)
 
-        coliding_Pairs[0].x_Velocity = normal_vector[0] * new_v1_normal + tangent_vector[0] * v1_tangent
-        coliding_Pairs[0].y_Velocity = normal_vector[1] * new_v1_normal + tangent_vector[1] * v1_tangent
-        coliding_Pairs[1].x_Velocity = normal_vector[0] * new_v2_normal + tangent_vector[0] * v2_tangent
-        coliding_Pairs[1].y_Velocity = normal_vector[1] * new_v2_normal + tangent_vector[1] * v2_tangent
+        # Anpassning för bevarande av rörelsemängd och kenetisk energi
+        new_v1_normal = (v1_normal * (coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2 * coliding_Pairs[1].mass * v2_normal) / (coliding_Pairs[0].mass + coliding_Pairs[1].mass)
+        new_v2_normal = (v2_normal * (coliding_Pairs[1].mass - coliding_Pairs[0].mass) + 2 * coliding_Pairs[0].mass * v1_normal) / (coliding_Pairs[1].mass + coliding_Pairs[0].mass)
 
-
-        #print(new_vel1[0]*(coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2*coliding_Pairs[1].mass*new_vel2[0])
-        #print((coliding_Pairs[0].mass + coliding_Pairs[1].mass))
+        # Uppdatera hastigheterna
+        coliding_Pairs[0].x_Velocity = (normal_vector[0] * new_v1_normal + tangent_vector[0] * v1_tangent)
+        coliding_Pairs[0].y_Velocity = (normal_vector[1] * new_v1_normal + tangent_vector[1] * v1_tangent)
+        coliding_Pairs[1].x_Velocity = (normal_vector[0] * new_v2_normal + tangent_vector[0] * v2_tangent)
+        coliding_Pairs[1].y_Velocity = (normal_vector[1] * new_v2_normal + tangent_vector[1] * v2_tangent)
+        
         #print(f"Hastighet: {np.sqrt(coliding_Pairs[0].x_Velocity**2+coliding_Pairs[0].y_Velocity**2)}")
         #print(f"Hastighet: {np.sqrt(coliding_Pairs[1].x_Velocity**2+coliding_Pairs[1].y_Velocity**2)}")
-
 
     def generate_Data(self, Objs: List[CircleObj], x_Starts: List[float], y_Starts: List[float]):
         timeSeconds: float = 0

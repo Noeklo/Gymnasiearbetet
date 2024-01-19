@@ -1,8 +1,13 @@
 import numpy as np
 from typing import List
+import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
+from matplotlib.colors import Normalize 
 
 class CircleObj:
+
+    cmap = plt.get_cmap("bwr")
+    norm = Normalize(vmin= 1, vmax=6)
 
     radius: float = None
     mass: float = None
@@ -12,14 +17,15 @@ class CircleObj:
     y: float = None
     circle: Circle = None
 
-    def __init__(self, radius: float, mass: float, x_Velocity: float, y_Velocity: float, x: float,y: float, color: str = "blue"):
+    def __init__(self, radius: float, mass: float, x_Velocity: float, y_Velocity: float, x: float,y: float):
         self.radius = radius  
         self.mass = mass
         self.y_Velocity = y_Velocity
         self.x_Velocity = x_Velocity
         self.x = x
         self.y = y
-        self.circle = Circle((x,y),self.radius, color = str(color))
+        self.color = self.cmap(self.norm(self.mass))
+        self.circle = Circle((x,y),self.radius, color = self.color)
         self.y_Cords: List[float] = np.empty(100000)
         self.x_Cords: List[float] = np.empty(100000) 
         
