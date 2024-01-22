@@ -21,6 +21,19 @@ class GUI:
         self.canvas1 = None
         self.size = 1
         self.time = 0
+        self.ani = None
+
+
+
+        self.responsive = 0.5
+        self.window.tk.call('tk', 'scaling', self.responsive)
+
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+        print(screen_height, screen_width)
+
+        self.window.bind("<Motion>", lambda  e: print(self.window.winfo_screenheight()))
+        self.window.bind("<Configure>", print(self.window.winfo_screenheight()))
         
         # title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
         # title_label.pack() 
@@ -138,9 +151,26 @@ class GUI:
         self.sizeslider.pack(ipadx = 50, ipady = 50)
         self.sizeslider.place(x=50, y=230)
 
-        self.labelsize = ttk.Label(tab1, text="1.0 m")
+        def on_size_change(*args):
+            entry_text = entry_var6.get()
+            if is_float(entry_text):
+                if float(entry_text) > 20.0:
+                    entry_var6.set('20')
+                    self.size = 20.0
+                self.size = float(entry_text)
+                self.sizeslider.set(self.size)
+
+        entry_var6 = tk.StringVar()
+        entry_var6.trace_add("write",  on_size_change)
+
+        self.inputsize = ttk.Entry(tab1, width=4, textvariable=entry_var6)
+        self.inputsize.insert(0, "8.0") 
+        self.inputsize.pack(pady=10)
+        self.inputsize.place(x=275, y=220)
+
+        self.labelsize = ttk.Label(tab1, text="m")
         self.labelsize.pack()
-        self.labelsize.place(x=275, y=225)
+        self.labelsize.place(x=320, y=225)
 
         self.sizeslider.bind("<Motion>", lambda  e: self.update_size1(self.sizeslider.get()))
 
@@ -312,7 +342,9 @@ class GUI:
 
     def update_size1(self, value):
         rounded_value = round(value, 1)
-        self.labelsize.config(text=f"{rounded_value:.1f} m")
+        # self.labelsize.config(text=f"{rounded_value:.1f} m")
+        self.inputsize.delete(0, 'end')
+        self.inputsize.insert(-1, f"{rounded_value:.1f}")
         self.size = rounded_value
         self.sizeslider.set(self.size)
 
@@ -361,13 +393,16 @@ class GUI:
         else:
             self.toggle_button.config(text='PÅ')
 
-
     def Start(self):
+        if self.ani != None:
+            self.Stop()
         self.ani = AnimationWriter(self.canvas1, self.window)
         self.ani.generate_Spec_Animation(self.vectors, self.velocity)
         self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)        
 
     def RandomStart(self):
+        if self.ani != None:
+            self.Stop()
         self.count = int(self.numeric_entry.get())
         self.time = int(self.time_entry.get())
         self.ani = AnimationWriter(self.canvas1, self.window)
