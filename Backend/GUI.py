@@ -25,15 +25,15 @@ class GUI:
 
 
 
-        self.responsive = 0.5
-        self.window.tk.call('tk', 'scaling', self.responsive)
+        # self.responsive = 0.5
+        # self.window.tk.call('tk', 'scaling', self.responsive)
 
-        screen_width = self.window.winfo_screenwidth()
-        screen_height = self.window.winfo_screenheight()
-        print(screen_height, screen_width)
+        # screen_width = self.window.winfo_screenwidth()
+        # screen_height = self.window.winfo_screenheight()
+        # print(screen_height, screen_width)
 
-        self.window.bind("<Motion>", lambda  e: print(self.window.winfo_screenheight()))
-        self.window.bind("<Configure>", print(self.window.winfo_screenheight()))
+        # self.window.bind("<Motion>", lambda  e: print(self.window.winfo_screenheight()))
+        # self.window.bind("<Configure>", print(self.window.winfo_screenheight()))
         
         # title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
         # title_label.pack() 
