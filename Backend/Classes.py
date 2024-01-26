@@ -6,7 +6,8 @@ from matplotlib.colors import Normalize
 
 class CircleObj:
 
-    cmap = plt.get_cmap("bwr")
+    #cmap = plt.get_cmap("bwr")
+    cmap = plt.get_cmap("coolwarm")
     norm = Normalize(vmin= 1, vmax=6)
 
     radius: float = None

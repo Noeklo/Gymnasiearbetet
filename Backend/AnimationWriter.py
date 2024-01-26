@@ -50,7 +50,7 @@ class AnimationWriter:
         self.x_Starts.append(x)
         self.y_Starts.append(y)
 
-    def generate_Random_Circle(self, quantity: int):
+    def generate_Random_Circle(self, quantity: int, avrage_velocity: float = 5, avrage_mass: float = 1):
 
         random_Number_Generator = np.random.default_rng()
 
