@@ -30,12 +30,11 @@ class AnimationWriter:
         self.window = window
         self.canvas1 = canvas1
         self.frames = 1000
-        self.circles = []
-        self.x_Starts = []
-        self.y_Starts = []
+        self.circles = np.array([])
+        self.x_Starts = np.array([])
+        self.y_Starts = np.array([])
         self.lim = 10
         
-        self._ = []
 
 #AnimationWriter construktor för separat matplot fönster
 #    def __init__(self, widow: tkinter.Tk = None,):
@@ -43,12 +42,12 @@ class AnimationWriter:
 #        self.canvas1 = Canvas((6,6), self.fps, "Projectile Motion", self.window)
 
 
-    def generate_Circle(self, x_Velocity, y_Velocity, x, y):
+    def generate_Circle(self, x_Velocity: float, y_Velocity: float, x: int, y: int):
         circle1 = CircleObj(self.radius,self.mass,x_Velocity,y_Velocity, x, y)
         self.canvas1.ax.add_patch(circle1.circle)
-        self.circles.append(circle1)
-        self.x_Starts.append(x)
-        self.y_Starts.append(y)
+        self.circles = np.append(self.circles, circle1)
+        self.x_Starts = np.append(self.x_Starts, x)
+        self.y_Starts = np.append(self.y_Starts, y)
 
     def generate_Random_Circle(self, quantity: int, avrage_velocity: float = 5, avrage_mass: float = 1):
 
@@ -71,11 +70,7 @@ class AnimationWriter:
         random_x_Cord = selected_coordinates[:, 0]
         random_y_Cord = selected_coordinates[:, 1]
 
-        #Gör en lista med färger 
-        #colors: List[str] = ["blue", "red"]
-
         for index, x in enumerate(random_x_Cord):
-            #random_Color = colors[random_Number_Generator.integers(low=1, high=len(colors), size=1)[0]]
             circle1 = CircleObj(self.radius,
                                 masses[index],
                                 random_x_Velocity[index],
@@ -85,17 +80,18 @@ class AnimationWriter:
         
 
             self.canvas1.ax.add_patch(circle1.circle)
-            self.circles.append(circle1)
+            self.circles = np.append(self.circles, circle1)
 
-            self.x_Starts.append(random_x_Cord[index])
-            self.y_Starts.append(random_y_Cord[index])
+            self.x_Starts = np.append(self.x_Starts, random_x_Cord[index])
+            self.y_Starts = np.append(self.y_Starts, random_y_Cord[index])
+
 
         circle1 = CircleObj(self.radius, 3,0,0,5,5)
         self.canvas1.ax.add_patch(circle1.circle)
-        self.circles.append(circle1)
+        self.circles = np.append(self.circles, circle1)
 
-        self.x_Starts.append(0)
-        self.y_Starts.append(0)
+        self.x_Starts = np.append(self.x_Starts, 0)
+        self.y_Starts = np.append(self.y_Starts, 0)
         
 
 #genererar animation med random cirklar
@@ -112,7 +108,7 @@ class AnimationWriter:
         self.generate_Circle(self.x_Velocity, self.y_Velocity, 5,5) # noll vid 75 bredd 540
         self.generate_Circle(0, 0, 7,7) # noll vid 75 bredd 540
 
-        self.circles += self.canvas1.boarders
+        self.circles = np.concatenate((self.circles, self.canvas1.boarders), axis=0)
    #s 
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
@@ -144,8 +140,7 @@ class AnimationWriter:
         self.calc1 = Calc2(self.canvas1, self.frames , self.lim)
         self.canvas1.set_Boarders(self.lim) 
 
-        self.circles += self.canvas1.boarders
-        #print(self.circles)
+        self.circles = np.concatenate((self.circles, self.canvas1.boarders), axis=0)
     
         start = time.monotonic_ns()
         self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)

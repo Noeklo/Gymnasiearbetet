@@ -40,7 +40,6 @@ class Canvas:
         self.ax.set_ylim(0, y_Limet)
         
     def set_Boarders(self, lim):
-        self.boarders: List[LineObj] = []
         length = np.linspace(0,lim,lim*1000)
 
         x_Boarder1: LineObj = LineObj(length, np.zeros(1000))
@@ -48,10 +47,7 @@ class Canvas:
         y_Boarder1: LineObj = LineObj(np.zeros(1000), length)
         y_Boarder2: LineObj = LineObj(np.array([lim for _ in range(1000)]), length)
 
-        self.boarders.append(x_Boarder1)
-        self.boarders.append(x_Boarder2)
-        self.boarders.append(y_Boarder1)
-        self.boarders.append(y_Boarder2)
+        self.boarders = np.array([x_Boarder1,x_Boarder2,y_Boarder1,y_Boarder2])
 
 #        plt.title(title)  
 #        plt.grid()

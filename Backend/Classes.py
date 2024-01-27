@@ -27,8 +27,8 @@ class CircleObj:
         self.y = y
         self.color = self.cmap(self.norm(self.mass))
         self.circle = Circle((x,y),self.radius, color = self.color)
-        self.y_Cords: List[float] = np.empty(100000)
-        self.x_Cords: List[float] = np.empty(100000) 
+        self.y_Cords: List[float] = np.empty(int(1e6))
+        self.x_Cords: List[float] = np.empty(int(1e6)) 
         
     def position(self, i):
         self.circle.set_center((self.x_Cords[i], self.y_Cords[i])) 

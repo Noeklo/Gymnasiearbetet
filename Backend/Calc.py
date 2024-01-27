@@ -50,7 +50,7 @@ class Calc2:
         self.lim = lim
         
     def get_angle(self, vectors: List):
-        angle: float = np.arctan(-(vectors[1][1] - vectors[0][1])/(vectors[1][0] - vectors[0][0]))
+        angle: float = np.arctan2(-(vectors[1][1] - vectors[0][1]),(vectors[1][0] - vectors[0][0]))
         return angle 
 
     def getZero(self, Obj: CircleObj):
@@ -67,30 +67,24 @@ class Calc2:
 
     def get_Difference(self, obj_Pair, i):
 
-        diff: float = None
-        #If both are circles 
+      # If both are circles
         if isinstance(obj_Pair[0], CircleObj) and isinstance(obj_Pair[1], CircleObj):
-            diff = np.sqrt( (obj_Pair[0].x_Cords[i] - obj_Pair[1].x_Cords[i])**2 + (obj_Pair[0].y_Cords[i] - obj_Pair[1].y_Cords[i])**2 ) 
-
-        #If one is a line
-        elif isinstance(obj_Pair[0], LineObj) and isinstance(obj_Pair[1], CircleObj): 
-            #If two x cords are the same than it is a y axis
-            if obj_Pair[0].x_Cords[1] == obj_Pair[0].x_Cords[2]: 
-                diff = np.sqrt((obj_Pair[0].x_Cords[0] - obj_Pair[1].x_Cords[i])**2) 
+            diff = np.linalg.norm(np.array([obj_Pair[0].x_Cords[i], obj_Pair[0].y_Cords[i]]) - np.array([obj_Pair[1].x_Cords[i], obj_Pair[1].y_Cords[i]]))
+        # If one is a line
+        elif isinstance(obj_Pair[0], LineObj) and isinstance(obj_Pair[1], CircleObj):
+            # If two x cords are the same, then it is a y-axis
+            if obj_Pair[0].x_Cords[1] == obj_Pair[0].x_Cords[2]:
+                diff = np.abs(obj_Pair[0].x_Cords[0] - obj_Pair[1].x_Cords[i])
             else:
-                diff = np.sqrt((obj_Pair[0].y_Cords[0] - obj_Pair[1].y_Cords[i])**2) 
-
-        elif isinstance(obj_Pair[0], CircleObj) and isinstance(obj_Pair[1], LineObj): 
-
-            if obj_Pair[1].x_Cords[1] == obj_Pair[1].x_Cords[2]: 
-                diff = np.sqrt((obj_Pair[1].x_Cords[0] - obj_Pair[0].x_Cords[i])**2) 
+                diff = np.abs(obj_Pair[0].y_Cords[0] - obj_Pair[1].y_Cords[i])
+        elif isinstance(obj_Pair[0], CircleObj) and isinstance(obj_Pair[1], LineObj):
+            if obj_Pair[1].x_Cords[1] == obj_Pair[1].x_Cords[2]:
+                diff = np.abs(obj_Pair[1].x_Cords[0] - obj_Pair[0].x_Cords[i])
             else:
-                diff = np.sqrt((obj_Pair[1].y_Cords[0] - obj_Pair[0].y_Cords[i])**2) 
-
-        #If both are lines
-        elif isinstance(obj_Pair[0], LineObj) and isinstance(obj_Pair[1], LineObj): 
-            diff = 10**10
-
+                diff = np.abs(obj_Pair[1].y_Cords[0] - obj_Pair[0].y_Cords[i])
+        # If both are lines
+        elif isinstance(obj_Pair[0], LineObj) and isinstance(obj_Pair[1], LineObj):
+            diff = 1e10  # Some large value
         return diff
 
     def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
@@ -104,6 +98,23 @@ class Calc2:
 
         return []
 
+    #def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
+
+    #    obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
+    #    diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
+    #    print(diffs)
+    #    print(obj_Pairs)
+
+    #    # Hitta index för kolliderande par
+    #    colliding_indices = np.where((0 < diffs) & (diffs <= (obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius) * 1.1))[0]
+
+    #    # Returnera de kolliderande paren
+    #    if len(colliding_indices) > 0:
+    #        return obj_Pairs[colliding_indices]
+
+    #    return []
+
+
     def check_Dif_From_Walls(self, Objs: List[CircleObj], i):
         for obj in Objs:
             if obj.x_Cords[i] >= self.lim:
@@ -114,8 +125,8 @@ class Calc2:
 
     def change_Velocity(self, i: int, coliding_Pairs: [[CircleObj]]):
 
-        vel1 = (coliding_Pairs[0].x_Velocity, coliding_Pairs[0].y_Velocity)
-        vel2 = (coliding_Pairs[1].x_Velocity, coliding_Pairs[1].y_Velocity) 
+        vel1 = np.array([coliding_Pairs[0].x_Velocity, coliding_Pairs[0].y_Velocity])
+        vel2 = np.array([coliding_Pairs[1].x_Velocity, coliding_Pairs[1].y_Velocity]) 
 
         # Beräkna avståndet mellan cirklarna
         distance = self.get_Difference(coliding_Pairs, i ) 
@@ -186,8 +197,8 @@ class Calc2:
             for index, Obj in enumerate(Objs):
                 if isinstance(Obj, CircleObj):
                     if i == 0 :
-                        Obj.y_Cords[0] = y_Starts[index]                
-                        Obj.x_Cords[0] = x_Starts[index]                
+                        Obj.y_Cords[:i+1] = y_Starts[index]
+                        Obj.x_Cords[:i+1] = x_Starts[index]
                     else:
                         Obj.y_Cords[i] = self.linear_Distence(Obj.y_Velocity) + Obj.y_Cords[i-1]
                         Obj.x_Cords[i] = self.linear_Distence(Obj.x_Velocity) + Obj.x_Cords[i-1]
@@ -207,5 +218,6 @@ class Calc2:
             Obj.x_Cords = Obj.x_Cords[:(i)]
 #            print(f"x cord 1{Obj.x_Cords}")
 #            print(f"x cord 2{Obj.y_Cords}")
+        
 
         
