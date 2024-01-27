@@ -88,25 +88,25 @@ class Calc2:
         return diff
 
     def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
-
+        coliding_Pairs = np.array([], shape=(1,2))
         obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
         diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
         for index, diff in enumerate(diffs):
             if 0 < diff <= (obj_Pairs[index][0].radius + obj_Pairs[index][1].radius)*1.1:
-                return obj_Pairs[index]
+                coliding_Pairs = np.append(coliding_Pairs, obj_Pairs[index], axis=0)
+            
 
-        return []
+        print(coliding_Pairs)
+        return coliding_Pairs
 
     #def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
 
     #    obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
     #    diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
-    #    print(diffs)
-    #    print(obj_Pairs)
 
     #    # Hitta index för kolliderande par
-    #    colliding_indices = np.where((0 < diffs) & (diffs <= (obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius) * 1.1))[0]
+    #    colliding_indices = np.where((0 < diffs) & (diffs <= (obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius) * 1.1))
 
     #    # Returnera de kolliderande paren
     #    if len(colliding_indices) > 0:
@@ -123,7 +123,7 @@ class Calc2:
                 pass
 
 
-    def change_Velocity(self, i: int, coliding_Pairs: [[CircleObj]]):
+    def change_Velocity(self, i: int, coliding_Pairs: [CircleObj, CircleObj]):
 
         vel1 = np.array([coliding_Pairs[0].x_Velocity, coliding_Pairs[0].y_Velocity])
         vel2 = np.array([coliding_Pairs[1].x_Velocity, coliding_Pairs[1].y_Velocity]) 
@@ -203,10 +203,10 @@ class Calc2:
                         Obj.y_Cords[i] = self.linear_Distence(Obj.y_Velocity) + Obj.y_Cords[i-1]
                         Obj.x_Cords[i] = self.linear_Distence(Obj.x_Velocity) + Obj.x_Cords[i-1]
 
-            coliding_Pairs: List[CircleObj] = self.get_Coliding_Pairs(Objs, index, i)
+            coliding_Pairs: [[CircleObj, CircleObj],] = self.get_Coliding_Pairs(Objs, index, i)
             if len(coliding_Pairs) > 0: 
-                
-                self.change_Velocity(i, coliding_Pairs)
+                for coliding_Pair in coliding_Pairs:
+                    self.change_Velocity(i, coliding_Pair)
                 #print("collision")s
 
             timeSeconds += self.timeIncrement
