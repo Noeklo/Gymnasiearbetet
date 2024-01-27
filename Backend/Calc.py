@@ -88,17 +88,15 @@ class Calc2:
         return diff
 
     def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
-        coliding_Pairs = np.array([], shape=(1,2))
+        coliding_Pairs = []
         obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
         diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
         for index, diff in enumerate(diffs):
             if 0 < diff <= (obj_Pairs[index][0].radius + obj_Pairs[index][1].radius)*1.1:
-                coliding_Pairs = np.append(coliding_Pairs, obj_Pairs[index], axis=0)
+                coliding_Pairs.append(obj_Pairs[index])
             
-
-        print(coliding_Pairs)
-        return coliding_Pairs
+        return np.array(coliding_Pairs)
 
     #def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
 
@@ -121,6 +119,7 @@ class Calc2:
                 pass
             elif obj.y_Cords[i] >= self.lim:
                 pass
+
 
 
     def change_Velocity(self, i: int, coliding_Pairs: [CircleObj, CircleObj]):
@@ -195,6 +194,7 @@ class Calc2:
             #print(f"frame {i}")
 
             for index, Obj in enumerate(Objs):
+
                 if isinstance(Obj, CircleObj):
                     if i == 0 :
                         Obj.y_Cords[:i+1] = y_Starts[index]
