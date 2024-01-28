@@ -56,6 +56,7 @@ class AnimationWriter:
         masses: int = random_Number_Generator.integers(low=1, high=6, size=quantity)
         random_x_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
         random_y_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
+        
 
          # Generate all possible coordinates
         all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
@@ -64,7 +65,7 @@ class AnimationWriter:
         np.random.shuffle(all_coordinates)
 
         # Take the first 'quantity' coordinates
-        selected_coordinates = all_coordinates[:quantity]
+        selected_coordinates = all_coordinates[:quantity-1]
 
         # Extract x and y coordinates
         random_x_Cord = selected_coordinates[:, 0]

@@ -3,6 +3,7 @@ from itertools import combinations
 from typing import List
 from Canvas import Canvas
 from Classes import CircleObj, LineObj
+import time
 
 
 #gammal
@@ -42,7 +43,7 @@ class Calc:
 class Calc2:
 
     def __init__(self, canvas: Canvas, frames: int, lim: int):
-        self.data_Multiplier = 10
+        self.data_Multiplier = 5 
         self.timeIncrement: float = 1/(self.data_Multiplier *canvas.fps)
 #        self.timeIncrement: float = 1/canvas.fps
         self.g: float = 9.82
@@ -87,7 +88,7 @@ class Calc2:
             diff = 1e10  # Some large value
         return diff
 
-    def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
+    def get_Coliding_Pairs(self, Objs: List[CircleObj], i):
         coliding_Pairs = []
         obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
         diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
@@ -100,11 +101,15 @@ class Calc2:
 
     #def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
 
-    #    obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
+    #    obj_Pairs = np.asarray(list(combinations(Objs, 2)), dtype=object) 
     #    diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
     #    # Hitta index för kolliderande par
-    #    colliding_indices = np.where((0 < diffs) & (diffs <= (obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius) * 1.1))
+    #    #colliding_indices = np.where((0 < diffs) & (diffs <= (obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius) * 1.1))
+
+    #    # Hitta index för kolliderande par
+    #    radii_sum = obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius
+    #    colliding_indices = np.where((0 < diffs) & (diffs <= radii_sum * 1.1))
 
     #    # Returnera de kolliderande paren
     #    if len(colliding_indices) > 0:
@@ -203,7 +208,7 @@ class Calc2:
                         Obj.y_Cords[i] = self.linear_Distence(Obj.y_Velocity) + Obj.y_Cords[i-1]
                         Obj.x_Cords[i] = self.linear_Distence(Obj.x_Velocity) + Obj.x_Cords[i-1]
 
-            coliding_Pairs: [[CircleObj, CircleObj],] = self.get_Coliding_Pairs(Objs, index, i)
+            coliding_Pairs: [[CircleObj, CircleObj],] = self.get_Coliding_Pairs(Objs, i)
             if len(coliding_Pairs) > 0: 
                 for coliding_Pair in coliding_Pairs:
                     self.change_Velocity(i, coliding_Pair)
@@ -211,13 +216,50 @@ class Calc2:
 
             timeSeconds += self.timeIncrement
             i += 1
+        
+        ##Tar bort oanvända element i koordinat arrayerna
 
-        #Tar bort oanvända element i arrayen
+        #vec_cut_Cords = np.vectorize(CircleObj.cut_Cords, otypes=[object])
+        #vec_cut_Cords(Objs, i)#snabbare variation av for loopen nedan
+
         for Obj in Objs:
             Obj.y_Cords = Obj.y_Cords[:(i)]
             Obj.x_Cords = Obj.x_Cords[:(i)]
-#            print(f"x cord 1{Obj.x_Cords}")
-#            print(f"x cord 2{Obj.y_Cords}")
-        
+
+            #print(f"x cord 1{Obj.x_Cords}")
+            #print(f"x cord 2{Obj.y_Cords}")
+
+    #def generate_Data(self, Objs: List[CircleObj], x_Starts: List[float], y_Starts: List[float]):
+    #    y_cords = np.array([obj.y_Cords for obj in Objs if isinstance(obj, CircleObj)])
+    #    x_cords = np.array([obj.x_Cords for obj in Objs if isinstance(obj, CircleObj)])
+
+    #    # Skapa arrayer för startposition
+    #    y_starts = np.array(y_Starts)
+    #    x_starts = np.array(x_Starts)
+
+    #    i = 0
+    #    while i < self.frames * self.data_Multiplier:
+    #        # Uppdatera position med vektorisering
+    #        y_cords += self.linear_Distence(Obj.y_Velocity)
+    #        x_cords += self.linear_Distence(Obj.x_Velocity)
+
+
+    #        # Sätt startposition vid första iterationen
+    #        y_cords[0] = np.where(i == 0, y_starts, y_cords[0])
+    #        x_cords[0] = np.where(i == 0, x_starts, x_cords[0])
+
+    #        # Hitta kollisioner med vektorisering
+    #        coliding_pairs = np.array(self.get_Coliding_Pairs(Objs, i))
+
+    #        if len(coliding_pairs) > 0:
+    #            # Vektoriserad ändring av hastighet vid kollision
+    #            self.change_Velocity(i, coliding_pairs)
+
+    #        time_seconds += self.timeIncrement
+    #        i += 1
+
+    #    for Obj in Objs:
+    #        Obj.y_Cords = Obj.y_Cords[:(i)]
+    #        Obj.x_Cords = Obj.x_Cords[:(i)]
 
         

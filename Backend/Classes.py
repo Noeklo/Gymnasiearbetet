@@ -32,7 +32,7 @@ class CircleObj:
         
     def position(self, i):
         self.circle.set_center((self.x_Cords[i], self.y_Cords[i])) 
-
+    
 class LineObj:
 
     mass: float = 10.0**100 
@@ -47,3 +47,4 @@ class LineObj:
 
     def position(self, i):
         pass
+    
