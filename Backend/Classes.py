@@ -8,7 +8,7 @@ class CircleObj:
 
     #cmap = plt.get_cmap("bwr")
     cmap = plt.get_cmap("coolwarm")
-    norm = Normalize(vmin= 1, vmax=6)
+    norm = Normalize(vmin= 1, vmax=100)
 
     radius: float = None
     mass: float = None

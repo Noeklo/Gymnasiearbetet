@@ -49,16 +49,63 @@ class AnimationWriter:
         self.x_Starts = np.append(self.x_Starts, x)
         self.y_Starts = np.append(self.y_Starts, y)
 
-    def generate_Random_Circle(self, quantity: int, avrage_velocity: float = 5, avrage_mass: float = 1):
+    def generate_normal_distrebuted_Circle(self, quantity: int, avrage_velocity: float = 5, standard_deviation_velocity: float = 1, avrage_mass: float = 1, standard_deviation_mass: float = 1):
 
         random_Number_Generator = np.random.default_rng()
 
+        #Generera random värden i arrays för massorna och hastigheterna 
+        normal_distrubuted_masses: np.ndarray = random_Number_Generator.normal(avrage_mass, standard_deviation_mass)
+        normal_distrubuted_x_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity) 
+        normal_distrubuted_y_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity) 
+
+        # Generate all possible coordinates
+        all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
+        
+        # Shuffle the coordinates
+        np.random.shuffle(all_coordinates)
+
+        # Take the first 'quantity' coordinates
+        selected_coordinates = all_coordinates[:quantity-1]
+
+        # Extract x and y coordinates
+        random_x_Cord = selected_coordinates[:, 0]
+        random_y_Cord = selected_coordinates[:, 1]
+
+        for index, x in enumerate(random_x_Cord):
+            circle1 = CircleObj(self.radius,
+                                normal_distrubuted_masses[index],
+                                normal_distrubuted_x_velocities[index],
+                                normal_distrubuted_y_velocities[index],
+                                random_x_Cord[index],
+                                random_y_Cord[index])
+        
+
+            self.canvas1.ax.add_patch(circle1.circle)
+            self.circles = np.append(self.circles, circle1)
+
+            self.x_Starts = np.append(self.x_Starts, random_x_Cord[index])
+            self.y_Starts = np.append(self.y_Starts, random_y_Cord[index])
+
+
+        circle1 = CircleObj(self.radius, 3,0,0,5,5)
+        self.canvas1.ax.add_patch(circle1.circle)
+        self.circles = np.append(self.circles, circle1)
+
+        self.x_Starts = np.append(self.x_Starts, 0)
+        self.y_Starts = np.append(self.y_Starts, 0)
+        
+
+    def generate_Random_Circle(self, quantity: int):
+
+        random_Number_Generator = np.random.default_rng()
+
+        #Generera random värden i arrays för massorna och hastigheterna 
         masses: int = random_Number_Generator.integers(low=1, high=6, size=quantity)
         random_x_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
         random_y_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
         
 
-         # Generate all possible coordinates
+        # Generate all possible coordinates
         all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
         
         # Shuffle the coordinates
