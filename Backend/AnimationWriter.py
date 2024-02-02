@@ -54,9 +54,11 @@ class AnimationWriter:
         random_Number_Generator = np.random.default_rng()
 
         #Generera random värden i arrays för massorna och hastigheterna 
-        normal_distrubuted_masses: np.ndarray = random_Number_Generator.normal(avrage_mass, standard_deviation_mass)
-        normal_distrubuted_x_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity) 
-        normal_distrubuted_y_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity) 
+        normal_distrubuted_masses: np.ndarray = random_Number_Generator.normal(avrage_mass, standard_deviation_mass, quantity)
+        normal_distrubuted_x_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity, quantity) 
+        normal_distrubuted_y_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity, quantity) 
+
+        print(normal_distrubuted_masses)
 
         # Generate all possible coordinates
         all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
@@ -65,11 +67,15 @@ class AnimationWriter:
         np.random.shuffle(all_coordinates)
 
         # Take the first 'quantity' coordinates
-        selected_coordinates = all_coordinates[:quantity-1]
+        selected_coordinates = all_coordinates[:quantity]
+
 
         # Extract x and y coordinates
         random_x_Cord = selected_coordinates[:, 0]
         random_y_Cord = selected_coordinates[:, 1]
+
+        print(random_x_Cord)
+        print(random_y_Cord)
 
         for index, x in enumerate(random_x_Cord):
             circle1 = CircleObj(self.radius,
@@ -85,15 +91,8 @@ class AnimationWriter:
 
             self.x_Starts = np.append(self.x_Starts, random_x_Cord[index])
             self.y_Starts = np.append(self.y_Starts, random_y_Cord[index])
-
-
-        circle1 = CircleObj(self.radius, 3,0,0,5,5)
-        self.canvas1.ax.add_patch(circle1.circle)
-        self.circles = np.append(self.circles, circle1)
-
-        self.x_Starts = np.append(self.x_Starts, 0)
-        self.y_Starts = np.append(self.y_Starts, 0)
         
+        print(quantity)
 
     def generate_Random_Circle(self, quantity: int):
 
@@ -133,14 +132,6 @@ class AnimationWriter:
             self.x_Starts = np.append(self.x_Starts, random_x_Cord[index])
             self.y_Starts = np.append(self.y_Starts, random_y_Cord[index])
 
-
-        circle1 = CircleObj(self.radius, 3,0,0,5,5)
-        self.canvas1.ax.add_patch(circle1.circle)
-        self.circles = np.append(self.circles, circle1)
-
-        self.x_Starts = np.append(self.x_Starts, 0)
-        self.y_Starts = np.append(self.y_Starts, 0)
-        
 
 #genererar animation med random cirklar
     def generate_Spec_Animation(self, vectors: List,  Velocity: float = 8, radius: float = 0.1, mass: float = 1):
@@ -182,7 +173,8 @@ class AnimationWriter:
         self.mass: float = mass 
         self.frames = int(length*60/2)
 
-        self.generate_Random_Circle(quantity)
+        #self.generate_Random_Circle(quantity)
+        self.generate_normal_distrebuted_Circle(quantity, 3, 1, 50, 10)
     
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames , self.lim)
