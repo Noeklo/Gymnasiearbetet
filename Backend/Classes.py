@@ -29,6 +29,9 @@ class CircleObj:
         self.circle = Circle((x,y),self.radius, color = self.color)
         self.y_Cords: List[float] = np.empty(int(1e6))
         self.x_Cords: List[float] = np.empty(int(1e6)) 
+    
+    def __add__(self, other):
+        return self.radius + other.radius
         
     def position(self, i):
         self.circle.set_center((self.x_Cords[i], self.y_Cords[i])) 
@@ -47,4 +50,7 @@ class LineObj:
 
     def position(self, i):
         pass
+    
+    def __add__(self, other):
+        return self.radius + other.radius
     

@@ -99,7 +99,7 @@ class Calc2:
             
         return np.array(coliding_Pairs)
 
-    #def get_Coliding_Pairs(self, Objs: List[CircleObj], index, i):
+    #def get_Coliding_Pairs(self, Objs: List[CircleObj], i):
 
     #    obj_Pairs = np.asarray(list(combinations(Objs, 2)), dtype=object) 
     #    diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
@@ -108,7 +108,7 @@ class Calc2:
     #    #colliding_indices = np.where((0 < diffs) & (diffs <= (obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius) * 1.1))
 
     #    # Hitta index för kolliderande par
-    #    radii_sum = obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius
+    #    radii_sum = obj_Pairs[:, 0]+ obj_Pairs[:, 1]
     #    colliding_indices = np.where((0 < diffs) & (diffs <= radii_sum * 1.1))
 
     #    # Returnera de kolliderande paren
