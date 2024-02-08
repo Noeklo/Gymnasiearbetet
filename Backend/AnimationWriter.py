@@ -173,8 +173,8 @@ class AnimationWriter:
         self.mass: float = mass 
         self.frames = int(length*60/2)
 
-        #self.generate_Random_Circle(quantity)
-        self.generate_normal_distrebuted_Circle(quantity, Velocity, 2, mass, 10)
+        self.generate_Random_Circle(quantity)
+        #self.generate_normal_distrebuted_Circle(quantity, Velocity, 2, mass, 10)
     
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames , self.lim)

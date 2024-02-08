@@ -43,7 +43,7 @@ class Calc:
 class Calc2:
 
     def __init__(self, canvas: Canvas, frames: int, lim: int):
-        self.data_Multiplier = 5 
+        self.data_Multiplier = 10 
         self.timeIncrement: float = 1/(self.data_Multiplier *canvas.fps)
 #        self.timeIncrement: float = 1/canvas.fps
         self.g: float = 9.82
