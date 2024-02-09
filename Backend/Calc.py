@@ -88,34 +88,34 @@ class Calc2:
             diff = 1e10  # Some large value
         return diff
 
-    def get_Coliding_Pairs(self, Objs: List[CircleObj], i):
-        coliding_Pairs = []
-        obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
-        diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
-
-        for index, diff in enumerate(diffs):
-            if 0 < diff <= (obj_Pairs[index][0].radius + obj_Pairs[index][1].radius)*1.1:
-                coliding_Pairs.append(obj_Pairs[index])
-            
-        return np.array(coliding_Pairs)
-
     #def get_Coliding_Pairs(self, Objs: List[CircleObj], i):
-
-    #    obj_Pairs = np.asarray(list(combinations(Objs, 2)), dtype=object) 
+    #    coliding_Pairs = []
+    #    obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
     #    diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
-    #    # Hitta index för kolliderande par
-    #    #colliding_indices = np.where((0 < diffs) & (diffs <= (obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius) * 1.1))
+    #    for index, diff in enumerate(diffs):
+    #        if 0 < diff <= (obj_Pairs[index][0].radius + obj_Pairs[index][1].radius)*1.1:
+    #            coliding_Pairs.append(obj_Pairs[index])
+    #        
+    #    return np.array(coliding_Pairs)
 
-    #    # Hitta index för kolliderande par
-    #    radii_sum = obj_Pairs[:, 0]+ obj_Pairs[:, 1]
-    #    colliding_indices = np.where((0 < diffs) & (diffs <= radii_sum * 1.1))
+    def get_Coliding_Pairs(self, Objs: List[CircleObj], i):
 
-    #    # Returnera de kolliderande paren
-    #    if len(colliding_indices) > 0:
-    #        return obj_Pairs[colliding_indices]
+        obj_Pairs = np.asarray(list(combinations(Objs, 2)), dtype=object) 
+        diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
-    #    return []
+        # Hitta index för kolliderande par
+        #colliding_indices = np.where((0 < diffs) & (diffs <= (obj_Pairs[:, 0].radius + obj_Pairs[:, 1].radius) * 1.1))
+
+        # Hitta index för kolliderande par
+        radii_sum = obj_Pairs[:, 0]+ obj_Pairs[:, 1]
+        colliding_indices = np.where((0 < diffs) & (diffs <= radii_sum * 1.1))
+
+        # Returnera de kolliderande paren
+        if len(colliding_indices) > 0:
+            return obj_Pairs[colliding_indices]
+
+        return []
 
 
     def check_Dif_From_Walls(self, Objs: List[CircleObj], i):

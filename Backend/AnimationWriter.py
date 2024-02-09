@@ -58,24 +58,29 @@ class AnimationWriter:
         normal_distrubuted_x_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity, quantity) 
         normal_distrubuted_y_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity, quantity) 
 
-        print(normal_distrubuted_masses)
+        normal_distrubuted_x_velocities = [np.round(i) for i in normal_distrubuted_x_velocities]
+        normal_distrubuted_y_velocities = [np.round(i) for i in normal_distrubuted_y_velocities]
+        normal_distrubuted_masses =  [np.abs(np.round(i)) for i in normal_distrubuted_masses]
 
-        # Generate all possible coordinates
+        print(normal_distrubuted_masses)
+        print(normal_distrubuted_x_velocities)
+        print(normal_distrubuted_y_velocities)
+
+        #Generera alla möjliga koordinater
         all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
         
-        # Shuffle the coordinates
+        #blanda koordinaterna
         np.random.shuffle(all_coordinates)
 
-        # Take the first 'quantity' coordinates
-        selected_coordinates = all_coordinates[:quantity]
+        # välj ut de första "quantity" koordinaterna
+        selected_coordinates = all_coordinates[:quantity-1]
 
-
-        # Extract x and y coordinates
+        #separera x och y koordinater
         random_x_Cord = selected_coordinates[:, 0]
         random_y_Cord = selected_coordinates[:, 1]
 
-        print(random_x_Cord)
-        print(random_y_Cord)
+        #print(random_x_Cord)
+        #print(random_y_Cord)
 
         for index, x in enumerate(random_x_Cord):
             circle1 = CircleObj(self.radius,
@@ -100,9 +105,11 @@ class AnimationWriter:
 
         #Generera random värden i arrays för massorna och hastigheterna 
         masses: int = random_Number_Generator.integers(low=1, high=6, size=quantity)
-        random_x_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
-        random_y_Velocity: int = random_Number_Generator.integers(low=-5, high=5, size=quantity)
+        random_x_Velocity: int = random_Number_Generator.integers(low=-20, high=20, size=quantity)
+        random_y_Velocity: int = random_Number_Generator.integers(low=-20, high=20, size=quantity)
         
+        print(random_x_Velocity)
+        print(random_y_Velocity)
 
         # Generate all possible coordinates
         all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
@@ -173,8 +180,8 @@ class AnimationWriter:
         self.mass: float = mass 
         self.frames = int(length*60/2)
 
-        self.generate_Random_Circle(quantity)
-        #self.generate_normal_distrebuted_Circle(quantity, Velocity, 2, mass, 10)
+        #self.generate_Random_Circle(quantity)
+        self.generate_normal_distrebuted_Circle(quantity, Velocity, 1, mass, 10)
     
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames , self.lim)

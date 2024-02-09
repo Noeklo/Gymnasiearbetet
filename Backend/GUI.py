@@ -72,7 +72,6 @@ class GUI:
                 return True
             except ValueError:
                 return False
-
         
 
         # INSIDE TAB 1
