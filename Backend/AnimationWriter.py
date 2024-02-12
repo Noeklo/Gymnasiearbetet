@@ -48,8 +48,8 @@ class AnimationWriter:
         self.circles = np.append(self.circles, circle1)
         self.x_Starts = np.append(self.x_Starts, x)
         self.y_Starts = np.append(self.y_Starts, y)
-
-    def generate_normal_distrebuted_Circle(self, quantity: int, avrage_velocity: float = 5, standard_deviation_velocity: float = 1, avrage_mass: float = 1, standard_deviation_mass: float = 1):
+    
+    def generate_normal_distrebuted_Circle(self, quantity: int, avrage_velocity: float = 5, standard_deviation_velocity: float = 5, avrage_mass: float = 100, standard_deviation_mass: float = 50):
 
         random_Number_Generator = np.random.default_rng()
 
@@ -58,11 +58,15 @@ class AnimationWriter:
         normal_distrubuted_x_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity, quantity) 
         normal_distrubuted_y_velocities: np.ndarray = random_Number_Generator.normal(avrage_velocity, standard_deviation_velocity, quantity) 
 
-        normal_distrubuted_x_velocities = [np.round(i) for i in normal_distrubuted_x_velocities]
-        normal_distrubuted_y_velocities = [np.round(i) for i in normal_distrubuted_y_velocities]
-        normal_distrubuted_masses =  [np.abs(np.round(i)) for i in normal_distrubuted_masses]
 
-        print(normal_distrubuted_masses)
+        normal_distrubuted_x_velocities = np.array([np.round(i) for i in normal_distrubuted_x_velocities])
+        normal_distrubuted_y_velocities = np.array([np.round(i) for i in normal_distrubuted_y_velocities])
+        normal_distrubuted_masses =  np.array([np.abs(np.round(i)) for i in normal_distrubuted_masses])
+
+        normal_distrubuted_x_velocities = np.where(normal_distrubuted_x_velocities%2==0,-normal_distrubuted_x_velocities, normal_distrubuted_x_velocities )
+        normal_distrubuted_y_velocities = np.where(normal_distrubuted_y_velocities%2==0, -normal_distrubuted_y_velocities, normal_distrubuted_y_velocities )
+
+        print((normal_distrubuted_masses))
         print(normal_distrubuted_x_velocities)
         print(normal_distrubuted_y_velocities)
 
@@ -78,9 +82,6 @@ class AnimationWriter:
         #separera x och y koordinater
         random_x_Cord = selected_coordinates[:, 0]
         random_y_Cord = selected_coordinates[:, 1]
-
-        #print(random_x_Cord)
-        #print(random_y_Cord)
 
         for index, x in enumerate(random_x_Cord):
             circle1 = CircleObj(self.radius,
@@ -181,7 +182,7 @@ class AnimationWriter:
         self.frames = int(length*60/2)
 
         #self.generate_Random_Circle(quantity)
-        self.generate_normal_distrebuted_Circle(quantity, Velocity, 1, mass, 10)
+        self.generate_normal_distrebuted_Circle(quantity, Velocity, 5, mass)
     
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames , self.lim)

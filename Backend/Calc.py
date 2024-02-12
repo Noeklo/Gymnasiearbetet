@@ -43,7 +43,7 @@ class Calc:
 class Calc2:
 
     def __init__(self, canvas: Canvas, frames: int, lim: int):
-        self.data_Multiplier = 10 
+        self.data_Multiplier = 20 
         self.timeIncrement: float = 1/(self.data_Multiplier *canvas.fps)
 #        self.timeIncrement: float = 1/canvas.fps
         self.g: float = 9.82
@@ -190,6 +190,11 @@ class Calc2:
         
         #print(f"Hastighet: {np.sqrt(coliding_Pairs[0].x_Velocity**2+coliding_Pairs[0].y_Velocity**2)}")
         #print(f"Hastighet: {np.sqrt(coliding_Pairs[1].x_Velocity**2+coliding_Pairs[1].y_Velocity**2)}")
+    def get_kinetic_energy(self, Obj: CircleObj):
+        velocity = np.sqrt(CircleObj)
+        kinetic_energy = CircleObj.mass*
+
+    def get_kinetic_total_energy(self, Objs: np.ndarray[CircleObj]):
 
     def generate_Data(self, Objs: List[CircleObj], x_Starts: List[float], y_Starts: List[float]):
         timeSeconds: float = 0
@@ -208,7 +213,7 @@ class Calc2:
                         Obj.y_Cords[i] = self.linear_Distence(Obj.y_Velocity) + Obj.y_Cords[i-1]
                         Obj.x_Cords[i] = self.linear_Distence(Obj.x_Velocity) + Obj.x_Cords[i-1]
 
-            coliding_Pairs: [[CircleObj, CircleObj],] = self.get_Coliding_Pairs(Objs, i)
+            coliding_Pairs: np.ndarray[[CircleObj, CircleObj],] = self.get_Coliding_Pairs(Objs, i)
             if len(coliding_Pairs) > 0: 
                 for coliding_Pair in coliding_Pairs:
                     self.change_Velocity(i, coliding_Pair)
@@ -226,6 +231,7 @@ class Calc2:
             Obj.y_Cords = Obj.y_Cords[:(i)]
             Obj.x_Cords = Obj.x_Cords[:(i)]
 
+    
             #print(f"x cord 1{Obj.x_Cords}")
             #print(f"x cord 2{Obj.y_Cords}")
 
