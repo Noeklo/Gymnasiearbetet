@@ -49,6 +49,7 @@ class Calc2:
         self.g: float = 9.82
         self.frames = frames
         self.lim = lim
+        self.kinetic_energys = np.empty(self.frames*self.data_Multiplier)
         
     def get_angle(self, vectors: List):
         angle: float = np.arctan2(-(vectors[1][1] - vectors[0][1]),(vectors[1][0] - vectors[0][0]))
@@ -88,18 +89,18 @@ class Calc2:
             diff = 1e10  # Some large value
         return diff
 
-    #def get_Coliding_Pairs(self, Objs: List[CircleObj], i):
-    #    coliding_Pairs = []
+    #def get_colliding_Pairs(self, Objs: List[CircleObj], i):
+    #    colliding_Pairs = []
     #    obj_Pairs = np.asarray(list(combinations(Objs, 2))) 
     #    diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
     #    for index, diff in enumerate(diffs):
     #        if 0 < diff <= (obj_Pairs[index][0].radius + obj_Pairs[index][1].radius)*1.1:
-    #            coliding_Pairs.append(obj_Pairs[index])
+    #            colliding_Pairs.append(obj_Pairs[index])
     #        
-    #    return np.array(coliding_Pairs)
+    #    return np.array(colliding_Pairs)
 
-    def get_Coliding_Pairs(self, Objs: List[CircleObj], i):
+    def get_colliding_Pairs(self, Objs: List[CircleObj], i):
 
         obj_Pairs = np.asarray(list(combinations(Objs, 2)), dtype=object) 
         diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
@@ -126,44 +127,42 @@ class Calc2:
                 pass
 
 
+    def change_Velocity_Inelastic(self, i: int, colliding_Pairs: [CircleObj, CircleObj]):
 
-    def change_Velocity(self, i: int, coliding_Pairs: [CircleObj, CircleObj]):
-
-        vel1 = np.array([coliding_Pairs[0].x_Velocity, coliding_Pairs[0].y_Velocity])
-        vel2 = np.array([coliding_Pairs[1].x_Velocity, coliding_Pairs[1].y_Velocity]) 
+        vel1 = np.array([colliding_Pairs[0].x_Velocity, colliding_Pairs[0].y_Velocity])
+        vel2 = np.array([colliding_Pairs[1].x_Velocity, colliding_Pairs[1].y_Velocity]) 
 
         # Beräkna avståndet mellan cirklarna
-        distance = self.get_Difference(coliding_Pairs, i ) 
+        distance = self.get_Difference(colliding_Pairs, i ) 
 
         # Beräkna normalvektorn
-
         #If one is a line
-        if isinstance(coliding_Pairs[0], LineObj) and isinstance(coliding_Pairs[1], CircleObj): 
+        if isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], CircleObj): 
             #If two x cords are the same than it is a y axis
-            if coliding_Pairs[0].x_Cords[1] == coliding_Pairs[0].x_Cords[2]: 
-                #normal_vector = (coliding_Pairs[1].radius/distance,0)
+            if colliding_Pairs[0].x_Cords[1] == colliding_Pairs[0].x_Cords[2]: 
+                #normal_vector = (colliding_Pairs[1].radius/distance,0)
                 normal_vector = (1,0)
             else:
-                #normal_vector = (0,coliding_Pairs[1].radius/distance)
+                #normal_vector = (0,colliding_Pairs[1].radius/distance)
                 normal_vector = (0,1)
 
             print(normal_vector)
 
-        if isinstance(coliding_Pairs[0], CircleObj) and isinstance(coliding_Pairs[1], LineObj): 
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], LineObj): 
 
-            if coliding_Pairs[1].x_Cords[1] == coliding_Pairs[1].x_Cords[2]: 
-                #normal_vector = (coliding_Pairs[0].radius/distance,0)
+            if colliding_Pairs[1].x_Cords[1] == colliding_Pairs[1].x_Cords[2]: 
+                #normal_vector = (colliding_Pairs[0].radius/distance,0)
                 normal_vector = (1,0)
             else:
-                #normal_vector = (0,coliding_Pairs[0].radius/distance)
+                #normal_vector = (0,colliding_Pairs[0].radius/distance)
                 normal_vector = (0,1)
 
 
-        if isinstance(coliding_Pairs[0], CircleObj) and isinstance(coliding_Pairs[1], CircleObj):
-            normal_vector = ((coliding_Pairs[1].x_Cords[i] - coliding_Pairs[0].x_Cords[i]) /
-                            distance, (coliding_Pairs[1].y_Cords[i] - coliding_Pairs[0].y_Cords[i]) / distance)
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], CircleObj):
+            normal_vector = ((colliding_Pairs[1].x_Cords[i] - colliding_Pairs[0].x_Cords[i]) /
+                            distance, (colliding_Pairs[1].y_Cords[i] - colliding_Pairs[0].y_Cords[i]) / distance)
 
-        elif isinstance(coliding_Pairs[0], LineObj) and isinstance(coliding_Pairs[1], LineObj): 
+        elif isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], LineObj): 
             normal_vector = (0,0)
 
         #Bräkna Unit Tanget vektorn       
@@ -174,34 +173,87 @@ class Calc2:
         v1_tangent = vel1[0] * tangent_vector[0] + vel1[1] * tangent_vector[1]
         v2_tangent = vel2[0] * tangent_vector[0] + vel2[1] * tangent_vector[1]
 
-        #Anpassning för bevarande av rörelsemängd och kenetisk energi
-        new_v1_normal = (v1_normal*(coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2*coliding_Pairs[1].mass*v1_normal) / (coliding_Pairs[0].mass + coliding_Pairs[1].mass)
-        new_v2_normal = (v2_normal*(coliding_Pairs[1].mass - coliding_Pairs[0].mass) + 2*coliding_Pairs[0].mass*v2_normal) / (coliding_Pairs[1].mass + coliding_Pairs[0].mass)
-
-        # Anpassning för bevarande av rörelsemängd och kenetisk energi
-        new_v1_normal = (v1_normal * (coliding_Pairs[0].mass - coliding_Pairs[1].mass) + 2 * coliding_Pairs[1].mass * v2_normal) / (coliding_Pairs[0].mass + coliding_Pairs[1].mass)
-        new_v2_normal = (v2_normal * (coliding_Pairs[1].mass - coliding_Pairs[0].mass) + 2 * coliding_Pairs[0].mass * v1_normal) / (coliding_Pairs[1].mass + coliding_Pairs[0].mass)
+        new_v_normal = (colliding_Pairs[0].mass * v1_normal + colliding_Pairs[1].mass * v2_normal) / (colliding_Pairs[0].mass + colliding_Pairs[1].mass)
 
         # Uppdatera hastigheterna
-        coliding_Pairs[0].x_Velocity = (normal_vector[0] * new_v1_normal + tangent_vector[0] * v1_tangent)
-        coliding_Pairs[0].y_Velocity = (normal_vector[1] * new_v1_normal + tangent_vector[1] * v1_tangent)
-        coliding_Pairs[1].x_Velocity = (normal_vector[0] * new_v2_normal + tangent_vector[0] * v2_tangent)
-        coliding_Pairs[1].y_Velocity = (normal_vector[1] * new_v2_normal + tangent_vector[1] * v2_tangent)
+        colliding_Pairs[0].x_Velocity = (normal_vector[0] * new_v_normal + tangent_vector[0] * v1_tangent)
+        colliding_Pairs[0].y_Velocity = (normal_vector[1] * new_v_normal + tangent_vector[1] * v1_tangent)
+        colliding_Pairs[1].x_Velocity = (normal_vector[0] * new_v_normal + tangent_vector[0] * v2_tangent)
+        colliding_Pairs[1].y_Velocity = (normal_vector[1] * new_v_normal + tangent_vector[1] * v2_tangent)
         
-        #print(f"Hastighet: {np.sqrt(coliding_Pairs[0].x_Velocity**2+coliding_Pairs[0].y_Velocity**2)}")
-        #print(f"Hastighet: {np.sqrt(coliding_Pairs[1].x_Velocity**2+coliding_Pairs[1].y_Velocity**2)}")
-    def get_kinetic_energy(self, Obj: CircleObj):
-        velocity = np.sqrt(CircleObj)
-        kinetic_energy = CircleObj.mass*
+        #print(f"Hastighet: {np.sqrt(colliding_Pairs[0].x_Velocity**2+colliding_Pairs[0].y_Velocity**2)}")
+        #print(f"Hastighet: {np.sqrt(colliding_Pairs[1].x_Velocity**2+colliding_Pairs[1].y_Velocity**2)}")
+
+    def change_Velocity_Elastic(self, i: int, colliding_Pairs: [CircleObj, CircleObj]):
+
+        vel1 = np.array([colliding_Pairs[0].x_Velocity, colliding_Pairs[0].y_Velocity])
+        vel2 = np.array([colliding_Pairs[1].x_Velocity, colliding_Pairs[1].y_Velocity]) 
+
+        # Beräkna avståndet mellan cirklarna
+        distance = self.get_Difference(colliding_Pairs, i ) 
+
+        # Beräkna normalvektorn
+        #If one is a line
+        if isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], CircleObj): 
+            #If two x cords are the same than it is a y axis
+            if colliding_Pairs[0].x_Cords[1] == colliding_Pairs[0].x_Cords[2]: 
+                #normal_vector = (colliding_Pairs[1].radius/distance,0)
+                normal_vector = (1,0)
+            else:
+                #normal_vector = (0,colliding_Pairs[1].radius/distance)
+                normal_vector = (0,1)
+
+            print(normal_vector)
+
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], LineObj): 
+
+            if colliding_Pairs[1].x_Cords[1] == colliding_Pairs[1].x_Cords[2]: 
+                #normal_vector = (colliding_Pairs[0].radius/distance,0)
+                normal_vector = (1,0)
+            else:
+                #normal_vector = (0,colliding_Pairs[0].radius/distance)
+                normal_vector = (0,1)
+
+
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], CircleObj):
+            normal_vector = ((colliding_Pairs[1].x_Cords[i] - colliding_Pairs[0].x_Cords[i]) /
+                            distance, (colliding_Pairs[1].y_Cords[i] - colliding_Pairs[0].y_Cords[i]) / distance)
+
+        elif isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], LineObj): 
+            normal_vector = (0,0)
+
+        #Bräkna Unit Tanget vektorn       
+        tangent_vector = (-normal_vector[1], normal_vector[0])
+        # Beräkna kollisionens hastighet längs normalvektorn
+        v1_normal = vel1[0] * normal_vector[0] + vel1[1] * normal_vector[1]
+        v2_normal = vel2[0] * normal_vector[0] + vel2[1] * normal_vector[1]
+        v1_tangent = vel1[0] * tangent_vector[0] + vel1[1] * tangent_vector[1]
+        v2_tangent = vel2[0] * tangent_vector[0] + vel2[1] * tangent_vector[1]
+
+        # Anpassning för bevarande av rörelsemängd och kenetisk energi
+        new_v1_normal = (v1_normal * (colliding_Pairs[0].mass - colliding_Pairs[1].mass) + 2 * colliding_Pairs[1].mass * v2_normal) / (colliding_Pairs[0].mass + colliding_Pairs[1].mass)
+        new_v2_normal = (v2_normal * (colliding_Pairs[1].mass - colliding_Pairs[0].mass) + 2 * colliding_Pairs[0].mass * v1_normal) / (colliding_Pairs[1].mass + colliding_Pairs[0].mass)
+
+        # Uppdatera hastigheterna
+        colliding_Pairs[0].x_Velocity = (normal_vector[0] * new_v1_normal + tangent_vector[0] * v1_tangent)
+        colliding_Pairs[0].y_Velocity = (normal_vector[1] * new_v1_normal + tangent_vector[1] * v1_tangent)
+        colliding_Pairs[1].x_Velocity = (normal_vector[0] * new_v2_normal + tangent_vector[0] * v2_tangent)
+        colliding_Pairs[1].y_Velocity = (normal_vector[1] * new_v2_normal + tangent_vector[1] * v2_tangent)
+        
+        #print(f"Hastighet: {np.sqrt(colliding_Pairs[0].x_Velocity**2+colliding_Pairs[0].y_Velocity**2)}")
+        #print(f"Hastighet: {np.sqrt(colliding_Pairs[1].x_Velocity**2+colliding_Pairs[1].y_Velocity**2)}")
 
     def get_kinetic_total_energy(self, Objs: np.ndarray[CircleObj]):
+        return np.sum([Obj.get_kinetic_energy() for Obj in Objs])
+
 
     def generate_Data(self, Objs: List[CircleObj], x_Starts: List[float], y_Starts: List[float]):
         timeSeconds: float = 0
         i: int = 0
 
         while i < self.frames*self.data_Multiplier:
-            #print(f"frame {i}")
+
+            self.kinetic_energys[i] = self.get_kinetic_total_energy(Objs) 
 
             for index, Obj in enumerate(Objs):
 
@@ -213,10 +265,10 @@ class Calc2:
                         Obj.y_Cords[i] = self.linear_Distence(Obj.y_Velocity) + Obj.y_Cords[i-1]
                         Obj.x_Cords[i] = self.linear_Distence(Obj.x_Velocity) + Obj.x_Cords[i-1]
 
-            coliding_Pairs: np.ndarray[[CircleObj, CircleObj],] = self.get_Coliding_Pairs(Objs, i)
-            if len(coliding_Pairs) > 0: 
-                for coliding_Pair in coliding_Pairs:
-                    self.change_Velocity(i, coliding_Pair)
+            colliding_Pairs: np.ndarray[[CircleObj, CircleObj],] = self.get_colliding_Pairs(Objs, i)
+            if len(colliding_Pairs) > 0: 
+                for colliding_Pair in colliding_Pairs:
+                    self.change_Velocity_Elastic(i, colliding_Pair)
                 #print("collision")s
 
             timeSeconds += self.timeIncrement
@@ -231,7 +283,7 @@ class Calc2:
             Obj.y_Cords = Obj.y_Cords[:(i)]
             Obj.x_Cords = Obj.x_Cords[:(i)]
 
-    
+        #print(self.kinetic_energys) 
             #print(f"x cord 1{Obj.x_Cords}")
             #print(f"x cord 2{Obj.y_Cords}")
 
@@ -255,11 +307,11 @@ class Calc2:
     #        x_cords[0] = np.where(i == 0, x_starts, x_cords[0])
 
     #        # Hitta kollisioner med vektorisering
-    #        coliding_pairs = np.array(self.get_Coliding_Pairs(Objs, i))
+    #        colliding_Pairs = np.array(self.get_colliding_Pairs(Objs, i))
 
-    #        if len(coliding_pairs) > 0:
+    #        if len(colliding_Pairs) > 0:
     #            # Vektoriserad ändring av hastighet vid kollision
-    #            self.change_Velocity(i, coliding_pairs)
+    #            self.change_Velocity(i, colliding_Pairs)
 
     #        time_seconds += self.timeIncrement
     #        i += 1

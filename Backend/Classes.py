@@ -32,6 +32,11 @@ class CircleObj:
     
     def __add__(self, other):
         return self.radius + other.radius
+
+    def get_kinetic_energy(self):
+        velocity = np.sqrt(self.x_Velocity**2 + self.y_Velocity**2)
+        kinetic_energy = self.mass*velocity**2/2
+        return kinetic_energy
         
     def position(self, i):
         self.circle.set_center((self.x_Cords[i], self.y_Cords[i])) 
@@ -47,6 +52,11 @@ class LineObj:
         self.y_Cords: np.array = np.array(y_Cords)
         self.x_Cords: np.array = np.array(x_Cords)
         #print(f"{x_Cords}\n{y_Cords}\n")         
+
+    def get_kinetic_energy(self):
+        velocity = np.sqrt(self.x_Velocity**2 + self.y_Velocity**2)
+        kinetic_energy = self.mass*velocity**2/2
+        return kinetic_energy
 
     def position(self, i):
         pass
