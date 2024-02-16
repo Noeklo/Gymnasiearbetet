@@ -98,8 +98,6 @@ class AnimationWriter:
             self.x_Starts = np.append(self.x_Starts, random_x_Cord[index])
             self.y_Starts = np.append(self.y_Starts, random_y_Cord[index])
         
-        print(quantity)
-
     def generate_Random_Circle(self, quantity: int):
 
         random_Number_Generator = np.random.default_rng()

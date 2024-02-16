@@ -183,6 +183,57 @@ class Calc2:
         
         #print(f"Hastighet: {np.sqrt(colliding_Pairs[0].x_Velocity**2+colliding_Pairs[0].y_Velocity**2)}")
         #print(f"Hastighet: {np.sqrt(colliding_Pairs[1].x_Velocity**2+colliding_Pairs[1].y_Velocity**2)}")
+    def change_Velocity_Elastic2(self, i: int, colliding_Pairs: [CircleObj, CircleObj]):
+
+        vel1 = np.array([colliding_Pairs[0].x_Velocity, colliding_Pairs[0].y_Velocity])
+        vel2 = np.array([colliding_Pairs[1].x_Velocity, colliding_Pairs[1].y_Velocity]) 
+
+        # Beräkna avståndet mellan cirklarna
+        distance = self.get_Difference(colliding_Pairs, i ) 
+
+        # Beräkna normalvektorn
+        #If one is a line
+        normal_vector = np.where(np.logical_and(isinstance(colliding_Pairs[0], LineObj), isinstance(colliding_Pairs[1], CircleObj)),
+                                 np.where((colliding_Pairs[0].x_Cords[1] == colliding_Pairs[0].x_Cords[2]), (1,0), (0,1))
+                                 )
+
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], LineObj): 
+
+            if colliding_Pairs[1].x_Cords[1] == colliding_Pairs[1].x_Cords[2]: 
+                #normal_vector = (colliding_Pairs[0].radius/distance,0)
+                normal_vector = (1,0)
+            else:
+                #normal_vector = (0,colliding_Pairs[0].radius/distance)
+                normal_vector = (0,1)
+
+
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], CircleObj):
+            normal_vector = ((colliding_Pairs[1].x_Cords[i] - colliding_Pairs[0].x_Cords[i]) /
+                            distance, (colliding_Pairs[1].y_Cords[i] - colliding_Pairs[0].y_Cords[i]) / distance)
+
+        elif isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], LineObj): 
+            normal_vector = (0,0)
+
+        #Bräkna Unit Tanget vektorn       
+        tangent_vector = (-normal_vector[1], normal_vector[0])
+        # Beräkna kollisionens hastighet längs normalvektorn
+        v1_normal = vel1[0] * normal_vector[0] + vel1[1] * normal_vector[1]
+        v2_normal = vel2[0] * normal_vector[0] + vel2[1] * normal_vector[1]
+        v1_tangent = vel1[0] * tangent_vector[0] + vel1[1] * tangent_vector[1]
+        v2_tangent = vel2[0] * tangent_vector[0] + vel2[1] * tangent_vector[1]
+
+        # Anpassning för bevarande av rörelsemängd och kenetisk energi
+        new_v1_normal = (v1_normal * (colliding_Pairs[0].mass - colliding_Pairs[1].mass) + 2 * colliding_Pairs[1].mass * v2_normal) / (colliding_Pairs[0].mass + colliding_Pairs[1].mass)
+        new_v2_normal = (v2_normal * (colliding_Pairs[1].mass - colliding_Pairs[0].mass) + 2 * colliding_Pairs[0].mass * v1_normal) / (colliding_Pairs[1].mass + colliding_Pairs[0].mass)
+
+        # Uppdatera hastigheterna
+        colliding_Pairs[0].x_Velocity = (normal_vector[0] * new_v1_normal + tangent_vector[0] * v1_tangent)
+        colliding_Pairs[0].y_Velocity = (normal_vector[1] * new_v1_normal + tangent_vector[1] * v1_tangent)
+        colliding_Pairs[1].x_Velocity = (normal_vector[0] * new_v2_normal + tangent_vector[0] * v2_tangent)
+        colliding_Pairs[1].y_Velocity = (normal_vector[1] * new_v2_normal + tangent_vector[1] * v2_tangent)
+        
+        #print(f"Hastighet: {np.sqrt(colliding_Pairs[0].x_Velocity**2+colliding_Pairs[0].y_Velocity**2)}")
+        #print(f"Hastighet: {np.sqrt(colliding_Pairs[1].x_Velocity**2+colliding_Pairs[1].y_Velocity**2)}")
 
     def change_Velocity_Elastic(self, i: int, colliding_Pairs: [CircleObj, CircleObj]):
 
