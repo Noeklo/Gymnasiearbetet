@@ -103,7 +103,7 @@ class Calc2:
 
         return []
 
-    def change_Velocity_Inelastic(self, i: int, colliding_Pairs: [TwoDObj, TwoDObj]) -> None:
+    def change_Velocity_Inelastic(self, i: int, colliding_Pairs: np.ndarray[TwoDObj, TwoDObj]) -> None:
 
         vel1 = np.array([colliding_Pairs[0].x_Velocity, colliding_Pairs[0].y_Velocity])
         vel2 = np.array([colliding_Pairs[1].x_Velocity, colliding_Pairs[1].y_Velocity]) 
@@ -113,7 +113,7 @@ class Calc2:
 
         # Beräkna normalvektorn
         #If one is a line
-        if isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], TwoDObj): 
+        if isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], CircleObj): 
             #If two x cords are the same than it is a y axis
             if colliding_Pairs[0].x_Cords[1] == colliding_Pairs[0].x_Cords[2]: 
                 #normal_vector = (colliding_Pairs[1].radius/distance,0)
@@ -122,7 +122,7 @@ class Calc2:
                 #normal_vector = (0,colliding_Pairs[1].radius/distance)
                 normal_vector = (0,1)
 
-        if isinstance(colliding_Pairs[0], TwoDObj) and isinstance(colliding_Pairs[1], LineObj): 
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], LineObj): 
 
             if colliding_Pairs[1].x_Cords[1] == colliding_Pairs[1].x_Cords[2]: 
                 #normal_vector = (colliding_Pairs[0].radius/distance,0)
@@ -131,7 +131,7 @@ class Calc2:
                 #normal_vector = (0,colliding_Pairs[0].radius/distance)
                 normal_vector = (0,1)
 
-        if isinstance(colliding_Pairs[0], TwoDObj) and isinstance(colliding_Pairs[1], TwoDObj):
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], CircleObj):
             normal_vector = ((colliding_Pairs[1].x_Cords[i] - colliding_Pairs[0].x_Cords[i]) /
                             distance, (colliding_Pairs[1].y_Cords[i] - colliding_Pairs[0].y_Cords[i]) / distance)
 
@@ -168,7 +168,7 @@ class Calc2:
 
         # Beräkna normalvektorn
         #If one is a line
-        if isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], TwoDObj): 
+        if isinstance(colliding_Pairs[0], LineObj) and isinstance(colliding_Pairs[1], CircleObj): 
             #If two x cords are the same than it is a y axis
             if colliding_Pairs[0].x_Cords[1] == colliding_Pairs[0].x_Cords[2]: 
                 #normal_vector = (colliding_Pairs[1].radius/distance,0)
@@ -177,7 +177,7 @@ class Calc2:
                 #normal_vector = (0,colliding_Pairs[1].radius/distance)
                 normal_vector = (0,1)
 
-        if isinstance(colliding_Pairs[0], TwoDObj) and isinstance(colliding_Pairs[1], LineObj): 
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], LineObj): 
 
             if colliding_Pairs[1].x_Cords[1] == colliding_Pairs[1].x_Cords[2]: 
                 #normal_vector = (colliding_Pairs[0].radius/distance,0)
@@ -186,7 +186,7 @@ class Calc2:
                 #normal_vector = (0,colliding_Pairs[0].radius/distance)
                 normal_vector = (0,1)
 
-        if isinstance(colliding_Pairs[0], TwoDObj) and isinstance(colliding_Pairs[1], TwoDObj):
+        if isinstance(colliding_Pairs[0], CircleObj) and isinstance(colliding_Pairs[1], CircleObj):
             normal_vector = ((colliding_Pairs[1].x_Cords[i] - colliding_Pairs[0].x_Cords[i]) /
                             distance, (colliding_Pairs[1].y_Cords[i] - colliding_Pairs[0].y_Cords[i]) / distance)
 
@@ -194,7 +194,7 @@ class Calc2:
             normal_vector = (0,0)
 
         #Bräkna Unit Tanget vektorn       
-        tangent_vector: tuple = (-normal_vector[1], normal_vector[0])
+        tangent_vector = (-normal_vector[1], normal_vector[0])
         # Beräkna kollisionens hastighet längs normalvektorn
         v1_normal: float  = vel1[0] * normal_vector[0] + vel1[1] * normal_vector[1]
         v2_normal: float  = vel2[0] * normal_vector[0] + vel2[1] * normal_vector[1]
@@ -230,7 +230,7 @@ class Calc2:
 
             for index, Obj in enumerate(Objs):
 
-                if isinstance(Obj, TwoDObj):
+                if isinstance(Obj, CircleObj):
                     if i == 0 :
                         Obj.y_Cords[:i+1] = y_Starts[index]
                         Obj.x_Cords[:i+1] = x_Starts[index]

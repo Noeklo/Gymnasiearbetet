@@ -66,9 +66,9 @@ class AnimationWriter:
         normal_distrubuted_x_velocities = np.where(normal_distrubuted_x_velocities%2==0,-normal_distrubuted_x_velocities, normal_distrubuted_x_velocities )
         normal_distrubuted_y_velocities = np.where(normal_distrubuted_y_velocities%2==0, -normal_distrubuted_y_velocities, normal_distrubuted_y_velocities )
 
-        print((normal_distrubuted_masses))
-        print(normal_distrubuted_x_velocities)
-        print(normal_distrubuted_y_velocities)
+        #print((normal_distrubuted_masses))
+        #print(normal_distrubuted_x_velocities)
+        #print(normal_distrubuted_y_velocities)
 
         #Generera alla möjliga koordinater
         all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
