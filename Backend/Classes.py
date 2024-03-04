@@ -4,16 +4,26 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 from matplotlib.colors import Normalize 
 
-class CircleObj:
+class TwoDObj:
+    radius: float = None
+    mass: float = None
+    y_Velocity: float = None
+    x_Velocity: float = None
+
+    def __add__(self, other) -> float:
+        return self.radius + other.radius
+
+    def get_Kinetic_Energy(self):
+        velocity = np.sqrt(self.x_Velocity**2 + self.y_Velocity**2)
+        kinetic_energy = self.mass*velocity**2/2
+        return kinetic_energy
+
+class CircleObj(TwoDObj):
 
     #cmap = plt.get_cmap("bwr")
     cmap = plt.get_cmap("coolwarm")
     norm = Normalize(vmin= 1, vmax=100)
 
-    radius: float = None
-    mass: float = None
-    y_Velocity: float = None
-    x_Velocity: float = None
     x: float = None
     y: float = None
     circle: Circle = None
@@ -29,38 +39,22 @@ class CircleObj:
         self.circle = Circle((x,y),self.radius, color = self.color)
         self.y_Cords: List[float] = np.empty(int(1e6))
         self.x_Cords: List[float] = np.empty(int(1e6)) 
-    
-    def __add__(self, other):
-        return self.radius + other.radius
-
-    def get_kinetic_energy(self):
-        velocity = np.sqrt(self.x_Velocity**2 + self.y_Velocity**2)
-        kinetic_energy = self.mass*velocity**2/2
-        return kinetic_energy
         
-    def position(self, i):
+    def position(self, i) -> None:
         self.circle.set_center((self.x_Cords[i], self.y_Cords[i])) 
     
-class LineObj:
+class LineObj(TwoDObj):
 
-    mass: float = 10.0**100 
-    radius: float = 0
-    y_Velocity: float = 0 
-    x_Velocity: float = 0 
-
-    def __init__(self, x_Cords: [], y_Cords: []):
-        self.y_Cords: np.array = np.array(y_Cords)
-        self.x_Cords: np.array = np.array(x_Cords)
+    def __init__(self, x_Cords: np.ndarray, y_Cords: np.ndarray):
+        self.y_Cords: np.ndarray = np.array(y_Cords)
+        self.x_Cords: np.ndarray = np.array(x_Cords)
+        self.mass: float = 10.0**100 
+        self.radius: float = 0
+        self.y_Velocity: float = 0 
+        self.x_Velocity: float = 0 
         #print(f"{x_Cords}\n{y_Cords}\n")         
 
-    def get_kinetic_energy(self):
-        velocity = np.sqrt(self.x_Velocity**2 + self.y_Velocity**2)
-        kinetic_energy = self.mass*velocity**2/2
-        return kinetic_energy
-
-    def position(self, i):
+    def position(self, i) -> None:
         pass
     
-    def __add__(self, other):
-        return self.radius + other.radius
     
