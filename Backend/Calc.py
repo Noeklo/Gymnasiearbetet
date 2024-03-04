@@ -334,7 +334,7 @@ class Calc2:
             Obj.y_Cords = Obj.y_Cords[:(i)]
             Obj.x_Cords = Obj.x_Cords[:(i)]
 
-        #print(self.kinetic_energys) 
+        print(f"Energi {self.kinetic_energys}") 
             #print(f"x cord 1{Obj.x_Cords}")
             #print(f"x cord 2{Obj.y_Cords}")
 
