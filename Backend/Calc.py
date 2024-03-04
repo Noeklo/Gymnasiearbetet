@@ -5,8 +5,7 @@ from Canvas import Canvas
 from Classes import TwoDObj, CircleObj, LineObj
 import time
 
-
-#gammal
+#utdaterad
 class Calc:
 
     def __init__(self, canvas: Canvas):
@@ -157,7 +156,6 @@ class Calc2:
         #print(f"Hastighet: {np.sqrt(colliding_Pairs[0].x_Velocity**2+colliding_Pairs[0].y_Velocity**2)}")
         #print(f"Hastighet: {np.sqrt(colliding_Pairs[1].x_Velocity**2+colliding_Pairs[1].y_Velocity**2)}")
         
-
     def change_Velocity_Elastic(self, i: int, colliding_Pairs: np.ndarray[TwoDObj, TwoDObj]) -> None:
 
         vel1: np.ndarray[float, float] = np.array([colliding_Pairs[0].x_Velocity, colliding_Pairs[0].y_Velocity])
