@@ -315,10 +315,9 @@ class GUI:
 
         def on_size_change2(*args):
             entry_text = entry_var7.get()
-            print(entry_text)
             if is_float(entry_text):
                 self.size = float(entry_text)/10
-                self.sizeslider2.set(self.size)
+                self.sizeslider2.set(self.size*10)
 
         entry_var7 = tk.StringVar()
         entry_var7.trace_add("write",  on_size_change2)
@@ -335,7 +334,6 @@ class GUI:
         
         self.sizeslider2.bind("<Motion>", lambda  e: self.update_size2(self.sizeslider2.get()/10))
 
-        
         self.button_label = ttk.Label(tab2, text="Elasticitet", font=("Roboto", normal_round(self.responsive*13), 'bold'))
         self.button_label.pack()
         self.button_label.place(x=self.responsive*50, y=self.responsive*250)
@@ -415,7 +413,7 @@ class GUI:
         self.inputsize.delete(0, 'end')
         self.inputsize.insert(-1, f"{rounded_value:.1f}")
         self.size = rounded_value
-        self.sizeslider.set(self.size)
+        self.sizeslider.set(self.size*10)
 
     def update_size2(self, value):
         rounded_value = round(value, 1)
@@ -423,7 +421,7 @@ class GUI:
         self.inputsize2.delete(0, 'end')
         self.inputsize2.insert(-1, f"{rounded_value:.1f}")
         self.size = rounded_value
-        self.sizeslider2.set(self.size)
+        self.sizeslider2.set(self.size*10)
 
 
     def update_mass1(self, value):
