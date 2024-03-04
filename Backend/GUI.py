@@ -106,7 +106,6 @@ class GUI:
                 return True
             except ValueError:
                 return False
-
         
 
         # INSIDE TAB 1
@@ -484,6 +483,7 @@ class GUI:
         self.count = int(self.numeric_entry.get())
         self.time = int(self.time_entry.get())
         self.ani = AnimationWriter(self.canvas1, self.window)
+        print(self.velocity)
         self.ani.generate_Rnd_Animation(self.count, self.velocity, self.size, 1, self.time)
 
     def Stop(self):
