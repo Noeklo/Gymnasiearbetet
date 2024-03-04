@@ -51,7 +51,7 @@ class AnimationWriter:
     
     def generate_normal_distrebuted_Circle(self, quantity: int, avrage_velocity: float = 5, standard_deviation_velocity: float = 5,
                                             avrage_mass: float = 100, standard_deviation_mass: float = 50,
-                                            avrage_radius: float = 0.1, standard_deviation_radius: float = 0):
+                                            avrage_radius: float = 0.02, standard_deviation_radius: float = 0):
 
         random_Number_Generator = np.random.default_rng()
 
@@ -178,13 +178,14 @@ class AnimationWriter:
 
 
 #generarar animation med cirklar som har specefik riktning och hastighet 
-    def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8, radius: float = 0.1, mass: float = 1, length: float = 1000/60, standard_deviation_velocity: int = 5, standard_deviation_mass = 50):
-        self.radius: float = radius
+    def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8,avrage_radius: float = 0.1,  mass: float = 1,
+                                length: float = 1000/60, standard_deviation_velocity: int = 5, standard_deviation_mass = 50, 
+                                standard_deviation_radius: float = 0):
         self.mass: float = mass 
         self.frames = int(length*60/2)
 
         #self.generate_Random_Circle(quantity)
-        self.generate_normal_distrebuted_Circle(quantity, Velocity, standard_deviation_velocity, mass, standard_deviation_mass)
+        self.generate_normal_distrebuted_Circle(quantity, Velocity, standard_deviation_velocity, mass, standard_deviation_mass, avrage_radius, standard_deviation_radius)
     
         #self.generate_Circle(1,1)
         self.calc1 = Calc2(self.canvas1, self.frames , self.lim)
