@@ -308,32 +308,32 @@ class GUI:
         title_label.pack()
         title_label.place(x=self.responsive*50, y=self.responsive*190)
 
-        # self.sizeslider2 = ttk.Scale(tab2, from_=1, to=5, length=self.responsive*200, orient=tk.HORIZONTAL)
-        # self.sizeslider2.set(self.size)
-        # self.sizeslider2.pack()
-        # self.sizeslider2.place(x=self.responsive*50, y=self.responsive*215)
+        self.sizeslider2 = ttk.Scale(tab2, from_=1, to=5, length=self.responsive*200, orient=tk.HORIZONTAL)
+        self.sizeslider2.set(self.size)
+        self.sizeslider2.pack()
+        self.sizeslider2.place(x=self.responsive*50, y=self.responsive*215)
 
-        # def on_size_change2(*args):
-        #     entry_text = entry_var7.get()
-        #     print(entry_text)
-        #     if is_float(entry_text):
-        #         self.size = float(entry_text)/10
-        #         self.sizeslider2.set(self.size)
+        def on_size_change2(*args):
+            entry_text = entry_var7.get()
+            print(entry_text)
+            if is_float(entry_text):
+                self.size = float(entry_text)/10
+                self.sizeslider2.set(self.size)
 
-        # entry_var7 = tk.StringVar()
-        # entry_var7.trace_add("write",  on_size_change2)
+        entry_var7 = tk.StringVar()
+        entry_var7.trace_add("write",  on_size_change2)
 
-        # self.inputsize2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=entry_var7, font=("Roboto", normal_round(13*self.responsive)))
-        # self.inputsize2.insert(0, "0.1") 
-        # self.inputsize2.pack(pady=self.responsive*10)
-        # self.inputsize2.place(x=self.responsive*275, y=self.responsive*205)
+        self.inputsize2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=entry_var7, font=("Roboto", normal_round(13*self.responsive)))
+        self.inputsize2.insert(0, "0.1") 
+        self.inputsize2.pack(pady=self.responsive*10)
+        self.inputsize2.place(x=self.responsive*275, y=self.responsive*205)
 
-        # self.labelsize2 = ttk.Label(tab2, text="m", font=("Roboto", normal_round(13*self.responsive)))
-        # self.labelsize2.pack()
-        # self.labelsize2.place(x=self.responsive*330, y=self.responsive*210)
+        self.labelsize2 = ttk.Label(tab2, text="m", font=("Roboto", normal_round(13*self.responsive)))
+        self.labelsize2.pack()
+        self.labelsize2.place(x=self.responsive*330, y=self.responsive*210)
 
         
-        # self.sizeslider.bind("<Motion>", lambda  e: self.update_size2(self.sizeslider2.get()/10))
+        self.sizeslider2.bind("<Motion>", lambda  e: self.update_size2(self.sizeslider2.get()/10))
 
         
         self.button_label = ttk.Label(tab2, text="Elasticitet", font=("Roboto", normal_round(self.responsive*13), 'bold'))
