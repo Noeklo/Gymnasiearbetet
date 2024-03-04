@@ -81,12 +81,12 @@ class AnimationWriter:
         np.random.shuffle(all_coordinates)
 
         # välj ut de första "quantity" koordinaterna
-        selected_coordinates = all_coordinates[:quantity-1]
+        selected_coordinates = all_coordinates[:quantity]
 
         #separera x och y koordinater
         random_x_Cord = selected_coordinates[:, 0]
         random_y_Cord = selected_coordinates[:, 1]
-
+        print(quantity)
         for index, x in enumerate(random_x_Cord):
             circle1 = CircleObj(normal_distrubuted_radius[index],
                                 normal_distrubuted_masses[index],
