@@ -226,6 +226,7 @@ class Calc2:
 
             self.kinetic_energys[i] = self.get_kinetic_total_energy(Objs) 
 
+
             for index, Obj in enumerate(Objs):
 
                 if isinstance(Obj, CircleObj):
