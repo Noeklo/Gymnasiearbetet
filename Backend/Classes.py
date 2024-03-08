@@ -20,6 +20,7 @@ class TwoDObj:
 
 class CircleObj(TwoDObj):
 
+
     #cmap = plt.get_cmap("bwr")
     cmap = plt.get_cmap("coolwarm")
     norm = Normalize(vmin= 1, vmax=100)
