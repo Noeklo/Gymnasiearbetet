@@ -28,15 +28,15 @@ class GUI:
         self.standard_deviation_velocity = 0
         self.standard_deviation_mass = 0
         self.standard_deviation_radius = 0
-        self.elasticity = False
+        self.elasticity = True
 
         self.responsive = 1
-
-        print("Width =", GetSystemMetrics(0))
-        print("Height =", GetSystemMetrics(1))
-        self.screens_width = GetSystemMetrics(0)
-
+        self.screens_width = self.window.winfo_screenwidth()
         self.window.resizable(False, False)
+        #print("Width =", GetSystemMetrics(0))
+        #print("Height =", GetSystemMetrics(1))
+        #self.screens_width = GetSystemMetrics(0)
+        
         # if self.screens_width < 1920:
         #     self.responsive = 0.5
         #     w = 1050*0.5
@@ -57,28 +57,6 @@ class GUI:
             w = 1050*2
             h = 600*2
             self.window.geometry(f"{int(w)}x{int(h)}")
-
-
-
-        # self.window.bind("<Configure>", lambda event: rescale(event))
-
-        # def rescale(data):
-            # print(data.width, data.height, data.width/1000)
-            # self.responsive = data.width/1000
-            # self.window.tk.call('tk', 'scaling', 1.3)
-            # self.window.tk.call('tk', 'scaling', self.responsive)
-
-
-        
-        # title_label = ttk.Label(self.window, text="FysiKol", font=("Roboto", 35, 'bold'))
-        # title_label.pack() 
-
-        start_point = None
-        strength = 0
-        color = None
-
-       
-
 
         def normal_round(n):
             if n - math.floor(n) < 0.5:
@@ -308,7 +286,7 @@ class GUI:
         self.inputvel2.pack(pady=self.responsive*10)
         self.inputvel2.place(x=self.responsive*225, y=self.responsive*135)
 
-        
+            
 
         self.labelvelocityw4 = ttk.Label(tab2, text="m/s", font=("Roboto", normal_round(self.responsive*13)))
         self.labelvelocityw4.pack()
@@ -495,30 +473,41 @@ class GUI:
     def Start(self):
         if self.ani != None:
             self.Stop()
-        self.ani = AnimationWriter(self.canvas1, self.window)
-        self.ani.generate_Spec_Animation(self.vectors, self.velocity)
-        self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)        
-
+        try:
+            self.ani = AnimationWriter(self.canvas1, self.window)
+            self.ani.generate_Spec_Animation(self.vectors, self.velocity)
+            self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)        
+        except IndexError: 
+            print("Vektor Saknas!")
+        except Exception as e:
+            print(e)
+            
     def RandomStart(self):
         if self.ani != None:
             self.Stop()
-        self.count = int(self.numeric_entry.get())
-        self.time = int(self.time_entry.get())
-        self.standard_deviation_mass = int(self.standardavikelse.get())
-        self.standard_deviation_velocity = int(self.standardavikelse2.get())
-        self.standard_deviation_radius = float(self.standardavikelse3.get())
-        self.ani = AnimationWriter(self.canvas1, self.window)
-        self.ani.generate_Rnd_Animation(
-            self.count, 
-            self.velocity, 
-            self.size, 
-            1, 
-            self.time, 
-            self.standard_deviation_velocity, 
-            self.standard_deviation_mass, 
-            self.standard_deviation_radius,
-            self.elasticity
-        )
+        try:
+            self.count = int(self.numeric_entry.get())
+            self.time = int(self.time_entry.get())
+        except ValueError:
+            print("Infogade alternativ måste vare heltal!")
+        except Exception as e:
+            print(e)
+        else:
+            self.standard_deviation_mass = int(self.standardavikelse.get())
+            self.standard_deviation_velocity = int(self.standardavikelse2.get())
+            self.standard_deviation_radius = float(self.standardavikelse3.get())
+            self.ani = AnimationWriter(self.canvas1, self.window)
+            self.ani.generate_Rnd_Animation(
+                self.count, 
+                self.velocity, 
+                self.size, 
+                1, 
+                self.time, 
+                self.standard_deviation_velocity, 
+                self.standard_deviation_mass, 
+                self.standard_deviation_radius,
+                self.elasticity
+            )
 
     def Stop(self):
         self.ani.stop_Animation()
@@ -527,7 +516,7 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().place(x=self.responsive*450, y=self.responsive*0)
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
-
+    
 
 
 

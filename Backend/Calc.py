@@ -216,7 +216,7 @@ class Calc2:
         return np.sum([Obj.get_Kinetic_Energy() for Obj in Objs])
 
 
-    def generate_Data(self, Objs: List[TwoDObj], x_Starts: List[float], y_Starts: List[float]) -> None:
+    def generate_Data(self, Objs: List[TwoDObj], x_Starts: List[float], y_Starts: List[float], elastic: bool = True) -> None:
         timeSeconds: float = 0
         i: int = 0
 
@@ -240,7 +240,10 @@ class Calc2:
             colliding_Pairs: np.ndarray[np.ndarray[TwoDObj, TwoDObj]] = self.get_colliding_Pairs(obj_Pairs, i)
             if len(colliding_Pairs) > 0: 
                 for colliding_Pair in colliding_Pairs:
-                    self.change_Velocity_Elastic(i, colliding_Pair)
+                    if elastic:
+                        self.change_Velocity_Elastic(i, colliding_Pair)
+                    else:
+                        self.change_Velocity_Inelastic(i, colliding_Pair)
 
             timeSeconds += self.timeIncrement
             i += 1
