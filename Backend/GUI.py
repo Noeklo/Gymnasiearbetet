@@ -28,6 +28,7 @@ class GUI:
 
             self.responsive = 1
             self.screens_width = self.window.winfo_screenwidth()
+            self.window.resizable(False, False)
             #print("Width =", GetSystemMetrics(0))
             #print("Height =", GetSystemMetrics(1))
             #self.screens_width = GetSystemMetrics(0)
