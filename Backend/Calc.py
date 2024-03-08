@@ -242,8 +242,6 @@ class Calc2:
                 for colliding_Pair in colliding_Pairs:
                     if elastic:
                         self.change_Velocity_Elastic(i, colliding_Pair)
-                    else:
-                        self.change_Velocity_Inelastic(i, colliding_Pair)
 
             timeSeconds += self.timeIncrement
             i += 1
