@@ -31,6 +31,8 @@ class GUI:
         print("Width =", GetSystemMetrics(0))
         print("Height =", GetSystemMetrics(1))
         self.screens_width = GetSystemMetrics(0)
+
+        self.window.resizable(False, False)
         # if self.screens_width < 1920:
         #     self.responsive = 0.5
         #     w = 1050*0.5
