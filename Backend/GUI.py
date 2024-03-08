@@ -25,6 +25,10 @@ class GUI:
         self.size = 0.1
         self.time = 0
         self.ani = None
+        self.standard_deviation_velocity = 0
+        self.standard_deviation_mass = 0
+        self.standard_deviation_radius = 0
+        self.elasticity = False
 
         self.responsive = 1
 
@@ -81,7 +85,6 @@ class GUI:
                 return math.floor(n)
             return math.ceil(n)
         
-        print('round', normal_round(0.5))
 
 
         self.line_tag = None
@@ -237,11 +240,15 @@ class GUI:
 
         # INSIDE TAB 2
 
+        self.sigma = ttk.Label(tab2, text="σ", font=("Roboto", normal_round(self.responsive*18)))
+        self.sigma.pack()
+        self.sigma.place(x=self.responsive*342, y=self.responsive*35)
+
         self.title_label = ttk.Label(tab2, text="Massa", font=("Roboto", normal_round(self.responsive*13), 'bold'))
         self.title_label.pack()
         self.title_label.place(x=self.responsive*50, y=self.responsive*50)
 
-        self.w3 = ttk.Scale(tab2, from_=1, to=200, length=self.responsive*200, orient=tk.HORIZONTAL)
+        self.w3 = ttk.Scale(tab2, from_=1, to=200, length=self.responsive*150, orient=tk.HORIZONTAL)
         self.w3.pack(ipadx=self.responsive* 50, ipady=self.responsive* 50)
         self.w3.place(x=self.responsive*50, y=self.responsive*75)
 
@@ -256,23 +263,27 @@ class GUI:
 
         entry_var3 = tk.StringVar()
         entry_var3.trace_add("write",  on_mass2_change)
-        
 
+        self.standardavikelse = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
+        self.standardavikelse.insert(0, "0")
+        self.standardavikelse.pack(pady=self.responsive*10)
+        self.standardavikelse.place(x=self.responsive*325, y=self.responsive*65)
+        
         self.inputmass2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=entry_var3, font=("Roboto", normal_round(13*self.responsive)))
         self.inputmass2.insert(0, "1.0") 
         self.inputmass2.pack(pady=self.responsive*10)
-        self.inputmass2.place(x=self.responsive*275, y=self.responsive*65)
+        self.inputmass2.place(x=self.responsive*225, y=self.responsive*65)
 
         self.labelw3 = tk.Label(tab2, text="KG", font=("Roboto", normal_round(13*self.responsive)))
         self.labelw3.pack()
-        self.labelw3.place(x=self.responsive*330, y=self.responsive*70)
+        self.labelw3.place(x=self.responsive*280, y=self.responsive*70)
         self.w3.bind("<Motion>", lambda  e: self.update_mass2(self.w3.get()))
 
         self.title_label = ttk.Label(tab2, text="Hastighet", font=("Roboto", normal_round(self.responsive*13), 'bold'))
         self.title_label.pack()
         self.title_label.place(x=self.responsive*50, y=self.responsive*120)
 
-        self.w4 = ttk.Scale(tab2, from_=0, to=20, length=self.responsive*200, orient=tk.HORIZONTAL)
+        self.w4 = ttk.Scale(tab2, from_=0, to=20, length=self.responsive*150, orient=tk.HORIZONTAL)
         self.w4.set(self.velocity)
         self.w4.pack(ipadx=self.responsive* 50, ipady=self.responsive*50)
         self.w4.place(x=self.responsive*50, y=self.responsive*145)
@@ -295,22 +306,26 @@ class GUI:
         self.inputvel2 = ttk.Entry(tab2, width=normal_round(self.responsive*4),  textvariable=entry_var4, font=("Roboto", normal_round(13*self.responsive)))
         self.inputvel2.insert(0, "8.0")
         self.inputvel2.pack(pady=self.responsive*10)
-        self.inputvel2.place(x=self.responsive*275, y=self.responsive*135)
+        self.inputvel2.place(x=self.responsive*225, y=self.responsive*135)
 
         
 
         self.labelvelocityw4 = ttk.Label(tab2, text="m/s", font=("Roboto", normal_round(self.responsive*13)))
         self.labelvelocityw4.pack()
-        self.labelvelocityw4.place(x=self.responsive*330, y=self.responsive*140)
+        self.labelvelocityw4.place(x=self.responsive*280, y=self.responsive*140)
 
         self.w4.bind("<Motion>", lambda  e: self.update_vel2(self.w4.get()))
 
+        self.standardavikelse2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
+        self.standardavikelse2.insert(0, "0")
+        self.standardavikelse2.pack(pady=self.responsive*10)
+        self.standardavikelse2.place(x=self.responsive*325, y=self.responsive*135)
 
         title_label = ttk.Label(tab2, text="Storlek", font=("Roboto", normal_round(13*self.responsive), 'bold'))
         title_label.pack()
         title_label.place(x=self.responsive*50, y=self.responsive*190)
 
-        self.sizeslider2 = ttk.Scale(tab2, from_=1, to=5, length=self.responsive*200, orient=tk.HORIZONTAL)
+        self.sizeslider2 = ttk.Scale(tab2, from_=1, to=5, length=self.responsive*150, orient=tk.HORIZONTAL)
         self.sizeslider2.set(self.size)
         self.sizeslider2.pack()
         self.sizeslider2.place(x=self.responsive*50, y=self.responsive*215)
@@ -327,11 +342,16 @@ class GUI:
         self.inputsize2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=entry_var7, font=("Roboto", normal_round(13*self.responsive)))
         self.inputsize2.insert(0, "0.1") 
         self.inputsize2.pack(pady=self.responsive*10)
-        self.inputsize2.place(x=self.responsive*275, y=self.responsive*205)
+        self.inputsize2.place(x=self.responsive*225, y=self.responsive*205)
 
         self.labelsize2 = ttk.Label(tab2, text="m", font=("Roboto", normal_round(13*self.responsive)))
         self.labelsize2.pack()
-        self.labelsize2.place(x=self.responsive*330, y=self.responsive*210)
+        self.labelsize2.place(x=self.responsive*280, y=self.responsive*210)
+
+        self.standardavikelse3 = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
+        self.standardavikelse3.insert(0, "0")
+        self.standardavikelse3.pack(pady=self.responsive*10)
+        self.standardavikelse3.place(x=self.responsive*325, y=self.responsive*205)
 
         
         self.sizeslider2.bind("<Motion>", lambda  e: self.update_size2(self.sizeslider2.get()/10))
@@ -467,8 +487,10 @@ class GUI:
     def Simpletoggle(self):
         if self.toggle_button.config('text')[-1] == 'PÅ':
             self.toggle_button.config(text='AV')
+            self.elasticity = False
         else:
             self.toggle_button.config(text='PÅ')
+            self.elasticity = True
 
     def Start(self):
         if self.ani != None:
@@ -482,9 +504,21 @@ class GUI:
             self.Stop()
         self.count = int(self.numeric_entry.get())
         self.time = int(self.time_entry.get())
+        self.standard_deviation_mass = int(self.standardavikelse.get())
+        self.standard_deviation_velocity = int(self.standardavikelse2.get())
+        self.standard_deviation_radius = float(self.standardavikelse3.get())
         self.ani = AnimationWriter(self.canvas1, self.window)
-        print(self.velocity)
-        self.ani.generate_Rnd_Animation(self.count, self.velocity, self.size, 1, self.time)
+        self.ani.generate_Rnd_Animation(
+            self.count, 
+            self.velocity, 
+            self.size, 
+            1, 
+            self.time, 
+            self.standard_deviation_velocity, 
+            self.standard_deviation_mass, 
+            self.standard_deviation_radius,
+            self.elasticity
+        )
 
     def Stop(self):
         self.ani.stop_Animation()
