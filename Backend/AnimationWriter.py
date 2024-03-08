@@ -180,7 +180,7 @@ class AnimationWriter:
 #generarar animation med cirklar som har specefik riktning och hastighet 
     def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8,avrage_radius: float = 0.1,  mass: float = 1,
                                 length: float = 1000/60, standard_deviation_velocity: int = 5, standard_deviation_mass = 50, 
-                                standard_deviation_radius: float = 0):
+                                standard_deviation_radius: float = 0, elastic: bool = True):
         self.mass: float = mass 
         self.frames = int(length*60/2)
 
@@ -194,7 +194,7 @@ class AnimationWriter:
         self.circles = np.concatenate((self.circles, self.canvas1.boarders), axis=0)
     
         start = time.monotonic_ns()
-        self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
+        self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts, elastic)
         self.end = time.monotonic_ns()
 
         print(f"tid för calc: {(self.end-start)/(10**9)}")
