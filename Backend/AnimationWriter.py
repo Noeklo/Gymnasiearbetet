@@ -67,12 +67,15 @@ class AnimationWriter:
         normal_distrubuted_masses = np.array([np.abs(np.round(i)) for i in normal_distrubuted_masses])
         normal_distrubuted_radius = np.array([np.abs(i) for i in normal_distrubuted_radius])
 
-        normal_distrubuted_x_velocities = np.where(normal_distrubuted_x_velocities%2==0,-normal_distrubuted_x_velocities, normal_distrubuted_x_velocities )
-        normal_distrubuted_y_velocities = np.where(normal_distrubuted_y_velocities%2==0, -normal_distrubuted_y_velocities, normal_distrubuted_y_velocities )
+        # ändrar ett slumpmässigt antal av hastigheter till negtivt då normal fördelningen gring ett posetivt medelvärde ger posetiva hastigheter
+        random_x_indencies = random_Number_Generator.integers(0,len(normal_distrubuted_x_velocities), np.random.randint(0, len(normal_distrubuted_x_velocities)))
+        random_y_indencies = random_Number_Generator.integers(0,len(normal_distrubuted_y_velocities), np.random.randint(0, len(normal_distrubuted_y_velocities)))
+        normal_distrubuted_x_velocities[random_x_indencies] = -normal_distrubuted_x_velocities[random_x_indencies]  
+        normal_distrubuted_y_velocities[random_y_indencies] = -normal_distrubuted_y_velocities[random_y_indencies] 
 
-        #print((normal_distrubuted_masses))
-        #print(normal_distrubuted_x_velocities)
-        #print(normal_distrubuted_y_velocities)
+        #gamalt inte slumpmässigt
+#        normal_distrubuted_x_velocities = np.where(np.arange(len(normal_distrubuted_x_velocities))%2==0,-normal_distrubuted_x_velocities, normal_distrubuted_x_velocities )
+#        normal_distrubuted_y_velocities = np.where(np.arange(len(normal_distrubuted_x_velocities))%2==0, -normal_distrubuted_y_velocities, normal_distrubuted_y_velocities )
 
         #Generera alla möjliga koordinater
         all_coordinates = np.array(list(np.ndindex((self.lim-2, self.lim-2))))+1
@@ -86,7 +89,7 @@ class AnimationWriter:
         #separera x och y koordinater
         random_x_Cord = selected_coordinates[:, 0]
         random_y_Cord = selected_coordinates[:, 1]
-        print(quantity)
+#        print(quantity)
         for index, x in enumerate(random_x_Cord):
             circle1 = CircleObj(normal_distrubuted_radius[index],
                                 normal_distrubuted_masses[index],

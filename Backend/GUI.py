@@ -153,8 +153,6 @@ class GUI:
         self.labelvelocityw2.pack()
         self.labelvelocityw2.place(x=self.responsive*330, y=self.responsive*145)
 
-
-
         self.w2.bind("<Motion>", lambda  e: self.update_vel1(self.w2.get()))
 
         title_label = ttk.Label(tab1, text="Storlek", font=("Roboto", normal_round(13*self.responsive), 'bold'))
