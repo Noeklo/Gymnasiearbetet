@@ -21,14 +21,14 @@ class TwoDObj:
 class CircleObj(TwoDObj):
 
     #cmap = plt.get_cmap("bwr")
-    cmap = plt.get_cmap("coolwarm")
-    norm = Normalize(vmin= 1, vmax=100)
+    cmap = plt.get_cmap("RdYlBu_r")
+    norm = Normalize(vmin= 1, vmax=200)
 
     x: float = None
     y: float = None
     circle: Circle = None
 
-    def __init__(self, radius: float, mass: float, x_Velocity: float, y_Velocity: float, x: float,y: float):
+    def __init__(self, radius: float, mass: float, x_Velocity: float, y_Velocity: float, x: float,y: float) -> None:
         self.radius = radius  
         self.mass = mass
         self.y_Velocity = y_Velocity
@@ -45,7 +45,7 @@ class CircleObj(TwoDObj):
     
 class LineObj(TwoDObj):
 
-    def __init__(self, x_Cords: np.ndarray, y_Cords: np.ndarray):
+    def __init__(self, x_Cords: np.ndarray, y_Cords: np.ndarray) -> None:
         self.y_Cords: np.ndarray = np.array(y_Cords)
         self.x_Cords: np.ndarray = np.array(x_Cords)
         self.mass: float = 10.0**100 
