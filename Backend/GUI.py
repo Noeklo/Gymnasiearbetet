@@ -191,9 +191,9 @@ class GUI:
         button_label.pack()
         button_label.place(x=self.responsive*50, y=self.responsive*280)
 
-        toggle_button = tk.Button(tab1, text="PÅ", width=normal_round(self.responsive*10), font=("Roboto", normal_round(13*self.responsive)), command=self.Simpletoggle)
-        toggle_button.pack()
-        toggle_button.place(x=self.responsive*50, y=self.responsive*310)
+        self.toggle_button1 = tk.Button(tab1, text="PÅ", width=normal_round(self.responsive*10), font=("Roboto", normal_round(13*self.responsive)), command=self.Simpletoggle)
+        self.toggle_button1.pack()
+        self.toggle_button1.place(x=self.responsive*50, y=self.responsive*310)
 
         init_button = tk.Button(tab1, text="START", width=normal_round(self.responsive*10), font=("Roboto", normal_round(13*self.responsive)), command=self.Start)
 
@@ -351,9 +351,9 @@ class GUI:
         self.time_entry.pack(pady=self.responsive*10)
         self.time_entry.place(x=self.responsive*175, y=self.responsive*360)
         
-        self.toggle_button = tk.Button(tab2, text="PÅ", width=normal_round(self.responsive*10), command=self.Simpletoggle, font=("Roboto", normal_round(13*self.responsive)))
-        self.toggle_button.pack(pady=self.responsive*10)
-        self.toggle_button.place(x=self.responsive*50, y=self.responsive*280)
+        self.toggle_button2 = tk.Button(tab2, text="PÅ", width=normal_round(self.responsive*10), command=self.Simpletoggle, font=("Roboto", normal_round(13*self.responsive)))
+        self.toggle_button2.pack(pady=self.responsive*10)
+        self.toggle_button2.place(x=self.responsive*50, y=self.responsive*280)
 
         init_button = tk.Button(tab2, text="START", width=normal_round(self.responsive*10), command=self.RandomStart, font=("Roboto", normal_round(13*self.responsive)))
         init_button.pack(pady=self.responsive*10)
@@ -461,12 +461,19 @@ class GUI:
 
 
     def Simpletoggle(self):
-        if self.toggle_button.config('text')[-1] == 'PÅ':
-            self.toggle_button.config(text='AV')
+        if self.toggle_button1.config('text')[-1] == 'PÅ':
+            self.toggle_button1.config(text='AV')
             self.elasticity = False
         else:
-            self.toggle_button.config(text='PÅ')
+            self.toggle_button1.config(text='PÅ')
             self.elasticity = True
+        if self.toggle_button2.config('text')[-1] == 'PÅ':
+            self.toggle_button2.config(text='AV')
+            self.elasticity = False
+        else:
+            self.toggle_button2.config(text='PÅ')
+            self.elasticity = True
+
 
     def Start(self):
         if self.ani != None:
