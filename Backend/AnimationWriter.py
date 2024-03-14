@@ -73,6 +73,9 @@ class AnimationWriter:
         normal_distrubuted_x_velocities[random_x_indencies] = -normal_distrubuted_x_velocities[random_x_indencies]  
         normal_distrubuted_y_velocities[random_y_indencies] = -normal_distrubuted_y_velocities[random_y_indencies] 
 
+        # sätter radien till mins 0.1
+        normal_distrubuted_radius = np.where(normal_distrubuted_radius<0.1, 0.1, normal_distrubuted_radius)
+
         #gamalt inte slumpmässigt
 #        normal_distrubuted_x_velocities = np.where(np.arange(len(normal_distrubuted_x_velocities))%2==0,-normal_distrubuted_x_velocities, normal_distrubuted_x_velocities )
 #        normal_distrubuted_y_velocities = np.where(np.arange(len(normal_distrubuted_x_velocities))%2==0, -normal_distrubuted_y_velocities, normal_distrubuted_y_velocities )
@@ -184,6 +187,9 @@ class AnimationWriter:
     def generate_Rnd_Animation(self, quantity: int, Velocity: float = 8,avrage_radius: float = 0.1,  mass: float = 1,
                                 length: float = 1000/60, standard_deviation_velocity: int = 5, standard_deviation_mass = 50, 
                                 standard_deviation_radius: float = 0, elastic: bool = True):
+        
+        print(avrage_radius)
+        print(standard_deviation_radius)
         self.mass: float = mass 
         self.frames = int(length*60/2)
 
