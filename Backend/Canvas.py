@@ -5,11 +5,13 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Circle
 from matplotlib.figure import Figure
-import matplotlib
+import matplotlib as mpl
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 import tkinter
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from matplotlib.colors import Normalize 
+
 
 # matplotlib.use("qtagg")
 
@@ -31,13 +33,20 @@ class Canvas:
             self.tkCanvas = FigureCanvasTkAgg(self.fig, master=self.window)
             self.tkCanvas.get_tk_widget().pack()
 
-         #   #from https://stackoverflow.com/questions/61084381/create-gradient-legend-matplotlib
-         #   colormap = plt.pcolor(plt.get_cmap("RdYlBu_r"))
-         #   axins1 = inset_axes(self.ax, width='10%', height='2%', loc='lower right')
-         #   cbar = self.fig.colorbar(plt.get_cmap("RdYlBu_r"), cax=axins1, orientation='horizontal')
-         #   #cbar = self.fig.colorbar(colormap, cax=axins1, orientation='horizontal', ticks=[below, above])
-         #   cbar.ax.set_xticklabels(['25', '75'])
-         #   axins1.xaxis.set_ticks_position('top')
+            #färgbar som representerar massan 
+            #from https://stackoverflow.com/questions/61084381/create-gradient-legend-matplotlib
+            cmap = plt.get_cmap("RdYlBu_r")
+            norm = Normalize(vmin= 1, vmax=200)
+            axbox = self.ax.get_position()
+            axins1 = inset_axes(self.ax, width='20%', height='3%', loc = "upper right")
+            self.fig.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap), cax=axins1, orientation='horizontal', ticks =[1,200])
+
+
+            #colormap = plt.pcolor(plt.get_cmap("RdYlBu_r"))
+            #axins1 = inset_axes(self.ax, width='10%', height='2%', loc='lower right')
+            #cbar = self.fig.colorbar(colormap, cax=axins1, orientation='horizontal', ticks=[below, above])
+            #cbar.ax.set_xticklabels(['25', '75'])
+            #axins1.xaxis.set_ticks_position('top')
         else:
             # Use Matplotlib in a standalone window
             self.fig, self.ax = plt.subplots(figsize=size)
