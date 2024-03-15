@@ -6,7 +6,7 @@ from tkinter import ttk
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 from PIL import Image, ImageTk
-from win32api import GetSystemMetrics
+#from win32api import GetSystemMetrics
 import math
 
 
