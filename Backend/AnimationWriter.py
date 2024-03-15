@@ -155,7 +155,7 @@ class AnimationWriter:
         self.radius: float = radius
         self.mass: float = mass 
 
-        self.calc1 = Calc2(self.canvas1, self.frames, self.lim, elastic)
+        self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
         self.canvas1.set_Boarders(self.lim) 
         
         self.x_Velocity: float = np.cos(self.calc1.get_angle(vectors))*Velocity
@@ -166,7 +166,7 @@ class AnimationWriter:
         self.circles = np.concatenate((self.circles, self.canvas1.boarders), axis=0)
    #s 
         start = time.monotonic_ns()
-        self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts)
+        self.calc1.generate_Data(self.circles, self.x_Starts, self.y_Starts, elastic)
         self.end = time.monotonic_ns()
 
         print(f"{(self.end-start)/(10**9)}")
