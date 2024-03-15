@@ -6,7 +6,7 @@ from tkinter import ttk
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 from PIL import Image, ImageTk
-from win32api import GetSystemMetrics
+#from win32api import GetSystemMetrics
 import math
 
 
@@ -264,8 +264,6 @@ class GUI:
         self.w4.pack(ipadx=self.responsive* 50, ipady=self.responsive*50)
         self.w4.place(x=self.responsive*50, y=self.responsive*145)
 
-
-
         def on_vel2_change(*args):
             entry_text = entry_var4.get()
             if is_float(entry_text):
@@ -275,7 +273,6 @@ class GUI:
                 self.velocity = float(entry_text)
                 self.w4.set(self.velocity)
 
-
         entry_var4 = tk.StringVar()
         entry_var4.trace_add("write",  on_vel2_change)
 
@@ -283,8 +280,6 @@ class GUI:
         self.inputvel2.insert(0, "8.0")
         self.inputvel2.pack(pady=self.responsive*10)
         self.inputvel2.place(x=self.responsive*225, y=self.responsive*135)
-
-            
 
         self.labelvelocityw4 = ttk.Label(tab2, text="m/s", font=("Roboto", normal_round(self.responsive*13)))
         self.labelvelocityw4.pack()
@@ -329,13 +324,11 @@ class GUI:
         self.standardavikelse3.pack(pady=self.responsive*10)
         self.standardavikelse3.place(x=self.responsive*325, y=self.responsive*205)
 
-        
         self.sizeslider2.bind("<Motion>", lambda  e: self.update_size2(self.sizeslider2.get()/10))
 
         self.button_label = ttk.Label(tab2, text="Elasticitet", font=("Roboto", normal_round(self.responsive*13), 'bold'))
         self.button_label.pack()
         self.button_label.place(x=self.responsive*50, y=self.responsive*250)
-
 
         self.entry_label = ttk.Label(tab2, text="Antal Objekt", font=("Roboto", normal_round(self.responsive*13), 'bold'))
         self.entry_label.pack()
@@ -366,6 +359,11 @@ class GUI:
         # stop_button = ttk.Button(tab2, text="SPARA", width=self.responsive*10, command=self.Stop)
         # stop_button.pack(pady=self.responsive*10)
         # stop_button.place(x=self.responsive*175, y=self.responsive*425)
+
+        self.message = tk.Label(self.window,  fg="#f00", text="FELAKTIG INPUT!", font=("Roboto", normal_round(self.responsive*18)))
+        self.message.pack()
+        self.message.place(x=self.responsive*150, y=self.responsive*565)
+        self.message.config(text='')
 
 
 
@@ -484,8 +482,10 @@ class GUI:
             self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)        
         except IndexError: 
             print("Vektor Saknas!")
+            self.message.config(text='VEKTOR SAKNAS!')
         except Exception as e:
             print(e)
+            self.message.config(text='FELAKTIG INPUT!')
             
     def RandomStart(self):
         if self.ani != None:
@@ -495,8 +495,10 @@ class GUI:
             self.time = int(self.time_entry.get())
         except ValueError:
             print("Infogade alternativ måste vare heltal!")
+            self.message.config(text='ALTERNATIV MÅSTE VARA HELTAL!')
         except Exception as e:
             print(e)
+            self.message.config(text='FELAKTIG INPUT!')
         else:
             self.standard_deviation_mass = int(self.standardavikelse.get())
             self.standard_deviation_velocity = int(self.standardavikelse2.get())
