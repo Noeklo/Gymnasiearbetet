@@ -72,7 +72,6 @@ class AnimationWriter:
         random_y_indencies = random_Number_Generator.integers(0,len(normal_distrubuted_y_velocities), np.random.randint(0, len(normal_distrubuted_y_velocities)))
         normal_distrubuted_x_velocities[random_x_indencies] = -normal_distrubuted_x_velocities[random_x_indencies]  
         normal_distrubuted_y_velocities[random_y_indencies] = -normal_distrubuted_y_velocities[random_y_indencies] 
-
         # sätter radien till mins 0.1
         normal_distrubuted_radius = np.where(normal_distrubuted_radius<0.1, 0.1, normal_distrubuted_radius)
 
