@@ -75,6 +75,7 @@ class GUI:
         lbl.pack()
         lbl.place(x=self.responsive*50, y=self.responsive*30)
 
+
         tab_parent = ttk.Notebook(lbl)
         tab1 = ttk.Frame(tab_parent, width=self.responsive*400, heigh=self.responsive*500)
         tab2 = ttk.Frame(tab_parent, width=self.responsive*400, heigh=self.responsive*500)
@@ -83,12 +84,18 @@ class GUI:
         # tab_parent.pack(ipadx=self.responsive* 100 - 50*self.responsive, ipady=self.responsive* 250 - 30*self.responsive)
         tab_parent.pack()
 
+        def on_tab_change(event):
+            self.size = 0.1
+            self.Stop()
+        tab_parent.bind('<<NotebookTabChanged>>', on_tab_change)
+
         def is_float(value):
             try:
                 float(value)
                 return True
             except ValueError:
                 return False
+            
         
 
         # INSIDE TAB 1
@@ -481,6 +488,7 @@ class GUI:
             self.ani.generate_Spec_Animation(self.vectors, self.velocity, self.size, self.massa, self.elasticity)
             self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
             self.message.config(text='')
+            print('radie', self.size)
         except IndexError: 
             print("Vektor Saknas!")
             self.message.config(text='Vektor saknas')
