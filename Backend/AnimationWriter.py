@@ -150,12 +150,12 @@ class AnimationWriter:
 
 
 #genererar animation med random cirklar
-    def generate_Spec_Animation(self, vectors: List,  Velocity: float = 8, radius: float = 0.1, mass: float = 1):
+    def generate_Spec_Animation(self, vectors: List,  Velocity: float = 8, radius: float = 0.1, mass: float = 1, elastic: bool = True):
 
         self.radius: float = radius
         self.mass: float = mass 
 
-        self.calc1 = Calc2(self.canvas1, self.frames, self.lim)
+        self.calc1 = Calc2(self.canvas1, self.frames, self.lim, elastic)
         self.canvas1.set_Boarders(self.lim) 
         
         self.x_Velocity: float = np.cos(self.calc1.get_angle(vectors))*Velocity
