@@ -360,7 +360,7 @@ class GUI:
         # stop_button.pack(pady=self.responsive*10)
         # stop_button.place(x=self.responsive*175, y=self.responsive*425)
 
-        self.message = tk.Label(self.window,  fg="#f00", text="FELAKTIG INPUT!", font=("Roboto", normal_round(self.responsive*18)))
+        self.message = tk.Label(self.window,  fg="#f00", text="FELAKTIG INPUT!", font=("Roboto", normal_round(self.responsive*14)))
         self.message.pack()
         self.message.place(x=self.responsive*150, y=self.responsive*565)
         self.message.config(text='')
@@ -478,11 +478,12 @@ class GUI:
             self.Stop()
         try:
             self.ani = AnimationWriter(self.canvas1, self.window)
-            self.ani.generate_Spec_Animation(self.vectors, self.velocity)
-            self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)        
+            self.ani.generate_Spec_Animation(self.vectors, self.velocity, self.size, self.massa, self.elasticity)
+            self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
+            self.message.config(text='')
         except IndexError: 
             print("Vektor Saknas!")
-            self.message.config(text='VEKTOR SAKNAS!')
+            self.message.config(text='Vektor saknas')
         except Exception as e:
             print(e)
             self.message.config(text='FELAKTIG INPUT!')
@@ -493,13 +494,15 @@ class GUI:
         try:
             self.count = int(self.numeric_entry.get())
             self.time = int(self.time_entry.get())
-        except ValueError:
+        except ValueError as e:
+            print(e)
             print("Infogade alternativ måste vare heltal!")
-            self.message.config(text='ALTERNATIV MÅSTE VARA HELTAL!')
+            self.message.config(text='Infogat värde ska vara heltal')
         except Exception as e:
             print(e)
             self.message.config(text='FELAKTIG INPUT!')
         else:
+            self.message.config(text='')
             self.standard_deviation_mass = int(self.standardavikelse.get())
             self.standard_deviation_velocity = int(self.standardavikelse2.get())
             self.standard_deviation_radius = float(self.standardavikelse3.get())
@@ -515,6 +518,7 @@ class GUI:
                 self.standard_deviation_radius,
                 self.elasticity
             )
+            
 
     def Stop(self):
         self.ani.stop_Animation()
@@ -523,6 +527,7 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().place(x=self.responsive*450, y=self.responsive*0)
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
+        self.message.config(text='')
     
 
 
