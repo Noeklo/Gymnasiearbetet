@@ -42,7 +42,7 @@ class Calc:
 class Calc2:
 
     def __init__(self, canvas: Canvas, frames: int, lim: int):
-        self.data_Multiplier = 20 
+        self.data_Multiplier = 40 
         self.timeIncrement: float = 1/(self.data_Multiplier *canvas.fps)
 #        self.timeIncrement: float = 1/canvas.fps
         self.g: float = 9.82
@@ -94,7 +94,7 @@ class Calc2:
 
         # Hitta index för kolliderande par
         radii_sum = obj_Pairs[:, 0]+ obj_Pairs[:, 1]
-        colliding_indices = np.where((0 < diffs) & (diffs <= radii_sum * 1.1))
+        colliding_indices = np.where((0 < diffs) & (diffs <= radii_sum * 1.01))
 
         # Returnera de kolliderande paren
         if len(colliding_indices) > 0:
