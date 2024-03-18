@@ -23,7 +23,7 @@ class GUI:
         self.count = 0
         self.canvas1 = None
         self.size = 0.1
-        self.currentTab = 1
+        self.currentTab = 0
         self.time = 0
         self.ani = None
         self.standard_deviation_velocity = 0
@@ -88,9 +88,7 @@ class GUI:
         def on_tab_change(event):
             self.size = 0.1
             self.Stop()
-            print('ldflin')
-            print(tab_parent.index(tab_parent.select()))
-            # self.currentTab = tab_parent.index(tab_parent.select())
+            self.currentTab = tab_parent.index(tab_parent.select())
         tab_parent.bind('<<NotebookTabChanged>>', on_tab_change)
 
         def is_float(value):
@@ -127,7 +125,7 @@ class GUI:
         self.inputmass.insert(0, "1.0") 
         self.inputmass.pack()
         self.inputmass.place(x=self.responsive*275, y=self.responsive*65)
-        self.labelw1 = tk.Label(tab1, text="KG", font=("Roboto", normal_round(13*self.responsive)))
+        self.labelw1 = tk.Label(tab1, text="kg", font=("Roboto", normal_round(13*self.responsive)))
         self.labelw1.pack()
         self.labelw1.place(x=self.responsive*330, y=self.responsive*70)
         self.w1.bind("<Motion>", lambda  e: self.update_mass1(self.w1.get()))
@@ -229,7 +227,12 @@ class GUI:
 
         self.sigma = ttk.Label(tab2, text="σ", font=("Roboto", normal_round(self.responsive*18)))
         self.sigma.pack()
-        self.sigma.place(x=self.responsive*342, y=self.responsive*35)
+        self.sigma.place(x=self.responsive*244, y=self.responsive*35)
+
+        self.mu = ttk.Label(tab2, text="µ", font=("Roboto", normal_round(self.responsive*18)))
+        self.mu.pack()
+        self.mu.place(x=self.responsive*308, y=self.responsive*35)
+
 
         self.title_label = ttk.Label(tab2, text="Massa", font=("Roboto", normal_round(self.responsive*13), 'bold'))
         self.title_label.pack()
@@ -254,16 +257,16 @@ class GUI:
         self.standardavikelse = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
         self.standardavikelse.insert(0, "0")
         self.standardavikelse.pack(pady=self.responsive*10)
-        self.standardavikelse.place(x=self.responsive*325, y=self.responsive*65)
+        self.standardavikelse.place(x=self.responsive*225, y=self.responsive*65)
         
         self.inputmass2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=entry_var3, font=("Roboto", normal_round(13*self.responsive)))
         self.inputmass2.insert(0, "1.0") 
         self.inputmass2.pack(pady=self.responsive*10)
-        self.inputmass2.place(x=self.responsive*225, y=self.responsive*65)
+        self.inputmass2.place(x=self.responsive*290, y=self.responsive*65)
 
-        self.labelw3 = tk.Label(tab2, text="KG", font=("Roboto", normal_round(13*self.responsive)))
+        self.labelw3 = tk.Label(tab2, text="kg", font=("Roboto", normal_round(13*self.responsive)))
         self.labelw3.pack()
-        self.labelw3.place(x=self.responsive*280, y=self.responsive*70)
+        self.labelw3.place(x=self.responsive*350, y=self.responsive*70)
         self.w3.bind("<Motion>", lambda  e: self.update_mass2(self.w3.get()))
 
         self.title_label = ttk.Label(tab2, text="Hastighet", font=("Roboto", normal_round(self.responsive*13), 'bold'))
@@ -290,18 +293,18 @@ class GUI:
         self.inputvel2 = ttk.Entry(tab2, width=normal_round(self.responsive*4),  textvariable=entry_var4, font=("Roboto", normal_round(13*self.responsive)))
         self.inputvel2.insert(0, "8.0")
         self.inputvel2.pack(pady=self.responsive*10)
-        self.inputvel2.place(x=self.responsive*225, y=self.responsive*135)
+        self.inputvel2.place(x=self.responsive*290, y=self.responsive*135)
 
         self.labelvelocityw4 = ttk.Label(tab2, text="m/s", font=("Roboto", normal_round(self.responsive*13)))
         self.labelvelocityw4.pack()
-        self.labelvelocityw4.place(x=self.responsive*280, y=self.responsive*140)
+        self.labelvelocityw4.place(x=self.responsive*350, y=self.responsive*140)
 
         self.w4.bind("<Motion>", lambda  e: self.update_vel2(self.w4.get()))
 
         self.standardavikelse2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
         self.standardavikelse2.insert(0, "0")
         self.standardavikelse2.pack(pady=self.responsive*10)
-        self.standardavikelse2.place(x=self.responsive*325, y=self.responsive*135)
+        self.standardavikelse2.place(x=self.responsive*225, y=self.responsive*135)
 
         title_label = ttk.Label(tab2, text="Storlek", font=("Roboto", normal_round(13*self.responsive), 'bold'))
         title_label.pack()
@@ -324,16 +327,16 @@ class GUI:
         self.inputsize2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=entry_var7, font=("Roboto", normal_round(13*self.responsive)))
         self.inputsize2.insert(0, "0.1") 
         self.inputsize2.pack(pady=self.responsive*10)
-        self.inputsize2.place(x=self.responsive*225, y=self.responsive*205)
+        self.inputsize2.place(x=self.responsive*290, y=self.responsive*205)
 
         self.labelsize2 = ttk.Label(tab2, text="m", font=("Roboto", normal_round(13*self.responsive)))
         self.labelsize2.pack()
-        self.labelsize2.place(x=self.responsive*280, y=self.responsive*210)
+        self.labelsize2.place(x=self.responsive*350, y=self.responsive*210)
 
         self.standardavikelse3 = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
         self.standardavikelse3.insert(0, "0")
         self.standardavikelse3.pack(pady=self.responsive*10)
-        self.standardavikelse3.place(x=self.responsive*325, y=self.responsive*205)
+        self.standardavikelse3.place(x=self.responsive*225, y=self.responsive*205)
 
         self.sizeslider2.bind("<Motion>", lambda  e: self.update_size2(self.sizeslider2.get()/10))
 
@@ -394,7 +397,7 @@ class GUI:
         strength = 0
 
     def left_click_hold(self, event, canvas):
-        if self.currentTab == 1:
+        if self.currentTab == 0:
             x, y = event.x, event.y
             if (x > 75 and x < 540 and y > 75 and y < 540):
                 global start_point, strength
