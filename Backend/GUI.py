@@ -194,7 +194,7 @@ class GUI:
 
         self.sizeslider.bind("<Motion>", lambda  e: self.update_size1(self.sizeslider.get()/10))
 
-        button_label = ttk.Label(tab1, text="Elasticitet", font=("Roboto", normal_round(13*self.responsive)))
+        button_label = ttk.Label(tab1, text="Elasticitet", font=("Roboto", normal_round(13*self.responsive), 'bold'))
         button_label.pack()
         button_label.place(x=self.responsive*50, y=self.responsive*280)
 
