@@ -23,6 +23,7 @@ class GUI:
         self.count = 0
         self.canvas1 = None
         self.size = 0.1
+        self.currentTab = 1
         self.time = 0
         self.ani = None
         self.standard_deviation_velocity = 0
@@ -87,6 +88,9 @@ class GUI:
         def on_tab_change(event):
             self.size = 0.1
             self.Stop()
+            print('ldflin')
+            print(tab_parent.index(tab_parent.select()))
+            # self.currentTab = tab_parent.index(tab_parent.select())
         tab_parent.bind('<<NotebookTabChanged>>', on_tab_change)
 
         def is_float(value):
@@ -390,25 +394,26 @@ class GUI:
         strength = 0
 
     def left_click_hold(self, event, canvas):
-        x, y = event.x, event.y
-        if (x > 75 and x < 540 and y > 75 and y < 540):
-            global start_point, strength
-            if self.line_tag:
-                self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
-            end_point = (event.x, event.y)
-            self.vectors = [start_point, end_point]
-            distance = self.calculate_distance(start_point, end_point)
-            strength = self.update_strength(distance)
-            self.update_vel1(strength * 10)
-            if strength < 1 and strength > 0.5:
-                self.color = f'#{int(strength * 255):1x}0000'
-            else:
-                if strength > 1:
-                    self.color = f'#ff0000'
-                elif strength < 0.3:
-                    self.color = f'#2b0202'
+        if self.currentTab == 1:
+            x, y = event.x, event.y
+            if (x > 75 and x < 540 and y > 75 and y < 540):
+                global start_point, strength
+                if self.line_tag:
+                    self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
+                end_point = (event.x, event.y)
+                self.vectors = [start_point, end_point]
+                distance = self.calculate_distance(start_point, end_point)
+                strength = self.update_strength(distance)
+                self.update_vel1(strength * 10)
+                if strength < 1 and strength > 0.5:
+                    self.color = f'#{int(strength * 255):1x}0000'
+                else:
+                    if strength > 1:
+                        self.color = f'#ff0000'
+                    elif strength < 0.3:
+                        self.color = f'#2b0202'
 
-            self.line_tag = self.canvas1.tkCanvas.get_tk_widget().create_line(start_point[0], start_point[1], end_point[0], end_point[1], fill=self.color, width=self.responsive*2)
+                self.line_tag = self.canvas1.tkCanvas.get_tk_widget().create_line(start_point[0], start_point[1], end_point[0], end_point[1], fill=self.color, width=self.responsive*2)
 
     def update_size1(self, value):
         rounded_value = round(value, 1)
