@@ -534,7 +534,9 @@ class GUI:
             
 
     def Stop(self):
-        self.ani.stop_Animation()
+        if isinstance(self.ani, AnimationWriter):
+            self.ani.stop_Animation()
+        
         self.canvas1.tkCanvas.get_tk_widget().destroy()
         self.canvas1 = Canvas((self.responsive*6,self.responsive*6), 60, "Projectile Motion", self.window)
         self.canvas1.tkCanvas.get_tk_widget().place(x=self.responsive*450, y=self.responsive*0)

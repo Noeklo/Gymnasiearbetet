@@ -25,6 +25,7 @@ class Canvas:
         self.fps = fps
         self.title = title
         self.window = window
+        
 
         if window is not None:
             # Use Matplotlib in a Tkinter window
