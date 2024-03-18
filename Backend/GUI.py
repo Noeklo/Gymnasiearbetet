@@ -532,7 +532,7 @@ class GUI:
                 self.elasticity
             )
             
-
+ 
     def Stop(self):
         if isinstance(self.ani, AnimationWriter):
             self.ani.stop_Animation()
