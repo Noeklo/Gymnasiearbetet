@@ -369,6 +369,7 @@ class GUI:
         stop_button = tk.Button(tab2, text="STOP", width=normal_round(self.responsive*10), command=self.Stop, font=("Roboto", normal_round(13*self.responsive)))
         stop_button.pack(pady=self.responsive*10)
         stop_button.place(x=self.responsive*50, y=self.responsive*425)
+        self.confirmation = False
 
         # stop_button = ttk.Button(tab2, text="SPARA", width=self.responsive*10, command=self.Stop)
         # stop_button.pack(pady=self.responsive*10)
@@ -510,13 +511,14 @@ class GUI:
         try:
             self.count = int(self.numeric_entry.get())
             self.time = int(self.time_entry.get())
+            if self.count * self.time >= 400 and self.confirmation == False:
+                self.confirmation = True
+                raise Exception("Stora tal leder till lång väntetid")
         except ValueError as e:
-            print(e)
-            print("Infogade alternativ måste vare heltal!")
             self.message.config(text='Infogat värde ska vara heltal')
         except Exception as e:
-            print(e)
-            self.message.config(text='FELAKTIG INPUT!')
+            self.message.config(text=str(e))
+
         else:
             self.message.config(text='')
             self.standard_deviation_mass = int(self.standardavikelse.get())
