@@ -518,10 +518,10 @@ class GUI:
         if self.ani != None:
             self.Stop()
         try:
+            self.message.config(text='')
             self.ani = AnimationWriter(self.canvas1, self.window)
             self.ani.generate_Spec_Animation(self.vectors, self.velocity, self.size, self.massa, self.elasticity)
             self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
-            self.message.config(text='')
             print('radie', self.size)
         except IndexError: 
             print("Vektor Saknas!")
@@ -534,6 +534,7 @@ class GUI:
         if self.ani != None:
             self.Stop()
         try:
+            self.message.config(text='')
             self.count = int(self.numeric_entry.get())
             self.time = int(self.time_entry.get())
             if self.count * self.time >= 400 and self.confirmation == False:
@@ -545,7 +546,6 @@ class GUI:
             self.message.config(text=str(e))
 
         else:
-            self.message.config(text='')
             self.standard_deviation_mass = int(self.standardavikelse.get())
             self.standard_deviation_velocity = int(self.standardavikelse2.get())
             self.standard_deviation_radius = float(self.standardavikelse3.get())
@@ -564,6 +564,7 @@ class GUI:
             
  
     def Stop(self):
+        self.message.config(text='')
         if isinstance(self.ani, AnimationWriter):
             self.ani.stop_Animation()
         
@@ -572,7 +573,7 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().place(x=self.responsive*450, y=self.responsive*0)
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
-        self.message.config(text='')
+       
     
 
 
