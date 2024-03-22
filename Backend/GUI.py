@@ -284,6 +284,8 @@ class GUI:
                 if float(entry_text) > 20.0:
                     entry_var4.set('20')
                     self.velocity = 20.0
+                    self.w4.set(self.velocity)
+                    return
                 self.velocity = float(entry_text)
                 self.w4.set(self.velocity)
 
@@ -316,15 +318,20 @@ class GUI:
         self.sizeslider2.place(x=self.responsive*50, y=self.responsive*215)
 
         def on_size_change2(*args):
-            entry_text = entry_var7.get()
+            entry_text = self.entry_var7.get()
             if is_float(entry_text):
+                if float(entry_text) > 0.5:
+                    self.entry_var7.set(0.5)
+                    self.size = 0.5
+                    self.sizeslider2.set(self.size*10)
+                    return
                 self.size = float(entry_text)/10
                 self.sizeslider2.set(self.size*10)
 
-        entry_var7 = tk.StringVar()
-        entry_var7.trace_add("write",  on_size_change2)
+        self.entry_var7 = tk.StringVar()
+        self.entry_var7.trace_add("write",  on_size_change2)
 
-        self.inputsize2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=entry_var7, font=("Roboto", normal_round(13*self.responsive)))
+        self.inputsize2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=self.entry_var7, font=("Roboto", normal_round(13*self.responsive)))
         self.inputsize2.insert(0, "0.1") 
         self.inputsize2.pack(pady=self.responsive*10)
         self.inputsize2.place(x=self.responsive*290, y=self.responsive*205)
@@ -420,6 +427,9 @@ class GUI:
 
     def update_size1(self, value):
         rounded_value = round(value, 1)
+        if rounded_value > 0.5:
+            rounded_value = 0.5
+            self.inputsize.set('0.5')
         # self.labelsize.config(text=f"{rounded_value:.1f} m")
         self.inputsize.delete(0, 'end')
         self.inputsize.insert(-1, f"{rounded_value:.1f}")
@@ -428,6 +438,8 @@ class GUI:
 
     def update_size2(self, value):
         rounded_value = round(value, 1)
+        if rounded_value > 0.5:
+            rounded_value = 0.5
         # self.labelsize.config(text=f"{rounded_value:.1f} m")
         self.inputsize2.delete(0, 'end')
         self.inputsize2.insert(-1, f"{rounded_value:.1f}")
@@ -438,6 +450,9 @@ class GUI:
     def update_mass1(self, value):
         rounded_value = round(value, 1)
         # self.labelw1.config(text=f"{rounded_value:.1f} KG")
+        if rounded_value > 200.0:
+            rounded_value = 200.0
+            self.inputmass.set('200')
         self.inputmass.delete(0, 'end')
         self.inputmass.insert(-1, f"{rounded_value:.1f}")
         self.massa = rounded_value
@@ -446,6 +461,9 @@ class GUI:
     def update_mass2(self, value):
         rounded_value = round(value, 1)
         # self.labelw3.config(text=f"{rounded_value:.1f} KG")
+        if rounded_value > 200.0:
+            rounded_value = 200.0
+            self.inputmass2.set('200')
         self.inputmass2.delete(0, 'end')
         self.inputmass2.insert(-1, f"{rounded_value:.1f}")
         self.massa = rounded_value
@@ -456,6 +474,7 @@ class GUI:
         if rounded_value < 21.0:
             if rounded_value > 20.0:
                 rounded_value = 20.0
+                self.inputmass2.set('20')
             # self.labelvelocityw2.config(text=f"{rounded_value:.1f} m/s")
             self.inputvel.delete(0, 'end')
             self.inputvel.insert(-1, f"{rounded_value:.1f}")
@@ -467,6 +486,12 @@ class GUI:
         if rounded_value < 21.0:
             if rounded_value > 20.0:
                 rounded_value = 20.0
+                self.inputmass2.set('200')
+                self.velocity = 20.0
+                self.w4.set(self.velocity)
+                self.inputvel2.delete(0, 'end')
+                self.inputvel2.insert(-1, f"{rounded_value:.1f}")
+                return
             self.inputvel2.delete(0, 'end')
             self.inputvel2.insert(-1, f"{rounded_value:.1f}")
             self.velocity = rounded_value
