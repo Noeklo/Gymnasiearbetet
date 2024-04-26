@@ -41,8 +41,15 @@ class Calc:
 
 class Calc2:
 
-    def __init__(self, canvas: Canvas, frames: int, lim: int):
-        self.data_Multiplier = 50 
+    data_Multiplier: int = None
+    timeIncrement: float = None
+    g: float = None
+    frames: int = None
+    lim: int = None
+    kinetic_energys: np.ndarray = None
+
+    def __init__(self, canvas: Canvas, frames: int, lim: int) -> None:
+        self.data_Multiplier: int = 50 
         self.timeIncrement: float = 1/(self.data_Multiplier *canvas.fps)
 #        self.timeIncrement: float = 1/canvas.fps
         self.g: float = 9.82
@@ -65,10 +72,13 @@ class Calc2:
     def linear_Distence(self, Velocity: float) -> float:
         distance = Velocity*self.timeIncrement
         return distance
+    
+
+
 
     def get_Difference(self, obj_Pair, i) -> float:
         
-      # If both are circles
+        #If both are circles
         if isinstance(obj_Pair[0], CircleObj) and isinstance(obj_Pair[1], CircleObj):
             diff = np.linalg.norm(np.array([obj_Pair[0].x_Cords[i], obj_Pair[0].y_Cords[i]]) - np.array([obj_Pair[1].x_Cords[i], obj_Pair[1].y_Cords[i]]))
         # If one is a line
@@ -90,6 +100,7 @@ class Calc2:
 
     def get_colliding_Pairs(self, obj_Pairs: np.ndarray[TwoDObj], i) -> np.ndarray[TwoDObj]:
 
+        #Boven
         diffs = np.asarray([self.get_Difference(obj_Pair, i) for obj_Pair in obj_Pairs])
 
         # Hitta index för kolliderande par

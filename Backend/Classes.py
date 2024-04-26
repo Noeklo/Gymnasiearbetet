@@ -13,7 +13,7 @@ class TwoDObj:
     def __add__(self, other) -> float:
         return self.radius + other.radius
 
-    def get_Kinetic_Energy(self):
+    def get_Kinetic_Energy(self) -> float:
         velocity = np.sqrt(self.x_Velocity**2 + self.y_Velocity**2)
         kinetic_energy = self.mass*velocity**2/2
         return kinetic_energy
