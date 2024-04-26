@@ -1,4 +1,5 @@
 
+# Importerar andra klasser och nödvändiga biblotek
 from AnimationWriter import AnimationWriter
 from Canvas import Canvas
 import tkinter as tk
@@ -6,13 +7,13 @@ from tkinter import ttk
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 from PIL import Image, ImageTk
-#from win32api import GetSystemMetrics
 import math
 
 
 class GUI:
     def __init__(self):
-        self.window = tk.Tk()
+        self.window = tk.Tk() #Initerar tkinter
+        #Sätter nödvändig information om fönstret
         self.window.title("FysiKol")
         self.window.geometry("1050x600")
         self.window.tk.call("source", "azure.tcl")
@@ -31,18 +32,10 @@ class GUI:
         self.standard_deviation_radius = 0
         self.elasticity = True
 
+        #Beräknar skärmens storlek och ändrar gränssnittet utifrån det (responsivitet)
         self.responsive = 1
         self.screens_width = self.window.winfo_screenwidth()
         self.window.resizable(False, False)
-        #print("Width =", GetSystemMetrics(0))
-        #print("Height =", GetSystemMetrics(1))
-        #self.screens_width = GetSystemMetrics(0)
-        
-        # if self.screens_width < 1920:
-        #     self.responsive = 0.5
-        #     w = 1050*0.5
-        #     h = 600*0.5
-        #     self.window.geometry(f"{int(w)}x{int(h)}")
         if self.screens_width < 1920:
             self.responsive = 1
             w = 1050*1
@@ -59,13 +52,14 @@ class GUI:
             h = 600*2
             self.window.geometry(f"{int(w)}x{int(h)}")
 
+        #Funktion som avrundar till närmaste heltal
         def normal_round(n):
             if n - math.floor(n) < 0.5:
                 return math.floor(n)
             return math.ceil(n)
         
 
-
+        #Skapar en canvas som används för att rita vektorer
         self.line_tag = None
         self.canvas1 = Canvas((self.responsive*6,self.responsive*6), 60, "Projectile Motion", self.window)
         self.canvas1.tkCanvas.get_tk_widget().place(x=self.responsive*450, y=self.responsive*0)
@@ -77,20 +71,23 @@ class GUI:
         lbl.place(x=self.responsive*50, y=self.responsive*30)
 
 
+        #Skapar två flikar i gränssnittet
         tab_parent = ttk.Notebook(lbl)
         tab1 = ttk.Frame(tab_parent, width=self.responsive*400, heigh=self.responsive*500)
         tab2 = ttk.Frame(tab_parent, width=self.responsive*400, heigh=self.responsive*500)
         tab_parent.add(tab1, text="Standard")
         tab_parent.add(tab2, text="Avancerad")
-        # tab_parent.pack(ipadx=self.responsive* 100 - 50*self.responsive, ipady=self.responsive* 250 - 30*self.responsive)
         tab_parent.pack()
 
+        #Funktion som uppdateras när man byter tab
         def on_tab_change(event):
             self.size = 0.1
             self.Stop()
             self.currentTab = tab_parent.index(tab_parent.select())
+
         tab_parent.bind('<<NotebookTabChanged>>', on_tab_change)
 
+        #Funktion som kollar om ett värde är float
         def is_float(value):
             try:
                 float(value)
@@ -100,7 +97,13 @@ class GUI:
             
         
 
-        # INSIDE TAB 1
+        # INUTI TAB 1
+
+        #ttk.Label = en titel
+        #ttk.Scale = en slider
+        #ttk.Entry = en input
+        #ttk.Button = en knapp
+
         title_label = ttk.Label(tab1, text="Massa", font=("Roboto", normal_round(13*self.responsive), 'bold'))
         title_label.pack()
         title_label.place(x=self.responsive*50, y=self.responsive*50)
@@ -109,6 +112,7 @@ class GUI:
         self.w1.pack()
         self.w1.place(x=self.responsive*50, y=self.responsive*75)
 
+        #Funktion som uppdaterar massan
         def on_mass1_change(*args):
             entry_text = entry_var1.get()
             if is_float(entry_text):
@@ -139,7 +143,7 @@ class GUI:
         self.w2.pack()
         self.w2.place(x=self.responsive*50, y=self.responsive*150)
 
-        
+        #Funktion som uppdaterar hastigheten
         def on_vel1_change(*args):
             entry_text = entry_var2.get()
             if is_float(entry_text):
@@ -149,11 +153,9 @@ class GUI:
                 self.velocity = float(entry_text)
                 self.w2.set(self.velocity)
 
-
         entry_var2 = tk.StringVar()
         entry_var2.trace_add("write",  on_vel1_change)
         
-
         self.inputvel = ttk.Entry(tab1, width=normal_round(self.responsive*4), textvariable=entry_var2, font=("Roboto", normal_round(13*self.responsive)))
         self.inputvel.insert(0, "8.0") 
         self.inputvel.pack(pady=self.responsive*10)
@@ -173,6 +175,7 @@ class GUI:
         self.sizeslider.pack()
         self.sizeslider.place(x=self.responsive*50, y=self.responsive*230)
 
+        #Funktion som uppdaterar storleken
         def on_size_change(*args):
             entry_text = entry_var6.get()
             if is_float(entry_text):
@@ -207,23 +210,14 @@ class GUI:
         init_button = tk.Button(tab1, text="START", width=normal_round(self.responsive*10), font=("Roboto", normal_round(13*self.responsive)), command=self.Start)
 
         init_button.pack()
-        # init_button.pack(pady=self.responsive*10)
         init_button.place(x=self.responsive*50, y=self.responsive*375)
 
         stop_button = tk.Button(tab1, text="STOP", width=normal_round(self.responsive*10), font=("Roboto", normal_round(13*self.responsive)), command=self.Stop)
-        # stop_button.pack(pady=self.responsive*10)
         stop_button.place(x=self.responsive*50, y=self.responsive*425)
 
-        # stop_button = ttk.Button(tab1, text="SPARA", width=self.responsive*10, command=self.Stop)
-        # stop_button.pack(pady=self.responsive*10)
-        # stop_button.place(x=self.responsive*175, y=self.responsive*425)
 
 
-
-
-
-
-        # INSIDE TAB 2
+        # INUTI TAB 2
 
         self.sigma = ttk.Label(tab2, text="σ", font=("Roboto", normal_round(self.responsive*18)))
         self.sigma.pack()
@@ -233,7 +227,6 @@ class GUI:
         self.mu.pack()
         self.mu.place(x=self.responsive*308, y=self.responsive*35)
 
-
         self.title_label = ttk.Label(tab2, text="Massa", font=("Roboto", normal_round(self.responsive*13), 'bold'))
         self.title_label.pack()
         self.title_label.place(x=self.responsive*50, y=self.responsive*50)
@@ -242,6 +235,7 @@ class GUI:
         self.w3.pack(ipadx=self.responsive* 50, ipady=self.responsive* 50)
         self.w3.place(x=self.responsive*50, y=self.responsive*75)
 
+        #Funktion som uppdaterar massan
         def on_mass2_change(*args):
             entry_text = entry_var3.get()
             if is_float(entry_text):
@@ -278,6 +272,7 @@ class GUI:
         self.w4.pack(ipadx=self.responsive* 50, ipady=self.responsive*50)
         self.w4.place(x=self.responsive*50, y=self.responsive*145)
 
+        #Funktion som uppdaterar hastigheten
         def on_vel2_change(*args):
             entry_text = entry_var4.get()
             if is_float(entry_text):
@@ -317,6 +312,7 @@ class GUI:
         self.sizeslider2.pack()
         self.sizeslider2.place(x=self.responsive*50, y=self.responsive*215)
 
+        #Funktion som uppdaterar storleken
         def on_size_change2(*args):
             entry_text = self.entry_var7.get()
             if is_float(entry_text):
@@ -378,32 +374,28 @@ class GUI:
         stop_button.place(x=self.responsive*50, y=self.responsive*425)
         self.confirmation = False
 
-        # stop_button = ttk.Button(tab2, text="SPARA", width=self.responsive*10, command=self.Stop)
-        # stop_button.pack(pady=self.responsive*10)
-        # stop_button.place(x=self.responsive*175, y=self.responsive*425)
-
         self.message = tk.Label(self.window,  fg="#f00", text="FELAKTIG INPUT!", font=("Roboto", normal_round(self.responsive*14)))
         self.message.pack()
         self.message.place(x=self.responsive*150, y=self.responsive*565)
         self.message.config(text='')
 
 
-
-    def calculate_vector(self, start, end):
-        return end[0] - start[0], end[1] - start[1]
-
+    #Beräknar avståndet mellan två punkter (Hur lång man drar vektorn)
     def calculate_distance(self, start, end):
         return ((end[0] - start[0])**2 + (end[1] - start[1])**2)**0.5
 
+    #Uppdaterar styrkan på vektorn
     def update_strength(self, distance):
         return distance * 0.01
 
+    #Funktion som kollar när man trycker vänster klick
     def left_click(self, event):
         global start_point, strength
 
         start_point = (event.x, event.y)
         strength = 0
 
+    #Funktion som kollar när man håller ner vänster klick och drar på skärmen (beräknar vektorn som styr riktningen på kollisionerna)
     def left_click_hold(self, event, canvas):
         if self.currentTab == 0:
             x, y = event.x, event.y
@@ -426,31 +418,30 @@ class GUI:
 
                 self.line_tag = self.canvas1.tkCanvas.get_tk_widget().create_line(start_point[0], start_point[1], end_point[0], end_point[1], fill=self.color, width=self.responsive*2)
 
+    #Funktion som uppdaterar storleken på gränssnittet
     def update_size1(self, value):
         rounded_value = round(value, 1)
         if rounded_value > 0.5:
             rounded_value = 0.5
             self.inputsize.set('0.5')
-        # self.labelsize.config(text=f"{rounded_value:.1f} m")
         self.inputsize.delete(0, 'end')
         self.inputsize.insert(-1, f"{rounded_value:.1f}")
         self.size = rounded_value
         self.sizeslider.set(self.size*10)
 
+    #Funktion som uppdaterar storleken på gränssnittet
     def update_size2(self, value):
         rounded_value = round(value, 1)
         if rounded_value > 0.5:
             rounded_value = 0.5
-        # self.labelsize.config(text=f"{rounded_value:.1f} m")
         self.inputsize2.delete(0, 'end')
         self.inputsize2.insert(-1, f"{rounded_value:.1f}")
         self.size = rounded_value
         self.sizeslider2.set(self.size*10)
 
-
+    #Funktion som uppdaterar massan på gränssnittet
     def update_mass1(self, value):
         rounded_value = round(value, 1)
-        # self.labelw1.config(text=f"{rounded_value:.1f} KG")
         if rounded_value > 200.0:
             rounded_value = 200.0
             self.inputmass.set('200')
@@ -459,9 +450,9 @@ class GUI:
         self.massa = rounded_value
         self.w1.set(self.massa)
 
+    #Funktion som uppdaterar massan på gränssnittet
     def update_mass2(self, value):
         rounded_value = round(value, 1)
-        # self.labelw3.config(text=f"{rounded_value:.1f} KG")
         if rounded_value > 200.0:
             rounded_value = 200.0
             self.inputmass2.set('200')
@@ -470,18 +461,19 @@ class GUI:
         self.massa = rounded_value
         self.w3.set(self.massa)
 
+    #Funktion som uppdaterar hastigheten på gränssnittet
     def update_vel1(self, value):
         rounded_value = round(value, 1)
         if rounded_value < 21.0:
             if rounded_value > 20.0:
                 rounded_value = 20.0
                 self.inputmass2.set('20')
-            # self.labelvelocityw2.config(text=f"{rounded_value:.1f} m/s")
             self.inputvel.delete(0, 'end')
             self.inputvel.insert(-1, f"{rounded_value:.1f}")
             self.velocity = rounded_value
             self.w2.set(self.velocity)
 
+    #Funktion som uppdaterar hastigheten på gränssnittet
     def update_vel2(self, value):
         rounded_value = round(value, 1)
         if rounded_value < 21.0:
@@ -498,7 +490,7 @@ class GUI:
             self.velocity = rounded_value
             self.w4.set(self.velocity)
 
-
+    #Funktion som hanterar logiken bakom en simpel av och på knapp som bestämmer elastisiteten
     def Simpletoggle(self):
         if self.toggle_button1.config('text')[-1] == 'PÅ':
             self.toggle_button1.config(text='AV')
@@ -513,7 +505,7 @@ class GUI:
             self.toggle_button2.config(text='PÅ')
             self.elasticity = True
 
-
+    #Funktion som startar animationen när man trycker på start knappen
     def Start(self):
         if self.ani != None:
             self.Stop()
@@ -530,6 +522,7 @@ class GUI:
             print(e)
             self.message.config(text='FELAKTIG INPUT!')
             
+    #Funktion som startar animation med slump inuti tab 2
     def RandomStart(self):
         if self.ani != None:
             self.Stop()
@@ -562,7 +555,7 @@ class GUI:
                 self.elasticity
             )
             
- 
+    #Funktion som stoppar animationen   
     def Stop(self):
         self.message.config(text='')
         if isinstance(self.ani, AnimationWriter):
