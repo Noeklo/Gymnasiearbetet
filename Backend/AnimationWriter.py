@@ -8,7 +8,6 @@ from typing import List
 
 from Classes import CircleObj, LineObj
 from Canvas import Canvas
-from Calc import Calc
 from Calc import Calc2
 
 class AnimationWriter:
