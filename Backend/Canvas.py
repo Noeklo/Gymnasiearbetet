@@ -40,9 +40,6 @@ class Canvas:
             self.ax = self.fig.add_subplot()
             self.tkCanvas = FigureCanvasTkAgg(self.fig, master=self.window)
             self.tkCanvas.get_tk_widget().pack()
-            print(type(self.fig))
-            print(type(self.ax))
-            print(type(self.tkCanvas))
 
             #färgbar som representerar massan 
             #fråm https://stackoverflow.com/questions/61084381/create-gradient-legend-matplotlib
