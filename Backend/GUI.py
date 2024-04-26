@@ -89,6 +89,7 @@ class GUI:
             self.size = 0.1
             self.Stop()
             self.currentTab = tab_parent.index(tab_parent.select())
+
         tab_parent.bind('<<NotebookTabChanged>>', on_tab_change)
 
         def is_float(value):
@@ -389,8 +390,8 @@ class GUI:
 
 
 
-    def calculate_vector(self, start, end):
-        return end[0] - start[0], end[1] - start[1]
+    # def calculate_vector(self, start, end):
+    #     return end[0] - start[0], end[1] - start[1]
 
     def calculate_distance(self, start, end):
         return ((end[0] - start[0])**2 + (end[1] - start[1])**2)**0.5
