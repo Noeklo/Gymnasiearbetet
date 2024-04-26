@@ -27,6 +27,7 @@ class Canvas:
 #    ax: mpl.axes._subplots.AxesSubplot = None
     #tkCanvas: mpl.backends.backend_tkagg.FigureCanvasTkAgg = None
 
+    # construktor för canvas objektet
     def __init__(self, size: tuple, fps: int, title: str, window: tkinter.Tk = None) -> None:
         self.size = size
         self.fps = fps
@@ -34,7 +35,7 @@ class Canvas:
         self.window = window
 
         if window is not None:
-            # Use Matplotlib in a Tkinter window
+            # Använd Matplotlib i Tkinter window
             self.fig = Figure(figsize=size, dpi=100)
             self.ax = self.fig.add_subplot()
             self.tkCanvas = FigureCanvasTkAgg(self.fig, master=self.window)
@@ -50,15 +51,17 @@ class Canvas:
             axins1 = inset_axes(self.ax, width='20%', height='3%', loc = "upper right")
             self.fig.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap), cax=axins1, orientation='horizontal', ticks =[1,200])
         else:
-            # Use Matplotlib in a standalone window
+            # använd matplotlib i separat fönster
             self.fig, self.ax = plt.subplots(figsize=size)
             plt.title(title)
             plt.grid()
-
+    
+    # Skapar värden för gränserna
     def set_Limets(self, x_Limet: int, y_Limet: int) -> None:
         self.ax.set_xlim(0, x_Limet)
         self.ax.set_ylim(0, y_Limet)
-        
+
+    # Skapar linjer som placeras vid gränserna angivna ovan
     def set_Boarders(self, lim) -> None:
         length = np.linspace(0,lim,lim*1000)
 

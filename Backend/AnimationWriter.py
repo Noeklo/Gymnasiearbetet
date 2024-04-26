@@ -70,7 +70,7 @@ class AnimationWriter:
         normal_distrubuted_masses = np.array([np.abs(np.round(i)) for i in normal_distrubuted_masses])
         normal_distrubuted_radius = np.array([np.abs(i) for i in normal_distrubuted_radius])
 
-        # ändrar ett slumpmässigt antal av hastigheter till negtivt, då normal fördelningen gring ett posetivt medelvärde ger posetiva hastigheter
+        # ändrar ett slumpmässigt antal av hastigheter till negtivt
         random_x_indencies = random_Number_Generator.integers(0,len(normal_distrubuted_x_velocities), np.random.randint(0, len(normal_distrubuted_x_velocities)))
         random_y_indencies = random_Number_Generator.integers(0,len(normal_distrubuted_y_velocities), np.random.randint(0, len(normal_distrubuted_y_velocities)))
         normal_distrubuted_x_velocities[random_x_indencies] = -normal_distrubuted_x_velocities[random_x_indencies]  
