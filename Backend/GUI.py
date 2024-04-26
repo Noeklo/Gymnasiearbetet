@@ -121,6 +121,8 @@ class GUI:
                     self.massa = 200.0
                 self.massa = float(entry_text)
                 self.w1.set(self.massa)
+            else:
+                entry_var1.set('0')
 
         entry_var1 = tk.StringVar()
         entry_var1.trace_add("write",  on_mass1_change)
@@ -152,6 +154,8 @@ class GUI:
                     self.velocity = 20.0
                 self.velocity = float(entry_text)
                 self.w2.set(self.velocity)
+            else:
+                entry_var2.set('0')
 
         entry_var2 = tk.StringVar()
         entry_var2.trace_add("write",  on_vel1_change)
@@ -184,6 +188,8 @@ class GUI:
                     self.size = 20.0
                 self.size = float(entry_text)/10
                 self.sizeslider.set(self.size*10)
+            else:
+                entry_var6.set('0')
 
         entry_var6 = tk.StringVar()
         entry_var6.trace_add("write",  on_size_change)
@@ -244,11 +250,26 @@ class GUI:
                     self.massa = 200.0
                 self.massa = float(entry_text)
                 self.w3.set(self.massa)
+            else:
+                entry_var3.set('0')
 
         entry_var3 = tk.StringVar()
         entry_var3.trace_add("write",  on_mass2_change)
 
-        self.standardavikelse = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
+        #Funktion som sätter ett tak på hur mycket som kan skrivas in i inputfältet
+        def on_massdevi_change(*args):
+            entry_text = mass_deviation.get()
+            if is_float(entry_text):
+                if float(entry_text) > 100.0:
+                    mass_deviation.set('100')
+            else:
+                self.message.config(text='FELAKTIG INPUT!')
+                mass_deviation.set('0')
+
+        mass_deviation = tk.StringVar()
+        mass_deviation.trace_add("write",  on_massdevi_change)
+
+        self.standardavikelse = ttk.Entry(tab2, width=normal_round(self.responsive*4),  textvariable=mass_deviation,  font=("Roboto", normal_round(13*self.responsive)))
         self.standardavikelse.insert(0, "0")
         self.standardavikelse.pack(pady=self.responsive*10)
         self.standardavikelse.place(x=self.responsive*225, y=self.responsive*65)
@@ -283,9 +304,24 @@ class GUI:
                     return
                 self.velocity = float(entry_text)
                 self.w4.set(self.velocity)
+            else:
+                entry_var4.set('0')
 
         entry_var4 = tk.StringVar()
         entry_var4.trace_add("write",  on_vel2_change)
+
+        #Funktion som sätter ett tak på hur mycket som kan skrivas in i inputfältet
+        def on_veldevi_change(*args):
+            entry_text = vel_deviation.get()
+            if is_float(entry_text):
+                if float(entry_text) > 15.0:
+                    vel_deviation.set('15')
+            else:
+                self.message.config(text='FELAKTIG INPUT!')
+                vel_deviation.set('0')
+
+        vel_deviation = tk.StringVar()
+        vel_deviation.trace_add("write",  on_veldevi_change)
 
         self.inputvel2 = ttk.Entry(tab2, width=normal_round(self.responsive*4),  textvariable=entry_var4, font=("Roboto", normal_round(13*self.responsive)))
         self.inputvel2.insert(0, "8.0")
@@ -298,7 +334,7 @@ class GUI:
 
         self.w4.bind("<Motion>", lambda  e: self.update_vel2(self.w4.get()))
 
-        self.standardavikelse2 = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
+        self.standardavikelse2 = ttk.Entry(tab2, width=normal_round(self.responsive*4),textvariable=vel_deviation, font=("Roboto", normal_round(13*self.responsive)))
         self.standardavikelse2.insert(0, "0")
         self.standardavikelse2.pack(pady=self.responsive*10)
         self.standardavikelse2.place(x=self.responsive*225, y=self.responsive*135)
@@ -323,6 +359,8 @@ class GUI:
                     return
                 self.size = float(entry_text)/10
                 self.sizeslider2.set(self.size*10)
+            else:
+                self.entry_var7.set(0)
 
         self.entry_var7 = tk.StringVar()
         self.entry_var7.trace_add("write",  on_size_change2)
@@ -336,7 +374,20 @@ class GUI:
         self.labelsize2.pack()
         self.labelsize2.place(x=self.responsive*350, y=self.responsive*210)
 
-        self.standardavikelse3 = ttk.Entry(tab2, width=normal_round(self.responsive*4), font=("Roboto", normal_round(13*self.responsive)))
+        #Funktion som sätter ett tak på hur mycket som kan skrivas in i inputfältet
+        def on_sizedevi_change(*args):
+            entry_text = size_deviation.get()
+            if is_float(entry_text):
+                if float(entry_text) > 0.4:
+                    size_deviation.set('0.4')
+            else:
+                self.message.config(text='FELAKTIG INPUT!')
+                size_deviation.set('0')
+
+        size_deviation = tk.StringVar()
+        size_deviation.trace_add("write",  on_sizedevi_change)
+
+        self.standardavikelse3 = ttk.Entry(tab2, width=normal_round(self.responsive*4), textvariable=size_deviation, font=("Roboto", normal_round(13*self.responsive)))
         self.standardavikelse3.insert(0, "0")
         self.standardavikelse3.pack(pady=self.responsive*10)
         self.standardavikelse3.place(x=self.responsive*225, y=self.responsive*205)
@@ -444,7 +495,7 @@ class GUI:
         rounded_value = round(value, 1)
         if rounded_value > 200.0:
             rounded_value = 200.0
-            self.inputmass.set('200')
+            # self.inputmass.set('200')
         self.inputmass.delete(0, 'end')
         self.inputmass.insert(-1, f"{rounded_value:.1f}")
         self.massa = rounded_value
@@ -455,7 +506,7 @@ class GUI:
         rounded_value = round(value, 1)
         if rounded_value > 200.0:
             rounded_value = 200.0
-            self.inputmass2.set('200')
+            # self.inputmass2.set('200')
         self.inputmass2.delete(0, 'end')
         self.inputmass2.insert(-1, f"{rounded_value:.1f}")
         self.massa = rounded_value
@@ -467,7 +518,7 @@ class GUI:
         if rounded_value < 21.0:
             if rounded_value > 20.0:
                 rounded_value = 20.0
-                self.inputmass2.set('20')
+                # self.inputmass2.set('20')
             self.inputvel.delete(0, 'end')
             self.inputvel.insert(-1, f"{rounded_value:.1f}")
             self.velocity = rounded_value
