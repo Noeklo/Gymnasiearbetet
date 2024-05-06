@@ -617,6 +617,7 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().place(x=self.responsive*450, y=self.responsive*0)
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
+        self.vectors = []
        
     
 
