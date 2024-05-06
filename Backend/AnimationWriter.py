@@ -77,7 +77,9 @@ class AnimationWriter:
         
         # sätter radien till minst 0.1 som säkerhetsågärd för att inte få för små radier.
         normal_distrubuted_radius = np.where(normal_distrubuted_radius<0.1, 0.1, normal_distrubuted_radius)
-        normal_distrubuted_radius = np.where(normal_distrubuted_radius==0.5, 0.49, normal_distrubuted_radius)
+
+        # Sätter radien till som högst 0.5
+        normal_distrubuted_radius = np.where(normal_distrubuted_radius>=0.5, 0.49, normal_distrubuted_radius)
         
         #gamalt inte slumpmässigt
 #        normal_distrubuted_x_velocities = np.where(np.arange(len(normal_distrubuted_x_velocities))%2==0,-normal_distrubuted_x_velocities, normal_distrubuted_x_velocities )
