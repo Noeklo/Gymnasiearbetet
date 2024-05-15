@@ -49,7 +49,7 @@ class Calc2:
     kinetic_energys: np.ndarray = None
 
     def __init__(self, canvas: Canvas, frames: int, lim: int) -> None:
-        self.data_Multiplier: int = 100 
+        self.data_Multiplier: int = 50 
         self.timeIncrement: float = 1/(self.data_Multiplier *canvas.fps)
 #        self.timeIncrement: float = 1/canvas.fps
         self.g: float = 9.82
