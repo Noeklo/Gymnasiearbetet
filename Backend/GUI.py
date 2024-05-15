@@ -591,8 +591,8 @@ class GUI:
             self.message.config(text=str(e))
 
         else:
-            self.standard_deviation_mass = int(self.standardavikelse.get())
-            self.standard_deviation_velocity = int(self.standardavikelse2.get())
+            self.standard_deviation_mass = float(self.standardavikelse.get())
+            self.standard_deviation_velocity = float(self.standardavikelse2.get())
             self.standard_deviation_radius = float(self.standardavikelse3.get())
             self.ani = AnimationWriter(self.canvas1, self.window)
             self.ani.generate_Rnd_Animation(
