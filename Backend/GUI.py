@@ -560,12 +560,12 @@ class GUI:
     def Start(self):
         if self.ani != None:
             self.Stop()
-
         try:
             self.message.config(text='')
             self.ani = AnimationWriter(self.canvas1, self.window)
             self.ani.generate_Spec_Animation(self.vectors, self.velocity, self.size, self.massa, self.elasticity)
             self.canvas1.tkCanvas.get_tk_widget().delete(self.line_tag)
+            print('radie', self.size)
         except IndexError: 
             print("Vektor Saknas!")
             self.message.config(text='Vektor saknas')
@@ -577,7 +577,6 @@ class GUI:
     def RandomStart(self):
         if self.ani != None:
             self.Stop()
-            self.vectors = []
         try:
             self.message.config(text='')
             self.count = int(self.numeric_entry.get())
@@ -618,7 +617,7 @@ class GUI:
         self.canvas1.tkCanvas.get_tk_widget().place(x=self.responsive*450, y=self.responsive*0)
         self.canvas1.tkCanvas.get_tk_widget().bind("<Button-1>", self.left_click)
         self.canvas1.tkCanvas.get_tk_widget().bind("<B1-Motion>", lambda event: self.left_click_hold(event, self.canvas1))
-        
+        self.vectors = []
        
     
 
